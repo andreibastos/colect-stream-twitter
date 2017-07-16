@@ -1,1 +1,1 @@
-Colect-Stream-Twitter
+coleta-twitter-stream
