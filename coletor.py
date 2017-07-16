@@ -18,7 +18,6 @@ PATH_KEYS = 'keys_exemplo.json';
 PATH_QUERYS = 'query_exemplo.json';
 NUM_PER_INSERT = 10
 
-
 ##### VARIÁVEIS ######
 log_system = ''
 index_key = 0;
@@ -59,6 +58,7 @@ class log_collector():
 		log['date_created'] = string_time_now();
 		log['text'] = text;
 		self.logs.append(log);
+		self.write(self);
 
 	def write(self):
 		json.dump(self.logs,self.file, indent=4)
@@ -225,7 +225,7 @@ def string_to_date(date_string):
 ######################## Rotina Principal #########################
 def main():
 	global log_system
-	# cria o objeto de log do systema
+	# cria o objeto de log do sistema
 	log_system = log_collector();
 
 	# ler as chaves
@@ -234,8 +234,6 @@ def main():
 
 	#ler as querys
 	querys = read_querys();
-
-	log_system.write();
 
 	for query in querys:
 		c = Collector(query['palavras'], query['linguagem'], key)
