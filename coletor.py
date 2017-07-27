@@ -7,7 +7,10 @@
 ############### IMPORT's ###############
 import json, datetime, time
 
-import threading, tweepy
+import threading, tweepy, socket, traceback, sys
+
+
+from pprint import pprint
 #######################################
 
 
@@ -43,8 +46,8 @@ class log_collector():
 		text = 'read file: {0}.'.format(filename);		
 		self.new(text);
 
-	def error(selfe, e):
-		text = 'error: {0}.'.format(e) 
+	def error(self, e):		
+		text = 'error: {0}.'.format(str(e)) 
 		self.new(text);		
 
 	def insert_tweets(self, NUM_PER_INSERT):
@@ -77,12 +80,13 @@ class Collector(threading.Thread):
 	def run(self):        
 		global log_system
 		## Quebra a lista em uma unica string com codificação utf8
-		q = "".join(x for x in self.query + ", ")
-		q = q.trim(",")
-		q = str(unicode(q).encode('utf-8'))  		
+		# q = ", ".join(x for x in self.query )		
+		# q = str(unicode(q).encode('utf-8'))  
+		
+		print(self.query)
 
 		## Adiciona no log
-		log_system.streaming_tweets(q)
+		log_system.streaming_tweets(unicode(self.query))
 		listener = StreamingListener(self)
 
 		## pega as informações da chave de identificação
@@ -102,27 +106,30 @@ class Collector(threading.Thread):
 			try:
 				self.connected = True
 
-				if self.language != "all":
-					self.stream.filter(track=q, languages=[self.language])
-
+				if self.language != "all":					
+					self.stream.filter(track=self.query, languages=['pt'])
 				else:
-					self.stream.filter(track=q, languages=[''])
-					self.connected = False
-					print "Connection dropped:", self.query
-					if self.active:
-						time.sleep(60)
+					self.stream.filter(track=self.query, languages=[''])
 
-			except socket.gaierror:
 				self.connected = False
-				print "Stream closed"
+
+				print("Connection dropped:%s"% self.query)
+				if self.active:
+					time.sleep(60)
+
+			except socket.gaierror as sg:
+				log_system.error(sg)   
+				self.connected = False
+				print("Stream closed")
 				time.sleep(60)
-			except Exception:
+			except Exception as e:
+				print e
+				log_system.error(e)   
 				self.connected = False
 				traceback.print_exc(file=sys.stdout)
 				sys.stdout.flush()
 				time.sleep(60)
-
-		print "Collector stopped."
+				print("Collector stopped.")
 
 class StreamingListener(tweepy.StreamListener):
 	def __init__(self, collector, *args, **kwargs):
@@ -178,12 +185,12 @@ class StreamingListener(tweepy.StreamListener):
 		super(StreamingListener, self).on_data(data)
 
 	def on_error(self, status_code):
-		print (status_code)
+		print(status_code)
 		if status_code == 401:
 			raise Exception("Authentication error")
 
 	def on_status(self, status):
-		print status
+		print(status)
 		# pass
 
 ##################################################################
@@ -232,10 +239,13 @@ def main():
 
 	#ler as querys
 	querys = read_querys();
+	
 
 	for query in querys:
+		query['palavras'] = [str(x) for x in query['palavras']]
 		c = Collector(query['palavras'], query['linguagem'], key)
-		# active_collectors.append(c)
+		active_collectors.append(c)
+		c.start()
 
 if __name__ == '__main__':
 	main()
