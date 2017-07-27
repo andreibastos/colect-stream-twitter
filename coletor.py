@@ -9,6 +9,7 @@ import json, datetime, time
 
 import threading, tweepy, socket, traceback, sys
 
+import requests
 
 from pprint import pprint
 #######################################
@@ -17,6 +18,7 @@ from pprint import pprint
 ############### VARIÁVEIS GLOBAIS ###################
 
 ##### CONSTANTES #####
+URL_API = 'https://requestb.in/ps44ncps'
 PATH_KEYS = 'keys_exemplo.json';
 PATH_QUERYS = 'query_exemplo.json';
 NUM_PER_INSERT = 10
@@ -174,6 +176,7 @@ class StreamingListener(tweepy.StreamListener):
 		try:
 			if((self.collector.count % NUM_PER_INSERT) == 0):             
 				# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
+
 				log_system.insert_tweets(NUM_PER_INSERT)
 				self.collector.list_temp_tweets_to_insert = []			
 		except Exception as e:
@@ -219,11 +222,27 @@ def read_querys():
 	log_system.read_file(PATH_QUERYS)
 	return json.loads(f.read());
 
+# conversões de data
 def string_time_now():
 	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
 
 def string_to_date(date_string):	 
 	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,"%a %b %d %H:%M:%S +0000 %Y")), None)
+
+def saveData(data):
+	try:			
+		r = requests.post('https://requestb.in/ps44ncps', data=data)
+		print r.status_code
+		print r.content
+		if r.status_code == 200:
+			return {'ok':1, 'msg':'gravado com sucesso'}
+			pass
+		else:
+			r.status_code 
+			
+	except Exception as e:
+		print e
+
 
 ###################################################################
 
@@ -245,7 +264,8 @@ def main():
 		query['palavras'] = [str(x) for x in query['palavras']]
 		c = Collector(query['palavras'], query['linguagem'], key)
 		active_collectors.append(c)
-		c.start()
+		saveData(query)
+		# c.start()
 
 if __name__ == '__main__':
 	main()
