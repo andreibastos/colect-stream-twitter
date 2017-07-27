@@ -34,11 +34,13 @@ class log_collector():
 	"""docstring for log_collector"""
 	def __init__(self):	
 		date = time.strftime("%Y%m%d_%H%M",time.gmtime());
+		log = '\"date_created\";\"text\"\n'
 		self.filename = 'log_' + date + '.log';		
-		self.file = open(self.filename, 'w');
+		self.file = open(self.filename, 'a');
+		self.file.write(log)
 
-	def read_file(self, filename):
-		text = 'read file: {0}.'.format(PATH_QUERYS);
+	def read_file(self, filename):		
+		text = 'read file: {0}.'.format(filename);		
 		self.new(text);
 
 	def error(selfe, e):
@@ -50,18 +52,15 @@ class log_collector():
 		self.new(text);		
 
 	def streaming_tweets(self, query):
-		text = "Streaming retweets for query '{0}'" .format(unicode(query))
+		text = "streaming retweets for query '{0}'" .format(unicode(query))
 		self.new(text);		
 
-	def new(self, text):
-		log = {}
-		log['date_created'] = string_time_now();
-		log['text'] = text;
-		self.logs.append(log);
-		self.write(self);
+	def new(self, text):				
+		log = "\"{0}\";\"{1}\"\n".format(str(string_time_now()),text)			
+		self.write(log);
 
-	def write(self):
-		json.dump(self.logs,self.file, indent=4)
+	def write(self, log):
+		self.file.write(log)
 
 class Collector(threading.Thread):
 	def __init__(self, query, language, key, log=None):
@@ -216,8 +215,7 @@ def read_querys():
 def string_time_now():
 	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
 
-def string_to_date(date_string):
-	global log_system    
+def string_to_date(date_string):	 
 	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,"%a %b %d %H:%M:%S +0000 %Y")), None)
 
 ###################################################################

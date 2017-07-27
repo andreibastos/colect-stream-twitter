@@ -2,3 +2,7 @@
 *.sublime-project
 
 *.sublime-workspace
+
+keys_exemplo\.json
+
+*.log
