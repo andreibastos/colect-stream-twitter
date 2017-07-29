@@ -6,12 +6,11 @@
 
 ############### IMPORT's ###############
 import json, datetime, time
+from dateutil.parser import *
 
 import threading, tweepy, socket, traceback, sys
 
 import requests
-
-from pprint import pprint
 #######################################
 
 
@@ -21,7 +20,8 @@ from pprint import pprint
 URL_API = 'https://requestb.in/ps44ncps'
 PATH_KEYS = 'keys_exemplo.json';
 PATH_QUERYS = 'query_exemplo.json';
-NUM_PER_INSERT = 10
+NUM_PER_INSERT = 10;
+DATE_FORMAT_TWITTER = "%a %b %d %H:%M:%S %z %Y";
 
 ##### VARIÁVEIS ######
 log_system = ''
@@ -68,9 +68,9 @@ class log_collector():
 		self.file.write(log)
 
 class Collector(threading.Thread):
-	def __init__(self, query, language, key, log=None):
+	def __init__(self, query, languages, key, log=None):
 		self.query = query        
-		self.language = language
+		self.languages = languages
 		self.key = key
 		self.log = log
 		self.count = 0
@@ -102,22 +102,13 @@ class Collector(threading.Thread):
 		#cria uma escuta 
 		self.stream = tweepy.streaming.Stream(auth, listener, timeout=60.0)
 		self.active = True
+		
+		self.stream.filter(track=self.query, languages=self.languages)
 
 		#enqunto estiver ativo
 		while (self.active):
 			try:
 				self.connected = True
-
-				if self.language != "all":					
-					self.stream.filter(track=self.query, languages=['pt'])
-				else:
-					self.stream.filter(track=self.query, languages=[''])
-
-				self.connected = False
-
-				print("Connection dropped:%s"% self.query)
-				if self.active:
-					time.sleep(60)
 
 			except socket.gaierror as sg:
 				log_system.error(sg)   
@@ -141,35 +132,46 @@ class StreamingListener(tweepy.StreamListener):
 		super(StreamingListener, self).__init__(*args, **kwargs)
 
 	def on_data(self, data):
-		try:	    
-			status = json.loads(data)
-			# modify to ISOdate in mongo
-			#created_at of status
-			status['created_at'] = parse(status['created_at'])
-			# status['created_at'] = string_to_date(status['created_at'])
-			
-			status['timestamp_ms'] = long(status['timestamp_ms'])
-			#created_at of user of status
-			tmp_user = status['user']
-			tmp_user['created_at'] = parse(tmp_user['created_at'])
-			status['user'] = tmp_user
 
-			#created_at of retweeted of status
-			tmp_retweeted = status.get('retweeted_status')            
-			if tmp_retweeted:
-				tmp_retweeted['created_at'] = parse(tmp_retweeted['created_at'])
-				#created_at of user of retweeted of status
-				tmp_user = tmp_retweeted['user']
-				tmp_user['created_at'] = parse(tmp_user['created_at'])
-				tmp_retweeted['user'] = tmp_user
-				status['retweeted_status'] = tmp_retweeted	            
+		try:
+
+			status = json.loads(data)
+			
+			# # modify to ISOdate in mongo
+			# #created_at of status
+			# status['created_at'] = parse(status['created_at'])
+			# # status['created_at'] = string_to_date(status['created_at'])
+			
+			# status['timestamp_ms'] = long(status['timestamp_ms'])
+			# #created_at of user of status
+			# tmp_user = status['user']
+			# tmp_user['created_at'] = parse(tmp_user['created_at'])
+			# status['user'] = tmp_user
+
+			# #created_at of retweeted of status
+			# tmp_retweeted = status.get('retweeted_status')            
+			# if tmp_retweeted:
+			# 	tmp_retweeted['created_at'] = parse(tmp_retweeted['created_at'])
+			# 	#created_at of user of retweeted of status
+			# 	tmp_user = tmp_retweeted['user']
+			# 	tmp_user['created_at'] = parse(tmp_user['created_at'])
+			# 	tmp_retweeted['user'] = tmp_user
+			# 	status['retweeted_status'] = tmp_retweeted	            
+			user = status['user']
+			user = user['screen_name']
+			text = str(unicode(status['text']).encode('utf-8')).replace("\n","") 			
+			print 'user:{0}\ttext:{1}'.format(user, text )
 
 		except Exception as e:  
-			log_system.error(e)                           
+			log_system.error(e) 
+			print e                          
 			return False
 
 		twitter_obj = {}                
 		twitter_obj['status'] = status
+
+		# print(json.dumps(twitter_obj,indent=4))
+		self.collector.count += 1
 
 		self.collector.list_temp_tweets_to_insert.append(twitter_obj)        
         
@@ -183,8 +185,6 @@ class StreamingListener(tweepy.StreamListener):
 			log_system.error(e)
 			return False
 
-		self.collector.count += 1
-
 		super(StreamingListener, self).on_data(data)
 
 	def on_error(self, status_code):
@@ -193,8 +193,8 @@ class StreamingListener(tweepy.StreamListener):
 			raise Exception("Authentication error")
 
 	def on_status(self, status):
-		print(status)
-		# pass
+		# print(status)
+		pass
 
 ##################################################################
 
@@ -229,17 +229,21 @@ def string_time_now():
 def string_to_date(date_string):	 
 	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,"%a %b %d %H:%M:%S +0000 %Y")), None)
 
+def string_to_date(date_string,date_format):	 
+	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,date_format)), None)
+
+
 def saveData(data):
 	try:			
 		r = requests.post('https://requestb.in/ps44ncps', data=data)
 		print r.status_code
 		print r.content
 		if r.status_code == 200:
-			return {'ok':1, 'msg':'gravado com sucesso'}
-			pass
-		else:
+			return {'ok':1, 'msg':'gravado com sucesso'}			
+		elif r.status_code == 500:
 			r.status_code 
-			
+
+
 	except Exception as e:
 		print e
 
@@ -261,11 +265,11 @@ def main():
 	
 
 	for query in querys:
-		query['palavras'] = [str(x) for x in query['palavras']]
-		c = Collector(query['palavras'], query['linguagem'], key)
+		query['track'] = [str(x) for x in query['track']]
+		c = Collector(query['track'], query['languages'], key)
 		active_collectors.append(c)
 		saveData(query)
-		# c.start()
+		c.start()
 
 if __name__ == '__main__':
 	main()
