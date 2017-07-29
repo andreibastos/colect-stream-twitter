@@ -8,3 +8,5 @@ keys_exemplo\.json
 *.log
 
 query_exemplo\.json
+
+matador_thread
