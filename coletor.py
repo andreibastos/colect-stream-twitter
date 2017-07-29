@@ -17,7 +17,8 @@ import requests
 ############### VARIÁVEIS GLOBAIS ###################
 
 ##### CONSTANTES #####
-URL_API = 'https://requestb.in/ps44ncps'
+URL_API_DATABASE = 'https://requestb.in/1nlo6kq1'
+URL_API_CATEGORIZE = 'https://requestb.in/1nlo6k1q1'
 PATH_KEYS = 'keys_exemplo.json';
 PATH_QUERYS = 'query_exemplo.json';
 NUM_PER_INSERT = 10;
@@ -81,13 +82,11 @@ class Collector(threading.Thread):
 
 	def run(self):        
 		global log_system
-		## Quebra a lista em uma unica string com codificação utf8
-		# q = ", ".join(x for x in self.query )		
-		# q = str(unicode(q).encode('utf-8'))  
-		
-		print(self.query)
 
 		## Adiciona no log
+		log_system.streaming_tweets(self.query)
+		print(self.query)
+		
 		log_system.streaming_tweets(unicode(self.query))
 		listener = StreamingListener(self)
 
@@ -135,32 +134,15 @@ class StreamingListener(tweepy.StreamListener):
 
 		try:
 
-			status = json.loads(data)
-			
-			# # modify to ISOdate in mongo
-			# #created_at of status
-			# status['created_at'] = parse(status['created_at'])
-			# # status['created_at'] = string_to_date(status['created_at'])
-			
-			# status['timestamp_ms'] = long(status['timestamp_ms'])
-			# #created_at of user of status
-			# tmp_user = status['user']
-			# tmp_user['created_at'] = parse(tmp_user['created_at'])
-			# status['user'] = tmp_user
-
-			# #created_at of retweeted of status
-			# tmp_retweeted = status.get('retweeted_status')            
-			# if tmp_retweeted:
-			# 	tmp_retweeted['created_at'] = parse(tmp_retweeted['created_at'])
-			# 	#created_at of user of retweeted of status
-			# 	tmp_user = tmp_retweeted['user']
-			# 	tmp_user['created_at'] = parse(tmp_user['created_at'])
-			# 	tmp_retweeted['user'] = tmp_user
-			# 	status['retweeted_status'] = tmp_retweeted	            
+			status = json.loads(data)			
+           
 			user = status['user']
 			user = user['screen_name']
 			text = str(unicode(status['text']).encode('utf-8')).replace("\n","") 			
 			print 'user:{0}\ttext:{1}'.format(user, text )
+
+			status = categoriza(status)
+
 
 		except Exception as e:  
 			log_system.error(e) 
@@ -232,19 +214,25 @@ def string_to_date(date_string):
 def string_to_date(date_string,date_format):	 
 	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,date_format)), None)
 
+def categoriza(status):	
+	status_categorized = status
+	params = {'text':status['text'], 'screen_name':status['user']['screen_name']}
+	try:			
+		r = requests.get(URL_API_CATEGORIZE, params=params)
+		r.raise_for_status()
+		print 'foi'
+
+	except requests.exceptions.HTTPError as e:
+		print e
+
 
 def saveData(data):
 	try:			
-		r = requests.post('https://requestb.in/ps44ncps', data=data)
-		print r.status_code
-		print r.content
-		if r.status_code == 200:
-			return {'ok':1, 'msg':'gravado com sucesso'}			
-		elif r.status_code == 500:
-			r.status_code 
-
-
-	except Exception as e:
+		r = requests.post(URL_API_DATABASE, data=data)
+		r.raise_for_status()
+		print 'foi'
+		return {'ok':1, 'msg':'gravado com sucesso'}			
+	except requests.exceptions.HTTPError as e:
 		print e
 
 
