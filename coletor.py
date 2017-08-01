@@ -1,4 +1,5 @@
-# coding: utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 #  Autor Andrei Bastos
 #  You can contact me by email (andreibastos@outlook.com) or write to:
@@ -10,7 +11,7 @@ from dateutil.parser import *
 
 import threading, tweepy, socket, traceback, sys
 
-import requests
+import requests, urllib
 #######################################
 
 
@@ -18,7 +19,7 @@ import requests
 
 ##### CONSTANTES #####
 URL_API_DATABASE = 'https://requestb.in/1nlo6kq1'
-URL_API_CATEGORIZE = 'https://requestb.in/1nlo6k1q1'
+URL_API_CATEGORIZE = 'http://188.166.40.27:5001/twitter?'
 PATH_KEYS = 'keys_exemplo.json';
 PATH_QUERYS = 'query_exemplo.json';
 NUM_PER_INSERT = 10;
@@ -74,14 +75,35 @@ class Collector(threading.Thread):
 		self.languages = languages
 		self.key = key
 		self.log = log
+		self.auth = {}
 		self.count = 0
 		self.active = False
 		self.connected = False
 		self.list_temp_tweets_to_insert = []  
 		super(Collector, self).__init__()
 
+
+	def swap_key(self, key):
+		self.key = key
+		return "troquei"
+
+	def swap_auth(self):
+		self.stop()
+		## pega as informações da chave de identificação
+		consumer_key, consumer_secret, \
+			access_token, access_token_secret = self.key
+
+		## cria a autenticação 
+		self.auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+		self.auth.set_access_token(access_token, access_token_secret)
+
+		
+		self.start()
+
 	def run(self):        
 		global log_system
+
+		self.swap_auth()
 
 		## Adiciona no log
 		log_system.streaming_tweets(self.query)
@@ -90,16 +112,8 @@ class Collector(threading.Thread):
 		log_system.streaming_tweets(unicode(self.query))
 		listener = StreamingListener(self)
 
-		## pega as informações da chave de identificação
-		consumer_key, consumer_secret, \
-			access_token, access_token_secret = self.key
-
-		## cria a autenticação 
-		auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-		auth.set_access_token(access_token, access_token_secret)
-
 		#cria uma escuta 
-		self.stream = tweepy.streaming.Stream(auth, listener, timeout=60.0)
+		self.stream = tweepy.streaming.Stream(self.auth, listener, timeout=60.0)
 		self.active = True
 		
 		self.stream.filter(track=self.query, languages=self.languages)
@@ -112,7 +126,8 @@ class Collector(threading.Thread):
 			except socket.gaierror as sg:
 				log_system.error(sg)   
 				self.connected = False
-				print("Stream closed")
+				c = active_collectors.pop(int(job_id) - 1)
+				c.stop()
 				time.sleep(60)
 			except Exception as e:
 				print e
@@ -122,6 +137,16 @@ class Collector(threading.Thread):
 				sys.stdout.flush()
 				time.sleep(60)
 				print("Collector stopped.")
+
+	def stop(self):		
+		self.active = False
+		print dir(self)
+		try:
+			self.stream.disconnect()
+		except Exception as e:
+			print e
+		
+
 
 class StreamingListener(tweepy.StreamListener):
 	def __init__(self, collector, *args, **kwargs):
@@ -133,15 +158,14 @@ class StreamingListener(tweepy.StreamListener):
 	def on_data(self, data):
 
 		try:
-
-			status = json.loads(data)			
+			status = json.loads(data)		
            
 			user = status['user']
 			user = user['screen_name']
 			text = str(unicode(status['text']).encode('utf-8')).replace("\n","") 			
-			print 'user:{0}\ttext:{1}'.format(user, text )
+			# print 'user:{0}\ttext:{1}'.format(user, text )
 
-			status = categoriza(status)
+			categories = categoriza(status)
 
 
 		except Exception as e:  
@@ -151,6 +175,8 @@ class StreamingListener(tweepy.StreamListener):
 
 		twitter_obj = {}                
 		twitter_obj['status'] = status
+		twitter_obj['categories'] = categories
+
 
 		# print(json.dumps(twitter_obj,indent=4))
 		self.collector.count += 1
@@ -173,7 +199,10 @@ class StreamingListener(tweepy.StreamListener):
 		print(status_code)
 		if status_code == 401:
 			raise Exception("Authentication error")
-
+		if status_code == 420:
+			self.collector.swap_key(get_key());
+			print self.collector.swap_auth()
+			raise Exception("Enhance Your Calm")
 	def on_status(self, status):
 		# print(status)
 		pass
@@ -190,7 +219,8 @@ def read_keys():
 	log_system.read_file(PATH_KEYS)
 	return json.loads(f.read());	
 
-def get_key(keys):
+def get_key():
+	global keys
 	global index_key;
 	## troca a chave atual por outra.
 	key = keys[index_key];
@@ -214,23 +244,42 @@ def string_to_date(date_string):
 def string_to_date(date_string,date_format):	 
 	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,date_format)), None)
 
-def categoriza(status):	
-	status_categorized = status
-	params = {'text':status['text'], 'screen_name':status['user']['screen_name']}
+def categoriza(status):
+	
+	
+	text = status['text'];	
+	username = status['user']['screen_name']
+	location = status['user']['location']
+	place = status['place'] 
+	if place:
+		place = place['full_name']
+		print json.dumps(place, indent=4)		
+
+	params = {'text':text, 'username':username, 'location':location, 'place':place}
+
+	
+
 	try:			
 		r = requests.get(URL_API_CATEGORIZE, params=params)
-		r.raise_for_status()
-		print 'foi'
+		# print r.url
+	# 	# # print r.url		
+		print r.json(), location, place
 
-	except requests.exceptions.HTTPError as e:
+	# 	# if r.status_code == 200:
+	# 	# 	return r.json()
+	# 	# if r.status_code == 503:
+	# 	# 	return {}	
+	except Exception as e:
 		print e
+	# 	print 'falhou'
+
 
 
 def saveData(data):
 	try:			
 		r = requests.post(URL_API_DATABASE, data=data)
 		r.raise_for_status()
-		print 'foi'
+		
 		return {'ok':1, 'msg':'gravado com sucesso'}			
 	except requests.exceptions.HTTPError as e:
 		print e
@@ -240,24 +289,28 @@ def saveData(data):
 
 ######################## Rotina Principal #########################
 def main():
-	global log_system
+	global log_system, keys
 	# cria o objeto de log do sistema
 	log_system = log_collector();
 
 	# ler as chaves
 	keys = read_keys();
-	key = get_key(keys); 
+	key = get_key(); 
 
 	#ler as querys
 	querys = read_querys();
 	
-
+	index_query = 0;
 	for query in querys:
-		query['track'] = [str(x) for x in query['track']]
+		if index_query % 2 == 0:
+			key = get_key(); 
+
+		query['track'] = [x for x in query['track']]
 		c = Collector(query['track'], query['languages'], key)
-		active_collectors.append(c)
-		saveData(query)
+		active_collectors.append(c)		
 		c.start()
+		index_query =+ 1
+
 
 if __name__ == '__main__':
 	main()
