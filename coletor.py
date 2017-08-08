@@ -18,10 +18,10 @@ import requests, urllib
 ############### VARIÁVEIS GLOBAIS ###################
 
 ##### CONSTANTES #####
-URL_API_DATABASE = 'https://requestb.in/1nlo6kq1'
+URL_API_DATABASE = 'https://inep-api-v2-dev.herokuapp.com/v2/tweets'
 URL_API_CATEGORIZE = 'http://188.166.40.27:5001/twitter?'
 PATH_KEYS = 'keys_exemplo.json';
-PATH_QUERYS = 'query_exemplo.json';
+PATH_QUERYS = 'querys.json';
 NUM_PER_INSERT = 10;
 DATE_FORMAT_TWITTER = "%a %b %d %H:%M:%S %z %Y";
 
@@ -98,9 +98,8 @@ class Collector(threading.Thread):
 		self.auth.set_access_token(access_token, access_token_secret)
 
 		
-		self.start()
 
-	def run(self):        
+	def main(self):
 		global log_system
 
 		self.swap_auth()
@@ -138,16 +137,14 @@ class Collector(threading.Thread):
 				time.sleep(60)
 				print("Collector stopped.")
 
-	def stop(self):		
-		self.active = False
-		print dir(self)
-		try:
-			self.stream.disconnect()
-		except Exception as e:
-			print e
+
+	def run(self):        
+		self.main()
+
+	def stop(self):				
+		self.active = False				
+		# print dir(self.stream)
 		
-
-
 class StreamingListener(tweepy.StreamListener):
 	def __init__(self, collector, *args, **kwargs):
 		self.collector = collector
@@ -165,7 +162,14 @@ class StreamingListener(tweepy.StreamListener):
 			text = str(unicode(status['text']).encode('utf-8')).replace("\n","") 			
 			# print 'user:{0}\ttext:{1}'.format(user, text )
 
-			categories = categoriza(status)
+			categories = categoriza(status)		
+			
+			keywords = []
+			reverse_geocode = []
+
+			if categories:
+				keywords = categories.get("keywords")			
+				reverse_geocode = categories.get("reverse_geocode")
 
 
 		except Exception as e:  
@@ -173,9 +177,12 @@ class StreamingListener(tweepy.StreamListener):
 			print e                          
 			return False
 
+
+
 		twitter_obj = {}                
 		twitter_obj['status'] = status
-		twitter_obj['categories'] = categories
+		twitter_obj['keywords'] = keywords
+		twitter_obj['reverse_geocode'] = reverse_geocode
 
 
 		# print(json.dumps(twitter_obj,indent=4))
@@ -186,7 +193,8 @@ class StreamingListener(tweepy.StreamListener):
 		try:
 			if((self.collector.count % NUM_PER_INSERT) == 0):             
 				# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
-
+				saveData(self.collector.list_temp_tweets_to_insert)
+				print 'save in database [{0}]'.format(NUM_PER_INSERT)
 				log_system.insert_tweets(NUM_PER_INSERT)
 				self.collector.list_temp_tweets_to_insert = []			
 		except Exception as e:
@@ -202,6 +210,7 @@ class StreamingListener(tweepy.StreamListener):
 		if status_code == 420:
 			self.collector.swap_key(get_key());
 			print self.collector.swap_auth()
+			self.collector.main()
 			raise Exception("Enhance Your Calm")
 	def on_status(self, status):
 		# print(status)
@@ -247,7 +256,7 @@ def string_to_date(date_string,date_format):
 def categoriza(status):
 	
 	
-	text = status['text'];	
+	text = str(unicode(status['text'].replace("\n", "")).encode('utf-8'))
 	username = status['user']['screen_name']
 	location = status['user']['location']
 	place = status['place'] 
@@ -257,27 +266,27 @@ def categoriza(status):
 
 	params = {'text':text, 'username':username, 'location':location, 'place':place}
 
-	
-
 	try:			
 		r = requests.get(URL_API_CATEGORIZE, params=params)
-		# print r.url
-	# 	# # print r.url		
-		print r.json(), location, place
+		r.raise_for_status()
+		categories = r.json()
+		# print json.dumps(r.json(), indent=4)
 
-	# 	# if r.status_code == 200:
-	# 	# 	return r.json()
-	# 	# if r.status_code == 503:
-	# 	# 	return {}	
+		print '[user]:{0}\t[text]:{1}\t[categories]:{2}\t[location]:{3}\t[place]:{4}'.format(username, text, json.dumps(categories), location, place)
+		return categories
 	except Exception as e:
 		print e
+		return {}
 	# 	print 'falhou'
 
 
 
 def saveData(data):
-	try:			
-		r = requests.post(URL_API_DATABASE, data=data)
+	data=json.dumps(data)
+	try:
+		headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
+
+		r = requests.post(URL_API_DATABASE, data=data, headers=headers)
 		r.raise_for_status()
 		
 		return {'ok':1, 'msg':'gravado com sucesso'}			
@@ -305,7 +314,9 @@ def main():
 		if index_query % 2 == 0:
 			key = get_key(); 
 
-		query['track'] = [x for x in query['track']]
+
+		query['track'] = [str(unicode(x).encode('utf-8')).decode("utf-8") for x in query['track']]
+		# print query['track'][0]
 		c = Collector(query['track'], query['languages'], key)
 		active_collectors.append(c)		
 		c.start()
