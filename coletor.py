@@ -12,6 +12,7 @@ from dateutil.parser import *
 import threading, tweepy, socket, traceback, sys
 
 import requests, urllib
+
 #######################################
 
 
@@ -67,7 +68,8 @@ class log_collector():
 		self.write(log);
 
 	def write(self, log):
-		self.file.write(log)
+		pass
+		# self.file.write(log)
 
 class Collector(threading.Thread):
 	def __init__(self, query, languages, key, log=None):
@@ -79,6 +81,7 @@ class Collector(threading.Thread):
 		self.count = 0
 		self.active = False
 		self.connected = False
+		self.stream = None
 		self.list_temp_tweets_to_insert = []  
 		super(Collector, self).__init__()
 
@@ -137,12 +140,16 @@ class Collector(threading.Thread):
 				time.sleep(60)
 				print("Collector stopped.")
 
+		return 0
 
 	def run(self):        
 		self.main()
 
 	def stop(self):				
-		self.active = False				
+		print "Stopping collector: " +  " ,".join(c for c in self.query)
+		self.active = False	
+		if 	self.stream is not None:
+			self.stream.disconnect()		
 		# print dir(self.stream)
 		
 class StreamingListener(tweepy.StreamListener):
@@ -159,9 +166,15 @@ class StreamingListener(tweepy.StreamListener):
            
 			user = status['user']
 			user = user['screen_name']
-			text = str(unicode(status['text']).encode('utf-8')).replace("\n","") 			
-			# print 'user:{0}\ttext:{1}'.format(user, text )
+			text = ""
+			try:
+				text = str(unicode(status['text']).encode('utf-8')).replace("\n","")
+			except Exception as e:
+				text = status['text']				
+			
 
+			# print 'user:{0}\ttext:{1}'.format(user, text )
+			
 			categories = categoriza(status)		
 			
 			keywords = []
@@ -173,13 +186,11 @@ class StreamingListener(tweepy.StreamListener):
 
 
 		except Exception as e:  
-			log_system.error(e) 
-			print e                          
+			log_system.error(e) 			
+			print e					     
 			return False
 
-
-
-		twitter_obj = {}                
+		twitter_obj = {}				
 		twitter_obj['status'] = status
 		twitter_obj['keywords'] = keywords
 		twitter_obj['reverse_geocode'] = reverse_geocode
@@ -211,7 +222,7 @@ class StreamingListener(tweepy.StreamListener):
 			self.collector.swap_key(get_key());
 			print self.collector.swap_auth()
 			self.collector.main()
-			raise Exception("Enhance Your Calm")
+			# raise Exception("Enhance Your Calm")
 	def on_status(self, status):
 		# print(status)
 		pass
@@ -260,14 +271,24 @@ def categoriza(status):
 	username = status['user']['screen_name']
 	location = status['user']['location']
 	place = status['place'] 
-	if place:
+	if place:		
 		place = place['full_name']
-		print json.dumps(place, indent=4)		
+		place = str(unicode(place).encode('utf-8'))		
+		print place
+
+	else:
+		place = ""
+
+	if not location:
+		location = ""
+	else:
+		location = str(unicode(location).encode('utf-8'))
 
 	params = {'text':text, 'username':username, 'location':location, 'place':place}
 
 	try:			
 		r = requests.get(URL_API_CATEGORIZE, params=params)
+		
 		r.raise_for_status()
 		categories = r.json()
 		# print json.dumps(r.json(), indent=4)
@@ -277,8 +298,6 @@ def categoriza(status):
 	except Exception as e:
 		print e
 		return {}
-	# 	print 'falhou'
-
 
 
 def saveData(data):
@@ -309,7 +328,7 @@ def main():
 	#ler as querys
 	querys = read_querys();
 	
-	index_query = 0;
+	index_query = 1;
 	for query in querys:
 		if index_query % 2 == 0:
 			key = get_key(); 
@@ -318,9 +337,22 @@ def main():
 		query['track'] = [str(unicode(x).encode('utf-8')).decode("utf-8") for x in query['track']]
 		# print query['track'][0]
 		c = Collector(query['track'], query['languages'], key)
-		active_collectors.append(c)		
+				
 		c.start()
+		active_collectors.append(c)
 		index_query =+ 1
+	
+	while True:
+		try:
+			raw_input('Ctrl+C stop program')
+		except (KeyboardInterrupt, EOFError):
+			print 'stopping program...'
+			for c in active_collectors:
+				c.stop();				
+			print 'program stop.'			
+			sys.exit()
+		
+		
 
 
 if __name__ == '__main__':
