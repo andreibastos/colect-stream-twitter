@@ -45,7 +45,7 @@ class log_collector():
 		log = '\"date_created\";\"text\"\n'
 		self.filename = 'log_' + date + '.log';		
 		self.file = open(self.filename, 'a');
-		self.file.write(log)
+		# self.file.write(log)
 
 	def read_file(self, filename):		
 		text = 'read file: {0}.'.format(filename);		
@@ -342,7 +342,7 @@ def main():
 				
 		c.start()
 		active_collectors.append(c)
-		index_query =+ 1
+		index_query = index_query + 1
 	
 	while True:
 		try:
