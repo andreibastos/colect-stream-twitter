@@ -11,10 +11,10 @@ from dateutil.parser import *
 
 import threading, tweepy, socket, traceback, sys
 
-import requests, urllib
+import requests, urllib, urllib3
 
 #######################################
-
+urllib3.disable_warnings()
 
 ############### VARIÁVEIS GLOBAIS ###################
 
@@ -165,8 +165,10 @@ class StreamingListener(tweepy.StreamListener):
 			status = json.loads(data)
 			status['timestamp_ms'] = long(status['timestamp_ms'])		
 			status['id'] = long(status['id'])
-           	status['user']['id'] = long(status['user']['id'])
+           	
 			user = status['user']
+			user['id'] = long(user['id'])
+			status['user'] = user
 			user = user['screen_name']
 			text = ""			
 			text = str(unicode(status['text']).encode('utf-8')).replace("\n","")			
