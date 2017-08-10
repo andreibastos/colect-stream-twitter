@@ -162,8 +162,10 @@ class StreamingListener(tweepy.StreamListener):
 	def on_data(self, data):
 
 		try:
-			status = json.loads(data)		
-           
+			status = json.loads(data)
+			status['timestamp_ms'] = long(status['timestamp_ms'])		
+			status['id'] = long(status['id'])
+           	status['user']['id'] = long(status['user']['id'])
 			user = status['user']
 			user = user['screen_name']
 			text = ""			
