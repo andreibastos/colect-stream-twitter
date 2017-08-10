@@ -190,6 +190,7 @@ class StreamingListener(tweepy.StreamListener):
 		twitter_obj = {}				
 		twitter_obj['status'] = status
 		twitter_obj['keywords'] = keywords
+		twitter_obj['categories'] = keywords
 		twitter_obj['reverse_geocode'] = reverse_geocode
 
 
