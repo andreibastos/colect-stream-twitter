@@ -88,10 +88,10 @@ class Collector(threading.Thread):
 
 	def swap_key(self, key):
 		self.key = key
-		return "troquei"
+		print "troquei"
 
 	def swap_auth(self):
-		self.stop()
+		
 		## pega as informações da chave de identificação
 		consumer_key, consumer_secret, \
 			access_token, access_token_secret = self.key
@@ -146,7 +146,7 @@ class Collector(threading.Thread):
 		self.main()
 
 	def stop(self):				
-		print "Stopping collector: " +  " ,".join(c for c in self.query)
+		print "Stopping collector: " +  ", ".join(c for c in self.query)
 		self.active = False	
 		if 	self.stream is not None:
 			self.stream.disconnect()		
@@ -166,15 +166,9 @@ class StreamingListener(tweepy.StreamListener):
            
 			user = status['user']
 			user = user['screen_name']
-			text = ""
-			try:
-				text = str(unicode(status['text']).encode('utf-8')).replace("\n","")
-			except Exception as e:
-				text = status['text']				
-			
-
-			# print 'user:{0}\ttext:{1}'.format(user, text )
-			
+			text = ""			
+			text = str(unicode(status['text']).encode('utf-8')).replace("\n","")			
+									
 			categories = categoriza(status)		
 			
 			keywords = []
@@ -183,7 +177,6 @@ class StreamingListener(tweepy.StreamListener):
 			if categories:
 				keywords = categories.get("keywords")			
 				reverse_geocode = categories.get("reverse_geocode")
-
 
 		except Exception as e:  
 			log_system.error(e) 			
@@ -205,7 +198,7 @@ class StreamingListener(tweepy.StreamListener):
 			if((self.collector.count % NUM_PER_INSERT) == 0):             
 				# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
 				saveData(self.collector.list_temp_tweets_to_insert)
-				print 'save in database [{0}]'.format(NUM_PER_INSERT)
+				print 'save in database {0} tweets'.format(NUM_PER_INSERT)
 				log_system.insert_tweets(NUM_PER_INSERT)
 				self.collector.list_temp_tweets_to_insert = []			
 		except Exception as e:
@@ -219,9 +212,12 @@ class StreamingListener(tweepy.StreamListener):
 		if status_code == 401:
 			raise Exception("Authentication error")
 		if status_code == 420:
+			time.sleep(60)
+			self.collector.stop()
 			self.collector.swap_key(get_key());
-			print self.collector.swap_auth()
+			self.collector.swap_auth()
 			self.collector.main()
+
 			# raise Exception("Enhance Your Calm")
 	def on_status(self, status):
 		# print(status)
@@ -243,8 +239,14 @@ def get_key():
 	global keys
 	global index_key;
 	## troca a chave atual por outra.
+
 	key = keys[index_key];
-	index_key +=1
+	print 'alterado de para {0}'.format(key[0])
+	
+	if index_key < len(keys)-1:	
+		index_key =index_key + 1
+	else:
+		index_key = 0
 	return key
 
 # querys 
@@ -293,7 +295,7 @@ def categoriza(status):
 		categories = r.json()
 		# print json.dumps(r.json(), indent=4)
 
-		print '[user]:{0}\t[text]:{1}\t[categories]:{2}\t[location]:{3}\t[place]:{4}'.format(username, text, json.dumps(categories), location, place)
+		print '[user]:{0}\t[text]:{1}\t[location]:{2}\t[place]:{3}'.format(username, text, location, place)
 		return categories
 	except Exception as e:
 		print e
@@ -330,7 +332,7 @@ def main():
 	
 	index_query = 1;
 	for query in querys:
-		if index_query % 2 == 0:
+		if index_query % 1 == 0:
 			key = get_key(); 
 
 
