@@ -117,8 +117,11 @@ class Collector(threading.Thread):
 		#cria uma escuta 
 		self.stream = tweepy.streaming.Stream(self.auth, listener, timeout=60.0)
 		self.active = True
+		try:
+			self.stream.filter(track=self.query, languages=self.languages)
+		except Exception as e:
+			print e
 		
-		self.stream.filter(track=self.query, languages=self.languages)
 
 		#enqunto estiver ativo
 		while (self.active):
@@ -185,7 +188,7 @@ class StreamingListener(tweepy.StreamListener):
 		except Exception as e:  
 			log_system.error(e) 			
 			print e					     
-			return False
+			# return False
 
 		twitter_obj = {}				
 		twitter_obj['status'] = status
