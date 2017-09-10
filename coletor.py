@@ -124,9 +124,8 @@ class Collector(threading.Thread):
 
 		## Adiciona no log
 		log_system.streaming_tweets(self.query)
-		print(self.query)
+		print(self.query)		
 		
-		log_system.streaming_tweets(unicode(self.query))
 		listener = StreamingListener(self)
 
 		#cria uma escuta 
