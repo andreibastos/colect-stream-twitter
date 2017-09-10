@@ -276,7 +276,7 @@ def read_querys():
 
 # conversões de data
 def string_time_now():
-	return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+	return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 def string_to_date(date_string):	 
 	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,"%a %b %d %H:%M:%S +0000 %Y")), None)
