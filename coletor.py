@@ -42,7 +42,7 @@ class log_collector():
 	logs = []	
 	"""docstring for log_collector"""
 	def __init__(self):	
-		date = time.strftime("%Y%m%d_%H%M",time.gmtime());
+		date = time.strftime("%Y%m%d_%H%M",time.localtime());
 		log = '\"date_created\";\"text\"\n'
 		self.filename = 'log_' + date + '.log';				
 		# self.file.write(log)
