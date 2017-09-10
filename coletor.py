@@ -20,6 +20,7 @@ urllib3.disable_warnings()
 
 ##### CONSTANTES #####
 URL_API_DATABASE = 'https://inep-api-v2-dev.herokuapp.com/v2/tweets'
+URL_BOT_TELEGRAM_LOG_ERROR = 'https://api.telegram.org/bot361505573:AAF8QkXARb32PK9W2dLoMF6Ou5jYfmN6WtI/sendMessage'
 URL_API_CATEGORIZE = 'http://188.166.40.27:5001/twitter?'
 PATH_KEYS = 'keys_exemplo.json';
 PATH_QUERYS = 'querys.json';
@@ -43,16 +44,30 @@ class log_collector():
 	def __init__(self):	
 		date = time.strftime("%Y%m%d_%H%M",time.gmtime());
 		log = '\"date_created\";\"text\"\n'
-		self.filename = 'log_' + date + '.log';		
-		self.file = open(self.filename, 'a');
+		self.filename = 'log_' + date + '.log';				
 		# self.file.write(log)
+
+	def send_telegram(self,text):
+		print(text)
+		chat_id = 42637535		
+		params = {'chat_id':chat_id,'text':text}
+		
+		try:			
+			r = requests.get(URL_BOT_TELEGRAM_LOG_ERROR, params=params)				
+			r.raise_for_status()
+			result = r.json()
+			print(result)		
+		except Exception as e:
+			print e
+			return {}
 
 	def read_file(self, filename):		
 		text = 'read file: {0}.'.format(filename);		
 		self.new(text);
 
-	def error(self, e):		
-		text = 'error: {0}.'.format(str(e)) 
+	def error(self,source, error_msg):		
+		text = 'Erro em {0}. Message_error:{1}.'.format(source, str(error_msg)) 
+		self.send_telegram(text);
 		self.new(text);		
 
 	def insert_tweets(self, NUM_PER_INSERT):
@@ -67,9 +82,10 @@ class log_collector():
 		log = "\"{0}\";\"{1}\"\n".format(str(string_time_now()),text)			
 		self.write(log);
 
-	def write(self, log):
+	def write(self, log):		
+		with open(self.filename, "a") as myfile:
+			myfile.write(log)    	
 		pass
-		# self.file.write(log)
 
 class Collector(threading.Thread):
 	def __init__(self, query, languages, key, log=None):
@@ -86,9 +102,10 @@ class Collector(threading.Thread):
 		super(Collector, self).__init__()
 
 
-	def swap_key(self, key):
-		self.key = key
-		print "troquei"
+	def swap_key(self, key):		
+		text_send_telegram = "troquei de {0} para {1} ".format(self.key, key)
+		log_system.send_telegram(text_send_telegram)			
+		self.key = key	
 
 	def swap_auth(self):
 		
@@ -99,8 +116,6 @@ class Collector(threading.Thread):
 		## cria a autenticação 
 		self.auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 		self.auth.set_access_token(access_token, access_token_secret)
-
-		
 
 	def main(self):
 		global log_system
@@ -120,8 +135,7 @@ class Collector(threading.Thread):
 		try:
 			self.stream.filter(track=self.query, languages=self.languages)
 		except Exception as e:
-			print e
-		
+			log_system.error('stream.filter', e)			
 
 		#enqunto estiver ativo
 		while (self.active):
@@ -129,20 +143,17 @@ class Collector(threading.Thread):
 				self.connected = True
 
 			except socket.gaierror as sg:
-				log_system.error(sg)   
+				log_system.error('socket.gaierror', e)				
 				self.connected = False
 				c = active_collectors.pop(int(job_id) - 1)
 				c.stop()
 				time.sleep(60)
 			except Exception as e:
-				print e
-				log_system.error(e)   
 				self.connected = False
 				traceback.print_exc(file=sys.stdout)
 				sys.stdout.flush()
 				time.sleep(60)
-				print("Collector stopped.")
-
+				log_system.error('connected', e)								
 		return 0
 
 	def run(self):        
@@ -186,8 +197,7 @@ class StreamingListener(tweepy.StreamListener):
 				reverse_geocode = categories.get("reverse_geocode")
 
 		except Exception as e:  
-			log_system.error(e) 			
-			print e					     
+			log_system.error('on_data',e)						
 			# return False
 
 		twitter_obj = {}				
@@ -205,18 +215,18 @@ class StreamingListener(tweepy.StreamListener):
 		try:
 			if((self.collector.count % NUM_PER_INSERT) == 0):             
 				# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
-				saveData(self.collector.list_temp_tweets_to_insert)
-				print 'save in database {0} tweets'.format(NUM_PER_INSERT)
+				saveData(self.collector.list_temp_tweets_to_insert)				
 				log_system.insert_tweets(NUM_PER_INSERT)
+				print 'save in database {0} tweets'.format(NUM_PER_INSERT)
 				self.collector.list_temp_tweets_to_insert = []			
 		except Exception as e:
-			log_system.error(e)
+			log_system.error('saveInDatabase',e)			
 			return False
 
 		super(StreamingListener, self).on_data(data)
 
 	def on_error(self, status_code):
-		print(status_code)
+		log_system.error('on_error', status_code)				
 		if status_code == 401:
 			raise Exception("Authentication error")
 		if status_code == 420:
@@ -276,24 +286,26 @@ def string_to_date(date_string,date_format):
 
 def categoriza(status):
 	
-	
-	text = str(unicode(status['text'].replace("\n", "")).encode('utf-8'))
-	username = status['user']['screen_name']
-	location = status['user']['location']
-	place = status['place'] 
-	if place:		
-		place = place['full_name']
-		place = str(unicode(place).encode('utf-8'))		
-		print place
+	try:
+		text = str(unicode(status['text'].replace("\n", "")).encode('utf-8'))
+		username = status['user']['screen_name']
+		location = status['user']['location']
+		place = status['place'] 
+		if place:		
+			place = place['full_name']
+			place = str(unicode(place).encode('utf-8'))		
+			print place
 
-	else:
-		place = ""
+		else:
+			place = ""
 
-	if not location:
-		location = ""
-	else:
-		location = str(unicode(location).encode('utf-8'))
-
+		if not location:
+			location = ""
+		else:
+			location = str(unicode(location).encode('utf-8'))
+	except Exception as e:
+		log_system.error('categoriza', e)
+		
 	params = {'text':text, 'username':username, 'location':location, 'place':place}
 
 	try:			
@@ -306,7 +318,7 @@ def categoriza(status):
 		print '[user]:{0}\t[text]:{1}\t[location]:{2}\t[place]:{3}'.format(username, text, location, place)
 		return categories
 	except Exception as e:
-		print e
+		log_system.error('request categoriza', e)		
 		return {}
 
 
@@ -320,8 +332,7 @@ def saveData(data):
 		
 		return {'ok':1, 'msg':'gravado com sucesso'}			
 	except requests.exceptions.HTTPError as e:
-		print e
-
+		log_system.error('saveData',e)
 
 ###################################################################
 
@@ -342,7 +353,6 @@ def main():
 	for query in querys:
 		if index_query % 1 == 0:
 			key = get_key(); 
-
 
 		query['track'] = [str(unicode(x).encode('utf-8')).decode("utf-8") for x in query['track']]
 		# print query['track'][0]
