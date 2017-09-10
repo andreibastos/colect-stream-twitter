@@ -102,8 +102,9 @@ class Collector(threading.Thread):
 		super(Collector, self).__init__()
 
 
-	def swap_key(self, key):		
-		text_send_telegram = "troquei de {0} para {1} ".format(self.key, key)
+	def swap_key(self, key):
+		if self.key:					
+			text_send_telegram = "troquei de {0} para {1} ".format(self.key[0], key[0])
 		log_system.send_telegram(text_send_telegram)			
 		self.key = key	
 
