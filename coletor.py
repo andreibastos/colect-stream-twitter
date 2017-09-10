@@ -22,6 +22,7 @@ urllib3.disable_warnings()
 URL_API_DATABASE = 'https://inep-api-v2-dev.herokuapp.com/v2/tweets'
 URL_BOT_TELEGRAM_LOG_ERROR = 'https://api.telegram.org/bot361505573:AAF8QkXARb32PK9W2dLoMF6Ou5jYfmN6WtI/sendMessage'
 URL_API_CATEGORIZE = 'http://188.166.40.27:5001/twitter?'
+FILEPATH_LOG = 'clipper.log'
 PATH_KEYS = 'keys_exemplo.json';
 PATH_QUERYS = 'querys.json';
 NUM_PER_INSERT = 10;
@@ -44,7 +45,7 @@ class log_collector():
 	def __init__(self):	
 		date = time.strftime("%Y%m%d_%H%M",time.localtime());
 		log = '\"date_created\";\"text\"\n'
-		self.filename = 'log_' + date + '.log';				
+		self.filename = FILEPATH_LOG;				
 		# self.file.write(log)
 
 	def send_telegram(self,text):
@@ -196,33 +197,33 @@ class StreamingListener(tweepy.StreamListener):
 				keywords = categories.get("keywords")			
 				reverse_geocode = categories.get("reverse_geocode")
 
+
+			twitter_obj = {}				
+			twitter_obj['status'] = status
+			twitter_obj['keywords'] = keywords
+			twitter_obj['categories'] = keywords
+			twitter_obj['reverse_geocode'] = reverse_geocode
+
+
+			# print(json.dumps(twitter_obj,indent=4))
+			self.collector.count += 1
+
+			self.collector.list_temp_tweets_to_insert.append(twitter_obj)        
+	        
+			try:
+				if((self.collector.count % NUM_PER_INSERT) == 0):             
+					# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
+					saveData(self.collector.list_temp_tweets_to_insert)				
+					log_system.insert_tweets(NUM_PER_INSERT)
+					print 'save in database {0} tweets'.format(NUM_PER_INSERT)
+					self.collector.list_temp_tweets_to_insert = []			
+			except Exception as e:
+				log_system.error('saveInDatabase',e)			
+				return False
+
 		except Exception as e:  
 			log_system.error('on_data',e)						
 			# return False
-
-		twitter_obj = {}				
-		twitter_obj['status'] = status
-		twitter_obj['keywords'] = keywords
-		twitter_obj['categories'] = keywords
-		twitter_obj['reverse_geocode'] = reverse_geocode
-
-
-		# print(json.dumps(twitter_obj,indent=4))
-		self.collector.count += 1
-
-		self.collector.list_temp_tweets_to_insert.append(twitter_obj)        
-        
-		try:
-			if((self.collector.count % NUM_PER_INSERT) == 0):             
-				# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
-				saveData(self.collector.list_temp_tweets_to_insert)				
-				log_system.insert_tweets(NUM_PER_INSERT)
-				print 'save in database {0} tweets'.format(NUM_PER_INSERT)
-				self.collector.list_temp_tweets_to_insert = []			
-		except Exception as e:
-			log_system.error('saveInDatabase',e)			
-			return False
-
 		super(StreamingListener, self).on_data(data)
 
 	def on_error(self, status_code):
