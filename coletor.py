@@ -18,13 +18,15 @@ urllib3.disable_warnings()
 
 ############### VARIÁVEIS GLOBAIS ###################
 
-##### CONSTANTES #####
-URL_API_DATABASE = 'https://inep-api-v2-dev.herokuapp.com/v2/tweets'
-URL_BOT_TELEGRAM_LOG_ERROR = 'https://api.telegram.org/bot361505573:AAF8QkXARb32PK9W2dLoMF6Ou5jYfmN6WtI/sendMessage'
-URL_API_CATEGORIZE = 'http://188.166.40.27:5001/twitter?'
-FILEPATH_LOG = 'clipper.log'
-PATH_KEYS = 'keys_exemplo.json';
-PATH_QUERYS = 'querys.json';
+##### Configurações #####
+api_database = 'https://inep-api-v2-dev.herokuapp.com/v2/tweets'
+api_bot_telegram = 'https://api.telegram.org/bot361505573:AAF8QkXARb32PK9W2dLoMF6Ou5jYfmN6WtI/sendMessage'
+api_categorize = 'http://188.166.40.27:5001/twitter?'
+filename_log = 'clipper.log'
+filename_keys = 'keys_exemplo.json';
+filename_querys = 'querys.json';
+
+
 NUM_PER_INSERT = 10;
 DATE_FORMAT_TWITTER = "%a %b %d %H:%M:%S %z %Y";
 
@@ -45,7 +47,7 @@ class log_collector():
 	def __init__(self):	
 		date = time.strftime("%Y%m%d_%H%M",time.localtime());
 		log = '\"date_created\";\"text\"\n'
-		self.filename = FILEPATH_LOG;				
+		self.filename = filename_log;				
 		# self.file.write(log)
 
 	def send_telegram(self,text):
@@ -54,7 +56,7 @@ class log_collector():
 		params = {'chat_id':chat_id,'text':text}
 		
 		try:			
-			r = requests.get(URL_BOT_TELEGRAM_LOG_ERROR, params=params)				
+			r = requests.get(api_bot_telegram, params=params)				
 			r.raise_for_status()
 			result = r.json()
 			print(result)		
@@ -245,13 +247,35 @@ class StreamingListener(tweepy.StreamListener):
 ##################################################################
 
 ######################### Funções ################################
+def getConfig(self):
+	try:
+		data = {}
+		with open('config.json') as data_file:    
+			data = json.load(data_file)
+
+		if data:
+			endpoints = data.get('endpoints')
+			files = data.get('files')	
+
+			api_database = endpoints.get('api_database')
+			api_bot_telegram = endpoints.get('api_bot_telegram')
+			api_categorize = endpoints.get('api_categorize')
+			filename_log = files.get('filename_log')
+			filename_keys = files.get('filename_keys')
+			filename_querys = files.get('filename_querys')								
+			pass
+		pass
+	except Exception as e:
+		log_system.error('getConfig',e)
+	pass
+
 # chaves de idenficação
 def read_keys():
 	global log_system
 	# ler arquivo	
-	f = open(PATH_KEYS,'r')
+	f = open(filename_keys,'r')
 
-	log_system.read_file(PATH_KEYS)
+	log_system.read_file(filename_keys)
 	return json.loads(f.read());	
 
 def get_key():
@@ -271,8 +295,8 @@ def get_key():
 # querys 
 def read_querys():
 	global log_system
-	f = open(PATH_QUERYS,'r')
-	log_system.read_file(PATH_QUERYS)
+	f = open(filename_querys,'r')
+	log_system.read_file(filename_querys)
 	return json.loads(f.read());
 
 # conversões de data
@@ -310,7 +334,7 @@ def categoriza(status):
 	params = {'text':text, 'username':username, 'location':location, 'place':place}
 
 	try:			
-		r = requests.get(URL_API_CATEGORIZE, params=params)
+		r = requests.get(api_categorize, params=params)
 		
 		r.raise_for_status()
 		categories = r.json()
@@ -328,7 +352,7 @@ def saveData(data):
 	try:
 		headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
 
-		r = requests.post(URL_API_DATABASE, data=data, headers=headers)
+		r = requests.post(api_database, data=data, headers=headers)
 		r.raise_for_status()
 		
 		return {'ok':1, 'msg':'gravado com sucesso'}			

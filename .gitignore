@@ -14,3 +14,5 @@ matador_thread
 modelo\.json
 
 query_exemplo \(copy\)\.json
+
+config\.json
