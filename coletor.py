@@ -27,7 +27,7 @@ filename_keys = '';
 filename_querys = '';
 
 
-NUM_PER_INSERT = 10;
+NUM_PER_INSERT = 100;
 DATE_FORMAT_TWITTER = "%a %b %d %H:%M:%S %z %Y";
 
 ##### VARIÁVEIS ######
@@ -190,7 +190,9 @@ class StreamingListener(tweepy.StreamListener):
 			text = ""			
 			text = str(unicode(status['text']).encode('utf-8')).replace("\n","")			
 									
-			categories = categoriza(status)		
+			categories = categoriza(status)
+
+			articles = get_articles(status)		
 			
 			keywords = []
 			reverse_geocode = []
@@ -285,17 +287,18 @@ def read_keys():
 		raise e
 
 def get_key():
+	from random import randint
+
 	global keys
 	global index_key;
 	## troca a chave atual por outra.
-
+	index_key = randint(0, len(keys))
 	key = keys[index_key];
-	print 'alterado de para {0}'.format(key[0])
+
+	text = 'usando \'key\': {0}'.format(key[0]) 
+	print(text) 
+	log_system.new(text)
 	
-	if index_key < len(keys)-1:	
-		index_key =index_key + 1
-	else:
-		index_key = 0
 	return key
 
 # querys 
@@ -352,6 +355,14 @@ def categoriza(status):
 		log_system.error('request categoriza', e)		
 		return {}
 
+def get_articles(status):
+	urls = status["entities"]["urls"]
+	if (urls):
+		for url in urls:
+			expanded_url = url["expanded_url"]
+			print(expanded_url)
+			pass
+
 
 def saveData(data):
 	data=json.dumps(data)
@@ -377,8 +388,7 @@ def main():
 
 	# ler as chaves
 	keys = read_keys();
-	key = get_key(); 
-
+	
 	#ler as querys
 	querys = read_querys();
 	
