@@ -19,12 +19,12 @@ urllib3.disable_warnings()
 ############### VARIÁVEIS GLOBAIS ###################
 
 ##### Configurações #####
-api_database = 'https://inep-api-v2-dev.herokuapp.com/v2/tweets'
-api_bot_telegram = 'https://api.telegram.org/bot361505573:AAF8QkXARb32PK9W2dLoMF6Ou5jYfmN6WtI/sendMessage'
-api_categorize = 'http://188.166.40.27:5001/twitter?'
-filename_log = 'clipper.log'
-filename_keys = 'keys_exemplo.json';
-filename_querys = 'querys.json';
+api_database = ''
+api_bot_telegram = ''
+api_categorize = ''
+filename_log = ''
+filename_keys = '';
+filename_querys = '';
 
 
 NUM_PER_INSERT = 10;
@@ -247,7 +247,8 @@ class StreamingListener(tweepy.StreamListener):
 ##################################################################
 
 ######################### Funções ################################
-def getConfig(self):
+def getConfig():
+	global api_database, api_bot_telegram, api_categorize, filename_keys, filename_querys, filename_log
 	try:
 		data = {}
 		with open('config.json') as data_file:    
@@ -255,11 +256,12 @@ def getConfig(self):
 
 		if data:
 			endpoints = data.get('endpoints')
-			files = data.get('files')	
+			files = data.get('files')			
 
 			api_database = endpoints.get('api_database')
 			api_bot_telegram = endpoints.get('api_bot_telegram')
 			api_categorize = endpoints.get('api_categorize')
+			
 			filename_log = files.get('filename_log')
 			filename_keys = files.get('filename_keys')
 			filename_querys = files.get('filename_querys')								
@@ -270,13 +272,17 @@ def getConfig(self):
 	pass
 
 # chaves de idenficação
-def read_keys():
-	global log_system
-	# ler arquivo	
-	f = open(filename_keys,'r')
+def read_keys():	
+	try:
+		global log_system
+		# ler arquivo	
+		f = open(filename_keys,'r')
 
-	log_system.read_file(filename_keys)
-	return json.loads(f.read());	
+		log_system.read_file(filename_keys)
+		return json.loads(f.read());	
+		pass
+	except Exception as e:
+		raise e
 
 def get_key():
 	global keys
@@ -363,6 +369,8 @@ def saveData(data):
 
 ######################## Rotina Principal #########################
 def main():
+	getConfig();
+
 	global log_system, keys
 	# cria o objeto de log do sistema
 	log_system = log_collector();
