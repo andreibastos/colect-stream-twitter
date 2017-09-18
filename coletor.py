@@ -58,8 +58,8 @@ class log_collector():
 		try:			
 			r = requests.get(api_bot_telegram, params=params)				
 			r.raise_for_status()
-			result = r.json()
-			print(result)		
+			result = r.json()			
+			self.new(result)		
 		except Exception as e:
 			print e
 			return {}
@@ -261,7 +261,7 @@ def getConfig():
 			api_database = endpoints.get('api_database')
 			api_bot_telegram = endpoints.get('api_bot_telegram')
 			api_categorize = endpoints.get('api_categorize')
-			
+
 			filename_log = files.get('filename_log')
 			filename_keys = files.get('filename_keys')
 			filename_querys = files.get('filename_querys')								
