@@ -60,8 +60,8 @@ class log_collector():
 			r.raise_for_status()
 			result = r.json()			
 			self.new(result)		
-		except Exception as e:
-			print e
+		except Exception as e:			
+			log_system.error('send_telegram', e)
 			return {}
 
 	def read_file(self, filename):		
@@ -86,8 +86,8 @@ class log_collector():
 		self.write(log);
 
 	def write(self, log):		
-		with open(self.filename, "a") as myfile:
-			myfile.write(log)    	
+		with open(self.filename, "a") as file_log:
+			file_log.write(log)    	
 		pass
 
 class Collector(threading.Thread):
