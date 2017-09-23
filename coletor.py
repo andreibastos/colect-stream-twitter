@@ -138,7 +138,11 @@ class Collector(threading.Thread):
 		try:
 			self.stream.filter(track=self.query, languages=self.languages)
 		except Exception as e:
-			log_system.error('stream.filter', e)			
+			log_system.error('stream.filter', e)
+			log_system.new('colect:{0} spleep 60 seconds'.format(self.query), e)
+			time.sleep(60)
+
+			self.main(self)			
 
 		#enqunto estiver ativo
 		while (self.active):
@@ -180,7 +184,12 @@ class StreamingListener(tweepy.StreamListener):
 
 		try:
 			status = json.loads(data)
-			status['timestamp_ms'] = long(status['timestamp_ms'])		
+			if status.get('timestamp_ms') :
+				status['timestamp_ms'] = long(status['timestamp_ms'])
+			else:
+				status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
+				pass
+
 			status['id'] = long(status['id'])
            	
 			user = status['user']
@@ -292,7 +301,7 @@ def get_key():
 	global keys
 	global index_key;
 	## troca a chave atual por outra.
-	index_key = randint(0, len(keys))
+	index_key = randint(0, len(keys)-1)
 	key = keys[index_key];
 
 	text = 'usando \'key\': {0}'.format(key[0]) 
