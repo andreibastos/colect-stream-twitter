@@ -27,7 +27,7 @@ filename_keys = '';
 filename_querys = '';
 
 
-NUM_PER_INSERT = 100;
+NUM_PER_INSERT = 10;
 DATE_FORMAT_TWITTER = "%a %b %d %H:%M:%S %z %Y";
 
 ##### VARIÁVEIS ######
