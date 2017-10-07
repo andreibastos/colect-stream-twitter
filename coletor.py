@@ -17,7 +17,6 @@ import requests, urllib, urllib3
 urllib3.disable_warnings()
 
 ############### VARIÁVEIS GLOBAIS ###################
-
 ##### Configurações #####
 api_database = ''
 api_bot_telegram = ''
@@ -27,7 +26,7 @@ filename_keys = '';
 filename_querys = '';
 
 
-NUM_PER_INSERT = 10;
+NUM_PER_INSERT = 10 ;
 DATE_FORMAT_TWITTER = "%a %b %d %H:%M:%S %z %Y";
 
 ##### VARIÁVEIS ######
@@ -139,10 +138,7 @@ class Collector(threading.Thread):
 			self.stream.filter(track=self.query, languages=self.languages)
 		except Exception as e:
 			log_system.error('stream.filter', e)
-			log_system.new('colect:{0} spleep 60 seconds'.format(self.query), e)
-			time.sleep(60)
-
-			self.main(self)			
+			log_system.new('colect:{0} spleep 60 seconds'.format(self.query))		
 
 		#enqunto estiver ativo
 		while (self.active):
