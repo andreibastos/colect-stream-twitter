@@ -191,8 +191,7 @@ class StreamingListener(tweepy.StreamListener):
 			user = status['user']
 			user['id'] = long(user['id'])
 			status['user'] = user
-			user = user['screen_name']
-			text = ""			
+			# user = user['screen_name']						
 			text = str(unicode(status['text']).encode('utf-8')).replace("\n","")			
 									
 			categories = categoriza(status, api_categorize)
@@ -213,7 +212,7 @@ class StreamingListener(tweepy.StreamListener):
 					keywords = categories2.get("keywords")
 
 
-			print(keywords)
+			print(text)
 			twitter_obj = {}				
 			twitter_obj['status'] = status
 			twitter_obj['keywords'] = keywords
