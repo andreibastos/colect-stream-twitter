@@ -177,7 +177,7 @@ class StreamingListener(tweepy.StreamListener):
 		super(StreamingListener, self).__init__(*args, **kwargs)
 
 	def on_data(self, data):
-
+		global api_categorize,api_categorize2
 		try:
 			status = json.loads(data)
 			if status.get('timestamp_ms') :
@@ -195,7 +195,8 @@ class StreamingListener(tweepy.StreamListener):
 			text = ""			
 			text = str(unicode(status['text']).encode('utf-8')).replace("\n","")			
 									
-			categories = categoriza(status)
+			categories = categoriza(status, api_categorize)
+			categories2 = categoriza(status, api_categorize2)
 
 			articles = get_articles(status)		
 			
@@ -205,8 +206,14 @@ class StreamingListener(tweepy.StreamListener):
 			if categories:
 				keywords = categories.get("keywords")			
 				reverse_geocode = categories.get("reverse_geocode")
+			if categories2:
+				if keywords:
+					keywords = list(set(keywords + categories2.get("keywords")))
+				else:
+					keywords = categories2.get("keywords")
 
 
+			print(keywords)
 			twitter_obj = {}				
 			twitter_obj['status'] = status
 			twitter_obj['keywords'] = keywords
@@ -255,7 +262,7 @@ class StreamingListener(tweepy.StreamListener):
 
 ######################### Funções ################################
 def getConfig():
-	global api_database, api_bot_telegram, api_categorize, filename_keys, filename_querys, filename_log
+	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield
 	try:
 		data = {}
 		with open('config.json') as data_file:    
@@ -264,10 +271,16 @@ def getConfig():
 		if data:
 			endpoints = data.get('endpoints')
 			files = data.get('files')			
+			collector = data.get('collector')
+
+			NUM_PER_INSERT = collector.get('NUM_PER_INSERT')
+			categorize_namefield = collector.get('categorize_namefield')
+
 
 			api_database = endpoints.get('api_database')
 			api_bot_telegram = endpoints.get('api_bot_telegram')
 			api_categorize = endpoints.get('api_categorize')
+			api_categorize2 = endpoints.get('api_categorize2')
 
 			filename_log = files.get('filename_log')
 			filename_keys = files.get('filename_keys')
@@ -323,8 +336,7 @@ def string_to_date(date_string):
 def string_to_date(date_string,date_format):	 
 	return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date_string,date_format)), None)
 
-def categoriza(status):
-	
+def categoriza(status, api_categorize):	
 	try:
 		text = str(unicode(status['text'].replace("\n", "")).encode('utf-8'))
 		username = status['user']['screen_name']
@@ -354,7 +366,7 @@ def categoriza(status):
 		categories = r.json()
 		# print json.dumps(r.json(), indent=4)
 
-		print '[user]:{0}\t[text]:{1}\t[location]:{2}\t[place]:{3}'.format(username, text, location, place)
+		# print '[user]:{0}\t[text]:{1}\t[location]:{2}\t[place]:{3}'.format(username, text, location, place)
 		return categories
 	except Exception as e:
 		log_system.error('request categoriza', e)		
