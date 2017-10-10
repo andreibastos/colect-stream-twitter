@@ -214,7 +214,7 @@ class StreamingListener(tweepy.StreamListener):
 
 			created_at = status.get('created_at');
 			if (created_at):
-				print(created_at + "\t"+text)
+				print(created_at,text)
 			else:
 				print(text)
 			twitter_obj = {}				
