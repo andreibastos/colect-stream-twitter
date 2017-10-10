@@ -212,7 +212,11 @@ class StreamingListener(tweepy.StreamListener):
 					keywords = categories2.get("keywords")
 
 
-			print(text)
+			created_at = status.get('created_at');
+			if (created_at):
+				print(created_at + "\t"+text)
+			else:
+				print(text)
 			twitter_obj = {}				
 			twitter_obj['status'] = status
 			twitter_obj['keywords'] = keywords
