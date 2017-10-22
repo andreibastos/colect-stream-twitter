@@ -183,8 +183,9 @@ class StreamingListener(tweepy.StreamListener):
 			if status.get('timestamp_ms') :
 				status['timestamp_ms'] = long(status['timestamp_ms'])
 			else:
-				status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
-				pass
+				if status.get("created_at"):				
+					status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
+				
 
 			status['id'] = long(status['id'])
            	
