@@ -188,6 +188,11 @@ class StreamingListener(tweepy.StreamListener):
 				
 
 			status['id'] = long(status['id'])
+
+			place = status.get('place')
+			if(place):
+				place['id'] = str(place['id'])
+				status['place'] = place
            	
 			user = status['user']
 			user['id'] = long(user['id'])
