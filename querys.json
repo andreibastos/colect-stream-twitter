@@ -4,7 +4,7 @@
             "mec2016", 
             " mec2015", 
             "inep", 
-            "prova brasil", 
+            "\"prova brasil\"", 
             "#provabrasil2017"
         ], 
         "languages": [
@@ -15,9 +15,9 @@
     }, 
     {
         "track": [
-            "Escolas de Governo", 
-            "sistema avaliação", 
-            "avaliação nacional"
+            "\"Escolas de Governo\"", 
+            "\"sistema avaliação\"", 
+            "\"avaliação nacional\""
         ], 
         "languages": [
             "pt"

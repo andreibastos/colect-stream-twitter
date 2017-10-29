@@ -1,4 +1,12 @@
 
+bin\*
+include\*
+lib\*
+local\*
+querys.json
+
+pip-selfcheck.json
+
 *.sublime-project
 
 *.sublime-workspace
@@ -14,3 +22,9 @@ matador_thread
 modelo\.json
 
 query_exemplo \(copy\)\.json
+
+config\.json
+
+colect-stream-twitter\.tar\.gz
+
+keys\.json
