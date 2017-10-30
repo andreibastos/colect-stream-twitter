@@ -14,7 +14,6 @@ from elasticsearch import (TransportError,
                            NotFoundError,
                            RequestError,)
 
-__all__ = [ElasticsearchEngine]
 
 ES_HOST = os.environ['ES_HOST_URI_00']
 
@@ -71,12 +70,14 @@ class ElasticsearchEngine(object):
 
           }
           self.client.create(doc_or_docs)
-      except Exception as elasticsearch.TransportError:
-        # TODO: handler properly
-        raise e
+      # except Exception as elasticsearch.TransportError:
+      #   # TODO: handler properly
+      #   raise e
       except Exception as TransportError:
         # TODO: handler properly
         raise e
       except Exception as TransportError:
         # TODO: handler properly
         raise e
+        
+__all__ = [ElasticsearchEngine]
