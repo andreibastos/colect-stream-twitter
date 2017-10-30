@@ -28,3 +28,6 @@ config\.json
 colect-stream-twitter\.tar\.gz
 
 keys\.json
+
+env
+.env
