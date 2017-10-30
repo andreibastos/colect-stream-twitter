@@ -8,11 +8,12 @@ import os
 
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
-from elasticsearch import (TransportError, 
-                           ConnectionTimeout, 
+from elasticsearch import (BulkIndexError,
                            ConnectionError, 
+                           ConnectionTimeout, 
                            NotFoundError,
-                           RequestError,)
+                           RequestError,
+                           TransportError,)
 
 __all__ = [ElasticsearchEngine]
 
@@ -47,36 +48,40 @@ class ElasticsearchEngine(object):
   def insert(index:str, 
              type:dict, 
              doc_or_docs:[dict], 
+             routing=None, 
              load_bulk=True, 
              **kwargs:dict):
-      try:
-        if load_bulk:
-          actions = []; append_action = actions.append
-          for doc in docs:
-            action = {
-              '_index': index,
-              '_type': type,
-              '_source': doc,
-            }
-            source = {**doc, **action}
-            
-            append_action(source)
+    try:
+      if load_bulk:
+        actions = []; append_2_actions = actions.append
 
-            result = helpers.bulk(self.client, **kwargs)
-        else:
-          action_create = {
-            'index': index,
-            'doc_type': type,
-            'body': doc_or_docs,
-
+        for doc in docs:
+          action = {
+            '_index': index,
+            '_type': type,
+            '_routing': routing,
+            '_source': doc,
           }
-          self.client.create(doc_or_docs)
-      except Exception as elasticsearch.TransportError:
-        # TODO: handler properly
+          append_2_actions(action)
+
+        result = helpers.bulk(self.client, actions, **kwargs)
+      else:
+        action = {
+          'index': index,
+          'doc_type': type,
+          'routing': routing,
+          'body': doc_or_docs,
+        }
+        self.client.create(action, **kwargs)
+    except TransportError as e:
+      # TODO: handler properly
+      raise e
+    except BulkIndexError as e:
+      # TODO: handler properly
+      raise e
+    except ConnectionError as e:
+      # TODO: handler properly
         raise e
-      except Exception as TransportError:
-        # TODO: handler properly
-        raise e
-      except Exception as TransportError:
-        # TODO: handler properly
+    except ConnectionTimeout as e:
+      # TODO: handler properly
         raise e
