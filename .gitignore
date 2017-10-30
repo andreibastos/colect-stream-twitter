@@ -28,3 +28,7 @@ config\.json
 colect-stream-twitter\.tar\.gz
 
 keys\.json
+
+querys_dilma\.json
+
+separador_querys\.py
