@@ -1,6 +1,30 @@
 
-config\.json
+bin\*
+include\*
+lib\*
+local\*
+querys.json
 
-keys\.json
+pip-selfcheck.json
+
+*.sublime-project
+
+*.sublime-workspace
+
+keys_exemplo\.json
+
+*.log
+
+query_exemplo\.json
 
 matador_thread
+
+modelo\.json
+
+query_exemplo \(copy\)\.json
+
+config\.json
+
+colect-stream-twitter\.tar\.gz
+
+keys\.json
