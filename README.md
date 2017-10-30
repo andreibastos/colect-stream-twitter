@@ -61,6 +61,7 @@ $ nano keys.json
 [
     ["hmUbVS0OEqLMPNUdvpDp3nF9k", "mXmj4ZxMcKNUc9nF8wF8aOUf0KeVGWLTXeBUrtptx55Cj6JwLV", "70141627-IbOIyGNpKgEtMg6dhU84onqyOHodPMOCJ6HUaUKaT", "uus0nbmPprAErWyvXtmxxQXaiSNZEzZImqMOuJo3bMDHO"]
 ]
+}
 ```
 Order: [consumer_key, consumer_secret, access_token, access_token_secret]
 
