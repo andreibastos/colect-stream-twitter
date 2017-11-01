@@ -74,3 +74,5 @@ config\.json
 datasource/__pycache__/
 
 *.pyc
+
+kill_coletor
