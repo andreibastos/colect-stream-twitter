@@ -75,6 +75,9 @@ datasource/__pycache__/
 
 *.pyc
 
+<<<<<<< refs/remotes/GustavoRPS/feature/ds-elasticsearch
 settings.cfg
 *.pyc
+=======
+>>>>>>> gitignore
 kill_coletor
