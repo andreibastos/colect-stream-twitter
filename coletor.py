@@ -454,8 +454,9 @@ def main():
 			for c in active_collectors:
 				c.stop();				
 			print('program stop.')	
-			sys.exit()
-		
+			break
+			sys.exit(1)
+	sys.exit(1)
 		
 
 
