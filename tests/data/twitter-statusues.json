@@ -1,0 +1,2780 @@
+[
+    {
+        "status": {
+            "text": "todo hora fico bloqueando o desespero com o enem",
+            "in_reply_to_status_id": null,
+            "id": 926198610781442000,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657931405,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198610781442048",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "♡wanlã♡",
+                "statuses_count": 123426,
+                "id": 1539816606,
+                "description": "continue a nadar",
+                "name": "wan",
+                "created_at": "2013-06-23T01:08:42.000Z",
+                "followers_count": 3959,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/925508396941545473/8Jgq88Vs_normal.jpg",
+                "friends_count": 2910,
+                "screen_name": "Hayvenclaw",
+                "id_str": "1539816606",
+                "listed_count": 15,
+                "translator_type": "regular"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:31.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d48",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @stewatz: eu só quero saber onde é o esquenta pós enem",
+            "in_reply_to_status_id": null,
+            "id": 926198607472185300,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657930616,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 923329957,
+                        "indices": [
+                            3,
+                            11
+                        ],
+                        "id_str": "923329957",
+                        "screen_name": "stewatz",
+                        "name": "letí"
+                    }
+                ]
+            },
+            "id_str": "926198607472185345",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "eu só quero saber onde é o esquenta pós enem",
+                "in_reply_to_status_id": null,
+                "id": 926197157249671200,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 0,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926197157249671168",
+                "retweet_count": 1,
+                "favorited": false,
+                "user": {
+                    "location": "barbacena, mg",
+                    "statuses_count": 72797,
+                    "id": 923329957,
+                    "description": "blessed be the froot oh la la la la ju u u uice",
+                    "name": "letí",
+                    "created_at": "2012-11-03T14:25:03.000Z",
+                    "followers_count": 1324,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/922117957681078274/6XLd-sla_normal.jpg",
+                    "friends_count": 504,
+                    "screen_name": "stewatz",
+                    "id_str": "923329957",
+                    "listed_count": 7,
+                    "translator_type": "regular"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T21:19:44.000Z",
+                "place": null,
+                "quote_count": 0,
+                "reply_count": 0
+            },
+            "user": {
+                "location": null,
+                "statuses_count": 17898,
+                "id": 2548678049,
+                "description": null,
+                "name": "J$",
+                "created_at": "2014-05-15T10:38:08.000Z",
+                "followers_count": 637,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/924429954863042560/TvY3Wq3V_normal.jpg",
+                "friends_count": 313,
+                "screen_name": "jsli98",
+                "id_str": "2548678049",
+                "listed_count": 2,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:30.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d47",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @_ENEM2017: galerinha do Enem:\n\nvocês vão conseguir\nvocês estão capacitados \nvocês vão alcançar seus objetivos\na vida estável tá logo al…",
+            "in_reply_to_status_id": null,
+            "id": 926198606578712600,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657930403,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 4098142378,
+                        "indices": [
+                            3,
+                            13
+                        ],
+                        "id_str": "4098142378",
+                        "screen_name": "_ENEM2017",
+                        "name": "Enem 2017"
+                    }
+                ]
+            },
+            "id_str": "926198606578712577",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "galerinha do Enem:\n\nvocês vão conseguir\nvocês estão capacitados \nvocês vão alcançar seus objetivos\na vida estável tá logo ali\nrespirem fundo",
+                "in_reply_to_status_id": null,
+                "id": 926184047369388000,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 561,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926184047369388045",
+                "retweet_count": 303,
+                "favorited": false,
+                "user": {
+                    "location": "SEGUE VOCÊ",
+                    "statuses_count": 787,
+                    "id": 4098142378,
+                    "description": "Dicas para a redação e possíveis questões.  Sugestões via DM 📩",
+                    "name": "Enem 2017",
+                    "created_at": "2015-11-02T15:22:42.000Z",
+                    "followers_count": 75456,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/909805595296980993/EtlM3oGz_normal.jpg",
+                    "friends_count": 0,
+                    "screen_name": "_ENEM2017",
+                    "id_str": "4098142378",
+                    "listed_count": 643,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T20:27:39.000Z",
+                "place": null,
+                "quote_count": 28,
+                "reply_count": 6
+            },
+            "user": {
+                "location": "• PFB • JSCBB • LT •",
+                "statuses_count": 24587,
+                "id": 4607553695,
+                "description": "@angelonoqueira 💍❤️ | @BotafogoOficial 🖤⚪️",
+                "name": "bruna",
+                "created_at": "2015-12-26T05:31:32.000Z",
+                "followers_count": 836,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/924450786825863168/efS6eV2F_normal.jpg",
+                "friends_count": 391,
+                "screen_name": "Macchiute_",
+                "id_str": "4607553695",
+                "listed_count": 1,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:30.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d46",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @macaulincrack: to nei ai pro enem quero eh fuma makonha",
+            "in_reply_to_status_id": null,
+            "id": 926198606159327200,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657930303,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 1197924782,
+                        "indices": [
+                            3,
+                            17
+                        ],
+                        "id_str": "1197924782",
+                        "screen_name": "macaulincrack",
+                        "name": "marginal influencer"
+                    }
+                ]
+            },
+            "id_str": "926198606159327234",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "to nei ai pro enem quero eh fuma makonha",
+                "in_reply_to_status_id": null,
+                "id": 926161419447492600,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 171,
+                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Lite</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926161419447492608",
+                "retweet_count": 105,
+                "favorited": false,
+                "user": {
+                    "location": "Brasília, Brazil",
+                    "statuses_count": 29175,
+                    "id": 1197924782,
+                    "description": "Este perfil contém mais de 4.700 substâncias tóxicas, e shitpost que causam dependência física ou psíquica. [+18]",
+                    "name": "marginal influencer",
+                    "created_at": "2013-02-19T16:39:46.000Z",
+                    "followers_count": 44078,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/813456213010710528/Qnt5XoVQ_normal.jpg",
+                    "friends_count": 208,
+                    "screen_name": "macaulincrack",
+                    "id_str": "1197924782",
+                    "listed_count": 508,
+                    "translator_type": "regular"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T18:57:44.000Z",
+                "place": null,
+                "quote_count": 7,
+                "reply_count": 2
+            },
+            "user": {
+                "location": "Campo Grande, Brasil",
+                "statuses_count": 26774,
+                "id": 158489272,
+                "description": "🌹\n              \n                                                              Snapchat: batalhavictor",
+                "name": "vito",
+                "created_at": "2010-06-22T21:06:27.000Z",
+                "followers_count": 368,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/922642290782457856/NS-RPqvL_normal.jpg",
+                "friends_count": 93,
+                "screen_name": "batalhavictor",
+                "id_str": "158489272",
+                "listed_count": 2,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:30.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "uf-ms",
+            "enem",
+            "cidade-campo grande",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "uf-ms",
+            "enem",
+            "cidade-campo grande",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d44",
+        "reverse_geocode": [
+            "-16.48971",
+            "-43.72939"
+        ]
+    },
+    {
+        "status": {
+            "text": "Só vou fazer o Enem pra comer mesmo pq passar q é bom, nada",
+            "in_reply_to_status_id": null,
+            "id": 926198605970591700,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657930258,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198605970591746",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "São José de Ubá, Brasil",
+                "statuses_count": 5263,
+                "id": 2363685089,
+                "description": "19, leonina, bailarina e louca",
+                "name": "Virgínia 🦄",
+                "created_at": "2014-02-24T21:13:35.000Z",
+                "followers_count": 300,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/919891521016647680/3Sf1kTA-_normal.jpg",
+                "friends_count": 179,
+                "screen_name": "virginialopes81",
+                "id_str": "2363685089",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:30.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "uf-sc",
+            "cidade-são josé",
+            "uf-rj",
+            "cidade-ubá",
+            "cidade-são josé de ubá",
+            "educação básica",
+            "enem",
+            "uf-mg"
+        ],
+        "keywords": [
+            "público geral",
+            "uf-sc",
+            "cidade-são josé",
+            "uf-rj",
+            "cidade-ubá",
+            "cidade-são josé de ubá",
+            "educação básica",
+            "enem",
+            "uf-mg"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d45",
+        "reverse_geocode": [
+            "-25.49346",
+            "-49.30028"
+        ]
+    },
+    {
+        "status": {
+            "text": "RT @centraldanacao: Pessoal a @karolinerosa12 perdeu o RG lá na norte ontem, ela vai fazer o ENEM domingo. Quem puder repassar pra ajud… ",
+            "in_reply_to_status_id": null,
+            "id": 926198602204106800,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657929360,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 3241296297,
+                        "indices": [
+                            3,
+                            18
+                        ],
+                        "id_str": "3241296297",
+                        "screen_name": "centraldanacao",
+                        "name": "Central da Nação"
+                    },
+                    {
+                        "id": 237920940,
+                        "indices": [
+                            30,
+                            45
+                        ],
+                        "id_str": "237920940",
+                        "screen_name": "karolinerosa12",
+                        "name": "K rol"
+                    }
+                ]
+            },
+            "id_str": "926198602204106754",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "Pessoal a @karolinerosa12 perdeu o RG lá na norte ontem, ela vai fazer o ENEM domingo. Quem puder repassar pra ajud… https://t.co/3WCbW3j1Ga",
+                "in_reply_to_status_id": null,
+                "id": 926080612410196000,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 269,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [
+                        {
+                            "url": "https://t.co/3WCbW3j1Ga",
+                            "indices": [
+                                117,
+                                140
+                            ],
+                            "expanded_url": "https://twitter.com/i/web/status/926080612410195968",
+                            "display_url": "twitter.com/i/web/status/9…"
+                        }
+                    ],
+                    "hashtags": [],
+                    "user_mentions": [
+                        {
+                            "id": 237920940,
+                            "indices": [
+                                10,
+                                25
+                            ],
+                            "id_str": "237920940",
+                            "screen_name": "karolinerosa12",
+                            "name": "K rol"
+                        }
+                    ]
+                },
+                "id_str": "926080612410195968",
+                "retweet_count": 534,
+                "favorited": false,
+                "user": {
+                    "location": "Rio de Janeiro - Petrolina-PE",
+                    "statuses_count": 66153,
+                    "id": 3241296297,
+                    "description": "Falamos 99% de Flamengo e 1% de outros assuntos. Não levem nossas piadas a sério. Meu twitter minhas regras. Nada do Flamengo tudo pelo Flamengo. SRN #Flatt",
+                    "name": "Central da Nação",
+                    "created_at": "2015-05-08T01:51:42.000Z",
+                    "followers_count": 28932,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/913892311712587777/_yvaavKe_normal.jpg",
+                    "friends_count": 896,
+                    "screen_name": "centraldanacao",
+                    "id_str": "3241296297",
+                    "listed_count": 220,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T13:36:38.000Z",
+                "place": null,
+                "quote_count": 3,
+                "reply_count": 7,
+                "display_text_range": [
+                    0,
+                    140
+                ],
+                "extended_tweet": {
+                    "display_text_range": [
+                        0,
+                        139
+                    ],
+                    "entities": {
+                        "user_mentions": [
+                            {
+                                "id": 237920940,
+                                "indices": [
+                                    10,
+                                    25
+                                ],
+                                "id_str": "237920940",
+                                "screen_name": "karolinerosa12",
+                                "name": "K rol"
+                            }
+                        ],
+                        "symbols": [],
+                        "hashtags": [],
+                        "urls": [],
+                        "media": [
+                            {
+                                "expanded_url": "https://twitter.com/centraldanacao/status/926080612410195968/photo/1",
+                                "display_url": "pic.twitter.com/akMb1HYyJv",
+                                "url": "https://t.co/akMb1HYyJv",
+                                "media_url_https": "https://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg",
+                                "id_str": "926080601551237120",
+                                "sizes": {
+                                    "large": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "small": {
+                                        "h": 680,
+                                        "resize": "fit",
+                                        "w": 382
+                                    },
+                                    "medium": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "thumb": {
+                                        "h": 150,
+                                        "resize": "crop",
+                                        "w": 150
+                                    }
+                                },
+                                "indices": [
+                                    140,
+                                    163
+                                ],
+                                "type": "photo",
+                                "id": 926080601551237100,
+                                "media_url": "http://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg"
+                            }
+                        ]
+                    },
+                    "extended_entities": {
+                        "media": [
+                            {
+                                "expanded_url": "https://twitter.com/centraldanacao/status/926080612410195968/photo/1",
+                                "display_url": "pic.twitter.com/akMb1HYyJv",
+                                "url": "https://t.co/akMb1HYyJv",
+                                "media_url_https": "https://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg",
+                                "id_str": "926080601551237120",
+                                "sizes": {
+                                    "large": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "small": {
+                                        "h": 680,
+                                        "resize": "fit",
+                                        "w": 382
+                                    },
+                                    "medium": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "thumb": {
+                                        "h": 150,
+                                        "resize": "crop",
+                                        "w": 150
+                                    }
+                                },
+                                "indices": [
+                                    140,
+                                    163
+                                ],
+                                "type": "photo",
+                                "id": 926080601551237100,
+                                "media_url": "http://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg"
+                            }
+                        ]
+                    },
+                    "full_text": "Pessoal a @karolinerosa12 perdeu o RG lá na norte ontem, ela vai fazer o ENEM domingo. Quem puder repassar pra ajudar, faça isso. Obrigado. https://t.co/akMb1HYyJv"
+                }
+            },
+            "user": {
+                "location": "+55021 ",
+                "statuses_count": 36732,
+                "id": 3188833846,
+                "description": "👻 nathalyapepper 👻",
+                "name": "Cecília",
+                "created_at": "2015-04-21T00:33:15.000Z",
+                "followers_count": 1527,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/920347815817162753/OlXwWL74_normal.jpg",
+                "friends_count": 640,
+                "screen_name": "Nathalya_Pepper",
+                "id_str": "3188833846",
+                "listed_count": 5,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:29.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d43",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "Sobre o enem: A vontade de estudar é grande, mas a de chorar é maior.",
+            "in_reply_to_status_id": null,
+            "id": 926198599989514200,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657928832,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198599989514240",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "S2 pq olinda, brasil ",
+                "statuses_count": 1120,
+                "id": 724737718387892200,
+                "description": "insta: joaop_lt\nsnap: joaop_vl",
+                "name": "xuaum ☯️",
+                "created_at": "2016-04-25T23:11:51.000Z",
+                "followers_count": 257,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/922867898670108672/bpPCcEgN_normal.jpg",
+                "friends_count": 170,
+                "screen_name": "joaop_lt",
+                "id_str": "724737718387892224",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:28.000Z",
+            "place": {
+                "full_name": "Gravataí, Brasil",
+                "url": "https://api.twitter.com/1.1/geo/id/66a72011ed6d4853.json",
+                "country": "Brasil",
+                "place_type": "city",
+                "bounding_box": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                -51.101365,
+                                -30.015653
+                            ],
+                            [
+                                -51.101365,
+                                -29.765763
+                            ],
+                            [
+                                -50.811151,
+                                -29.765763
+                            ],
+                            [
+                                -50.811151,
+                                -30.015653
+                            ]
+                        ]
+                    ]
+                },
+                "country_code": {
+                    "0": "B",
+                    "1": "R"
+                },
+                "attributes": {},
+                "id": null,
+                "name": "Gravataí"
+            },
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "uf-pe",
+            "cidade-olinda",
+            "cidade-gravataí",
+            "uf-rs",
+            "educação básica",
+            "enem"
+        ],
+        "keywords": [
+            "público geral",
+            "uf-pe",
+            "cidade-olinda",
+            "cidade-gravataí",
+            "uf-rs",
+            "educação básica",
+            "enem"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d42",
+        "reverse_geocode": [
+            "-29.90915",
+            "-50.95301"
+        ]
+    },
+    {
+        "status": {
+            "text": "Prevejo que esse mês será ótimo: Enem, 2 apresentações de seminário e provas",
+            "in_reply_to_status_id": null,
+            "id": 926198599033212900,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Lite</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657928604,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198599033212928",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": null,
+                "statuses_count": 186,
+                "id": 843680860561965000,
+                "description": "Fui encontrada pelo Teu amor.",
+                "name": "Natasha",
+                "created_at": "2017-03-20T04:29:26.000Z",
+                "followers_count": 87,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/924832506578337793/Zip6fJt8_normal.jpg",
+                "friends_count": 121,
+                "screen_name": "natashaevelyn__",
+                "id_str": "843680860561965056",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:28.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d41",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "TONELADAS https://t.co/MqDaEvB0HG",
+            "in_reply_to_status_id": null,
+            "id": 926198598559240200,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "quoted_status_id": 926161419447492600,
+            "quoted_status_id_str": "926161419447492608",
+            "quoted_status": {
+                "text": "to nei ai pro enem quero eh fuma makonha",
+                "in_reply_to_status_id": null,
+                "id": 926161419447492600,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 171,
+                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Lite</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926161419447492608",
+                "retweet_count": 104,
+                "favorited": false,
+                "user": {
+                    "location": "Brasília, Brazil",
+                    "statuses_count": 29175,
+                    "id": 1197924782,
+                    "description": "Este perfil contém mais de 4.700 substâncias tóxicas, e shitpost que causam dependência física ou psíquica. [+18]",
+                    "name": "marginal influencer",
+                    "created_at": "2013-02-19T16:39:46.000Z",
+                    "followers_count": 44078,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/813456213010710528/Qnt5XoVQ_normal.jpg",
+                    "friends_count": 208,
+                    "screen_name": "macaulincrack",
+                    "id_str": "1197924782",
+                    "listed_count": 508,
+                    "translator_type": "regular"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T18:57:44.000Z",
+                "place": null,
+                "quote_count": 6,
+                "reply_count": 2
+            },
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657928491,
+            "entities": {
+                "symbols": [],
+                "urls": [
+                    {
+                        "url": "https://t.co/MqDaEvB0HG",
+                        "indices": [
+                            10,
+                            33
+                        ],
+                        "expanded_url": "https://twitter.com/macaulincrack/status/926161419447492608",
+                        "display_url": "twitter.com/macaulincrack/…"
+                    }
+                ],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198598559240194",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "Campo Grande, Brasil",
+                "statuses_count": 26773,
+                "id": 158489272,
+                "description": "🌹\n              \n                                                              Snapchat: batalhavictor",
+                "name": "vito",
+                "created_at": "2010-06-22T21:06:27.000Z",
+                "followers_count": 368,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/922642290782457856/NS-RPqvL_normal.jpg",
+                "friends_count": 93,
+                "screen_name": "batalhavictor",
+                "id_str": "158489272",
+                "listed_count": 2,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:28.000Z",
+            "place": {
+                "full_name": "Campo Grande, Brazil",
+                "url": "https://api.twitter.com/1.1/geo/id/d13775d10c08f835.json",
+                "country": "Brazil",
+                "place_type": "city",
+                "bounding_box": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                -54.923521,
+                                -21.584578
+                            ],
+                            [
+                                -54.923521,
+                                -20.166077
+                            ],
+                            [
+                                -53.600229,
+                                -20.166077
+                            ],
+                            [
+                                -53.600229,
+                                -21.584578
+                            ]
+                        ]
+                    ]
+                },
+                "country_code": {
+                    "0": "B",
+                    "1": "R"
+                },
+                "attributes": {},
+                "id": null,
+                "name": "Campo Grande"
+            },
+            "quote_count": 0,
+            "reply_count": 0,
+            "display_text_range": [
+                0,
+                9
+            ]
+        },
+        "categories": [
+            "público geral",
+            "institucional",
+            "uf-ms",
+            "cidade-campo grande"
+        ],
+        "keywords": [
+            "público geral",
+            "institucional",
+            "uf-ms",
+            "cidade-campo grande"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d40",
+        "reverse_geocode": [
+            "-16.48971",
+            "-43.72939"
+        ]
+    },
+    {
+        "status": {
+            "text": "RT @fafscardoso: Não vai ter eu tirando nota boa no enem https://t.co/GHzOZbskZw",
+            "in_reply_to_status_id": null,
+            "id": 926198595539357700,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "quoted_status_id": 898957394914488300,
+            "quoted_status_id_str": "898957394914488320",
+            "quoted_status": {
+                "text": "podem começar com os não vai ter pq funciona https://t.co/boaDxvdSTt",
+                "in_reply_to_status_id": null,
+                "id": 898957394914488300,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 266,
+                "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "media": [
+                        {
+                            "media_url_https": "https://pbs.twimg.com/media/DHm8-qeXgAUdBVz.jpg",
+                            "id_str": "898957385376694277",
+                            "type": "photo"
+                        }
+                    ],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "898957394914488320",
+                "retweet_count": 48,
+                "favorited": false,
+                "user": {
+                    "location": "ngs pds mari rob ste duda",
+                    "statuses_count": 110770,
+                    "id": 3119584803,
+                    "description": "girlfriend acc: @westeroside",
+                    "name": "beta loves robert",
+                    "created_at": "2015-03-26T20:11:37.000Z",
+                    "followers_count": 17438,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/925908507035086849/n34Z5FKf_normal.jpg",
+                    "friends_count": 15053,
+                    "screen_name": "greyslogia",
+                    "id_str": "3119584803",
+                    "listed_count": 130,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-08-19T17:18:39.000Z",
+                "place": null,
+                "quote_count": 2569,
+                "reply_count": 37,
+                "display_text_range": [
+                    0,
+                    44
+                ]
+            },
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657927771,
+            "entities": {
+                "symbols": [],
+                "urls": [
+                    {
+                        "url": "https://t.co/GHzOZbskZw",
+                        "indices": [
+                            57,
+                            80
+                        ],
+                        "expanded_url": "https://twitter.com/greyslogia/status/898957394914488320",
+                        "display_url": "twitter.com/greyslogia/sta…"
+                    }
+                ],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 2499915022,
+                        "indices": [
+                            3,
+                            15
+                        ],
+                        "id_str": "2499915022",
+                        "screen_name": "fafscardoso",
+                        "name": "Flávia"
+                    }
+                ]
+            },
+            "id_str": "926198595539357700",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "Não vai ter eu tirando nota boa no enem https://t.co/GHzOZbskZw",
+                "in_reply_to_status_id": null,
+                "id": 926147280532631600,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "quoted_status_id": 898957394914488300,
+                "quoted_status_id_str": "898957394914488320",
+                "quoted_status": {
+                    "text": "podem começar com os não vai ter pq funciona https://t.co/boaDxvdSTt",
+                    "in_reply_to_status_id": null,
+                    "id": 898957394914488300,
+                    "in_reply_to_status_id_str": null,
+                    "in_reply_to_user_id": null,
+                    "favorite_count": 266,
+                    "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+                    "retweeted": false,
+                    "coordinates": null,
+                    "entities": {
+                        "symbols": [],
+                        "media": [
+                            {
+                                "media_url_https": "https://pbs.twimg.com/media/DHm8-qeXgAUdBVz.jpg",
+                                "id_str": "898957385376694277",
+                                "type": "photo"
+                            }
+                        ],
+                        "urls": [],
+                        "hashtags": [],
+                        "user_mentions": []
+                    },
+                    "id_str": "898957394914488320",
+                    "retweet_count": 48,
+                    "favorited": false,
+                    "user": {
+                        "location": "ngs pds mari rob ste duda",
+                        "statuses_count": 110770,
+                        "id": 3119584803,
+                        "description": "girlfriend acc: @westeroside",
+                        "name": "beta loves robert",
+                        "created_at": "2015-03-26T20:11:37.000Z",
+                        "followers_count": 17438,
+                        "profile_image_url_https": "https://pbs.twimg.com/profile_images/925908507035086849/n34Z5FKf_normal.jpg",
+                        "friends_count": 15053,
+                        "screen_name": "greyslogia",
+                        "id_str": "3119584803",
+                        "listed_count": 130,
+                        "translator_type": "none"
+                    },
+                    "geo": null,
+                    "created_at": "2017-08-19T17:18:39.000Z",
+                    "place": null,
+                    "quote_count": 2569,
+                    "reply_count": 37,
+                    "display_text_range": [
+                        0,
+                        44
+                    ]
+                },
+                "favorite_count": 2,
+                "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [
+                        {
+                            "url": "https://t.co/GHzOZbskZw",
+                            "indices": [
+                                40,
+                                63
+                            ],
+                            "expanded_url": "https://twitter.com/greyslogia/status/898957394914488320",
+                            "display_url": "twitter.com/greyslogia/sta…"
+                        }
+                    ],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926147280532631552",
+                "retweet_count": 4,
+                "favorited": false,
+                "user": {
+                    "location": "Goiás, Brasil",
+                    "statuses_count": 16371,
+                    "id": 2499915022,
+                    "description": "mãe de 6 filhos",
+                    "name": "Flávia",
+                    "created_at": "2014-04-21T15:54:10.000Z",
+                    "followers_count": 774,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/907354159967502337/tsEpypNB_normal.jpg",
+                    "friends_count": 434,
+                    "screen_name": "fafscardoso",
+                    "id_str": "2499915022",
+                    "listed_count": 1,
+                    "translator_type": "regular"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T18:01:33.000Z",
+                "place": null,
+                "quote_count": 0,
+                "reply_count": 0,
+                "display_text_range": [
+                    0,
+                    39
+                ]
+            },
+            "user": {
+                "location": null,
+                "statuses_count": 4044,
+                "id": 3817634476,
+                "description": null,
+                "name": "Ana julia",
+                "created_at": "2015-09-29T19:49:00.000Z",
+                "followers_count": 786,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/919239723390066689/8GwZCUGI_normal.jpg",
+                "friends_count": 492,
+                "screen_name": "najuaandrade",
+                "id_str": "3817634476",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:27.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d3f",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @carlosdaaniel3l: essa é o nota do enem da sorte, se você der rt terás a mesma nota da foto https://t.co/T50Sjl7Qr4",
+            "in_reply_to_status_id": null,
+            "id": 926198591303102500,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657926761,
+            "entities": {
+                "symbols": [],
+                "media": [
+                    {
+                        "media_url_https": "https://pbs.twimg.com/media/DNcDIs-WsAASSVQ.jpg",
+                        "source_status_id": 925211708326645800,
+                        "id_str": "925211696494456832",
+                        "type": "photo",
+                        "source_user_id": 737821096494440400,
+                        "source_user_id_str": "737821096494440452"
+                    }
+                ],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 737821096494440400,
+                        "indices": [
+                            3,
+                            19
+                        ],
+                        "id_str": "737821096494440452",
+                        "screen_name": "carlosdaaniel3l",
+                        "name": "daniel"
+                    }
+                ]
+            },
+            "id_str": "926198591303102465",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "essa é o nota do enem da sorte, se você der rt terás a mesma nota da foto https://t.co/T50Sjl7Qr4",
+                "in_reply_to_status_id": null,
+                "id": 925211708326645800,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 12683,
+                "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "media": [
+                        {
+                            "media_url_https": "https://pbs.twimg.com/media/DNcDIs-WsAASSVQ.jpg",
+                            "id_str": "925211696494456832",
+                            "type": "photo"
+                        }
+                    ],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "925211708326645760",
+                "retweet_count": 28605,
+                "favorited": false,
+                "user": {
+                    "location": "Rio Branco, Brasil",
+                    "statuses_count": 6781,
+                    "id": 737821096494440400,
+                    "description": "meu mundo, minhas regras, nada além de mim e eu mesmo. Gêmeos ♊",
+                    "name": "daniel",
+                    "created_at": "2016-06-01T01:40:32.000Z",
+                    "followers_count": 560,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/925887256400932866/lnWbXcmE_normal.jpg",
+                    "friends_count": 469,
+                    "screen_name": "carlosdaaniel3l",
+                    "id_str": "737821096494440452",
+                    "listed_count": 44,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-10-31T04:03:55.000Z",
+                "place": null,
+                "quote_count": 1831,
+                "reply_count": 164,
+                "display_text_range": [
+                    0,
+                    73
+                ]
+            },
+            "user": {
+                "location": "Cuiabá",
+                "statuses_count": 3013,
+                "id": 4922283021,
+                "description": "sccp",
+                "name": "yasmin",
+                "created_at": "2016-02-17T04:08:56.000Z",
+                "followers_count": 180,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/926194764038459393/ctmYqiGh_normal.jpg",
+                "friends_count": 104,
+                "screen_name": "yafrancini",
+                "id_str": "4922283021",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:26.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "uf-mt",
+            "cidade-cuiabá",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "uf-mt",
+            "cidade-cuiabá",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d3e",
+        "reverse_geocode": [
+            "-18.41667",
+            "-43.81667"
+        ]
+    },
+    {
+        "status": {
+            "text": "@saetreart vc vai no show da dua ne?? queria porem ENEM",
+            "in_reply_to_status_id": 926198353620295700,
+            "id": 926198588933369900,
+            "in_reply_to_status_id_str": "926198353620295685",
+            "in_reply_to_user_id": 1387964076,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657926196,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 1387964076,
+                        "indices": [
+                            0,
+                            10
+                        ],
+                        "id_str": "1387964076",
+                        "screen_name": "saetreart",
+                        "name": "☾"
+                    }
+                ]
+            },
+            "id_str": "926198588933369857",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "cec • fcb • cavs • pats",
+                "statuses_count": 8868,
+                "id": 831644421254942700,
+                "description": "a queen is never late, everyone else is simply early",
+                "name": "spooky fab",
+                "created_at": "2017-02-14T23:20:56.000Z",
+                "followers_count": 329,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/924399112895782912/T-TzYwRD_normal.jpg",
+                "friends_count": 287,
+                "screen_name": "kubrirck",
+                "id_str": "831644421254942720",
+                "listed_count": 5,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:26.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0,
+            "display_text_range": [
+                11,
+                55
+            ]
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d3d",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "Minha mãe não para de falar oq eu tenho q fazer sobre o assunto ENEM, desse jeito eu vou pirar manoooooo aaaaaaa",
+            "in_reply_to_status_id": null,
+            "id": 926198587473752000,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657925848,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198587473752064",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "Barueri, Brasil",
+                "statuses_count": 7958,
+                "id": 733539612,
+                "description": null,
+                "name": "CS",
+                "created_at": "2012-08-02T21:01:37.000Z",
+                "followers_count": 735,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/925920022526152704/3OZeSiN-_normal.jpg",
+                "friends_count": 848,
+                "screen_name": "mistp_",
+                "id_str": "733539612",
+                "listed_count": 1,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:25.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "cidade-barueri",
+            "enem",
+            "uf-sp",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "cidade-barueri",
+            "enem",
+            "uf-sp",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d3c",
+        "reverse_geocode": [
+            "-23.50172",
+            "-46.86993"
+        ]
+    },
+    {
+        "status": {
+            "text": "Professor desmistifica redação do Enem e dá dicas sobre o que fazer e o que não fazer na hora de escrever https://t.co/uWyscKfLDf",
+            "in_reply_to_status_id": null,
+            "id": 926198587301691400,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"https://ifttt.com\" rel=\"nofollow\">IFTTT</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657925807,
+            "entities": {
+                "symbols": [],
+                "urls": [
+                    {
+                        "url": "https://t.co/uWyscKfLDf",
+                        "indices": [
+                            106,
+                            129
+                        ],
+                        "expanded_url": "http://ift.tt/2ztazWy",
+                        "display_url": "ift.tt/2ztazWy"
+                    }
+                ],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198587301691397",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": null,
+                "statuses_count": 215368,
+                "id": 827570912325226500,
+                "description": null,
+                "name": "Forninho",
+                "created_at": "2017-02-03T17:34:15.000Z",
+                "followers_count": 431,
+                "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+                "friends_count": 263,
+                "screen_name": "eitagiovan4",
+                "id_str": "827570912325226497",
+                "listed_count": 4,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:25.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d3a",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @_ENEM2017: galerinha do Enem:\n\nvocês vão conseguir\nvocês estão capacitados \nvocês vão alcançar seus objetivos\na vida estável tá logo al…",
+            "in_reply_to_status_id": null,
+            "id": 926198587297615900,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657925806,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 4098142378,
+                        "indices": [
+                            3,
+                            13
+                        ],
+                        "id_str": "4098142378",
+                        "screen_name": "_ENEM2017",
+                        "name": "Enem 2017"
+                    }
+                ]
+            },
+            "id_str": "926198587297615872",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "galerinha do Enem:\n\nvocês vão conseguir\nvocês estão capacitados \nvocês vão alcançar seus objetivos\na vida estável tá logo ali\nrespirem fundo",
+                "in_reply_to_status_id": null,
+                "id": 926184047369388000,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 561,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926184047369388045",
+                "retweet_count": 302,
+                "favorited": false,
+                "user": {
+                    "location": "SEGUE VOCÊ",
+                    "statuses_count": 787,
+                    "id": 4098142378,
+                    "description": "Dicas para a redação e possíveis questões.  Sugestões via DM 📩",
+                    "name": "Enem 2017",
+                    "created_at": "2015-11-02T15:22:42.000Z",
+                    "followers_count": 75456,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/909805595296980993/EtlM3oGz_normal.jpg",
+                    "friends_count": 0,
+                    "screen_name": "_ENEM2017",
+                    "id_str": "4098142378",
+                    "listed_count": 643,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T20:27:39.000Z",
+                "place": null,
+                "quote_count": 28,
+                "reply_count": 6
+            },
+            "user": {
+                "location": "Rio de Janeiro, Brasil",
+                "statuses_count": 2388,
+                "id": 2650484295,
+                "description": "snap:juliaa152 /Algumas coisas não precisam fazer sentido,basta valer a pena🍃🍃loka💆 CRVG⚫⚪🔴",
+                "name": "Juh🦋",
+                "created_at": "2014-06-28T15:55:17.000Z",
+                "followers_count": 130,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/910937246257344513/gYkLm-ki_normal.jpg",
+                "friends_count": 145,
+                "screen_name": "anajuliajuju24",
+                "id_str": "2650484295",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:25.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "uf-rj",
+            "enem",
+            "cidade-rio de janeiro",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "uf-rj",
+            "enem",
+            "cidade-rio de janeiro",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d3b",
+        "reverse_geocode": [
+            "-22.92008",
+            "-43.33069"
+        ]
+    },
+    {
+        "status": {
+            "text": "Faço a prova do enem para:",
+            "in_reply_to_status_id": null,
+            "id": 926198585640783900,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657925411,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198585640783873",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": null,
+                "statuses_count": 603,
+                "id": 733084761640603600,
+                "description": null,
+                "name": "Galego",
+                "created_at": "2016-05-19T00:00:02.000Z",
+                "followers_count": 104,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/919197997220683777/WXda9Qzb_normal.jpg",
+                "friends_count": 170,
+                "screen_name": "leomarco20",
+                "id_str": "733084761640603650",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:25.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d39",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @centraldanacao: Pessoal a @karolinerosa12 perdeu o RG lá na norte ontem, ela vai fazer o ENEM domingo. Quem puder repassar pra ajud… ",
+            "in_reply_to_status_id": null,
+            "id": 926198585313693700,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657925333,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 3241296297,
+                        "indices": [
+                            3,
+                            18
+                        ],
+                        "id_str": "3241296297",
+                        "screen_name": "centraldanacao",
+                        "name": "Central da Nação"
+                    },
+                    {
+                        "id": 237920940,
+                        "indices": [
+                            30,
+                            45
+                        ],
+                        "id_str": "237920940",
+                        "screen_name": "karolinerosa12",
+                        "name": "K rol"
+                    }
+                ]
+            },
+            "id_str": "926198585313693697",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "Pessoal a @karolinerosa12 perdeu o RG lá na norte ontem, ela vai fazer o ENEM domingo. Quem puder repassar pra ajud… https://t.co/3WCbW3j1Ga",
+                "in_reply_to_status_id": null,
+                "id": 926080612410196000,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 269,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [
+                        {
+                            "url": "https://t.co/3WCbW3j1Ga",
+                            "indices": [
+                                117,
+                                140
+                            ],
+                            "expanded_url": "https://twitter.com/i/web/status/926080612410195968",
+                            "display_url": "twitter.com/i/web/status/9…"
+                        }
+                    ],
+                    "hashtags": [],
+                    "user_mentions": [
+                        {
+                            "id": 237920940,
+                            "indices": [
+                                10,
+                                25
+                            ],
+                            "id_str": "237920940",
+                            "screen_name": "karolinerosa12",
+                            "name": "K rol"
+                        }
+                    ]
+                },
+                "id_str": "926080612410195968",
+                "retweet_count": 533,
+                "favorited": false,
+                "user": {
+                    "location": "Rio de Janeiro - Petrolina-PE",
+                    "statuses_count": 66153,
+                    "id": 3241296297,
+                    "description": "Falamos 99% de Flamengo e 1% de outros assuntos. Não levem nossas piadas a sério. Meu twitter minhas regras. Nada do Flamengo tudo pelo Flamengo. SRN #Flatt",
+                    "name": "Central da Nação",
+                    "created_at": "2015-05-08T01:51:42.000Z",
+                    "followers_count": 28932,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/913892311712587777/_yvaavKe_normal.jpg",
+                    "friends_count": 896,
+                    "screen_name": "centraldanacao",
+                    "id_str": "3241296297",
+                    "listed_count": 220,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T13:36:38.000Z",
+                "place": null,
+                "quote_count": 3,
+                "reply_count": 7,
+                "display_text_range": [
+                    0,
+                    140
+                ],
+                "extended_tweet": {
+                    "display_text_range": [
+                        0,
+                        139
+                    ],
+                    "entities": {
+                        "user_mentions": [
+                            {
+                                "id": 237920940,
+                                "indices": [
+                                    10,
+                                    25
+                                ],
+                                "id_str": "237920940",
+                                "screen_name": "karolinerosa12",
+                                "name": "K rol"
+                            }
+                        ],
+                        "symbols": [],
+                        "hashtags": [],
+                        "urls": [],
+                        "media": [
+                            {
+                                "expanded_url": "https://twitter.com/centraldanacao/status/926080612410195968/photo/1",
+                                "display_url": "pic.twitter.com/akMb1HYyJv",
+                                "url": "https://t.co/akMb1HYyJv",
+                                "media_url_https": "https://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg",
+                                "id_str": "926080601551237120",
+                                "sizes": {
+                                    "large": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "small": {
+                                        "h": 680,
+                                        "resize": "fit",
+                                        "w": 382
+                                    },
+                                    "medium": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "thumb": {
+                                        "h": 150,
+                                        "resize": "crop",
+                                        "w": 150
+                                    }
+                                },
+                                "indices": [
+                                    140,
+                                    163
+                                ],
+                                "type": "photo",
+                                "id": 926080601551237100,
+                                "media_url": "http://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg"
+                            }
+                        ]
+                    },
+                    "extended_entities": {
+                        "media": [
+                            {
+                                "expanded_url": "https://twitter.com/centraldanacao/status/926080612410195968/photo/1",
+                                "display_url": "pic.twitter.com/akMb1HYyJv",
+                                "url": "https://t.co/akMb1HYyJv",
+                                "media_url_https": "https://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg",
+                                "id_str": "926080601551237120",
+                                "sizes": {
+                                    "large": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "small": {
+                                        "h": 680,
+                                        "resize": "fit",
+                                        "w": 382
+                                    },
+                                    "medium": {
+                                        "h": 1024,
+                                        "resize": "fit",
+                                        "w": 575
+                                    },
+                                    "thumb": {
+                                        "h": 150,
+                                        "resize": "crop",
+                                        "w": 150
+                                    }
+                                },
+                                "indices": [
+                                    140,
+                                    163
+                                ],
+                                "type": "photo",
+                                "id": 926080601551237100,
+                                "media_url": "http://pbs.twimg.com/media/DNoZZojXcAAoLjc.jpg"
+                            }
+                        ]
+                    },
+                    "full_text": "Pessoal a @karolinerosa12 perdeu o RG lá na norte ontem, ela vai fazer o ENEM domingo. Quem puder repassar pra ajudar, faça isso. Obrigado. https://t.co/akMb1HYyJv"
+                }
+            },
+            "user": {
+                "location": "Rio de Janeiro, Brasil",
+                "statuses_count": 3439,
+                "id": 567232039,
+                "description": "Fluente em carioquês. Coração rubro-negro. Direito por amor.| 👻 @deboraindlc",
+                "name": "Regina Débora",
+                "created_at": "2012-04-30T13:35:57.000Z",
+                "followers_count": 307,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/919324615801008128/p67Hyh1X_normal.jpg",
+                "friends_count": 579,
+                "screen_name": "Deboraindlc",
+                "id_str": "567232039",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:25.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "uf-rj",
+            "enem",
+            "cidade-rio de janeiro",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "uf-rj",
+            "enem",
+            "cidade-rio de janeiro",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d38",
+        "reverse_geocode": [
+            "-22.92008",
+            "-43.33069"
+        ]
+    },
+    {
+        "status": {
+            "text": "Combinei com as minhas amigas de ficar sentado na frente da maior escola da cidade esperando os atrasados do ENEM.",
+            "in_reply_to_status_id": null,
+            "id": 926198584915226600,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657925238,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198584915226624",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "22198♡승철 ㅡ ot3; hvc.",
+                "statuses_count": 17004,
+                "id": 840233990036545500,
+                "description": "wow it's beautiful maknae from neweast · all hands on his fluffly bunny ears! ㅡ 렌 ɞ",
+                "name": "최 ♡ 고 : mingki ·",
+                "created_at": "2017-03-10T16:12:48.000Z",
+                "followers_count": 610,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/925825310909755392/cqMxi9vb_normal.jpg",
+                "friends_count": 369,
+                "screen_name": "953MK",
+                "id_str": "840233990036545537",
+                "listed_count": 1,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:25.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d37",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @bahcamargo1: Pra quem precisar ler isto hoje. 💛 https://t.co/adiCLsVZpY",
+            "in_reply_to_status_id": null,
+            "id": 926198566409986000,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "quoted_status_id": 926184047369388000,
+            "quoted_status_id_str": "926184047369388045",
+            "quoted_status": {
+                "text": "galerinha do Enem:\n\nvocês vão conseguir\nvocês estão capacitados \nvocês vão alcançar seus objetivos\na vida estável tá logo ali\nrespirem fundo",
+                "in_reply_to_status_id": null,
+                "id": 926184047369388000,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 561,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926184047369388045",
+                "retweet_count": 301,
+                "favorited": false,
+                "user": {
+                    "location": "SEGUE VOCÊ",
+                    "statuses_count": 787,
+                    "id": 4098142378,
+                    "description": "Dicas para a redação e possíveis questões.  Sugestões via DM 📩",
+                    "name": "Enem 2017",
+                    "created_at": "2015-11-02T15:22:42.000Z",
+                    "followers_count": 75456,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/909805595296980993/EtlM3oGz_normal.jpg",
+                    "friends_count": 0,
+                    "screen_name": "_ENEM2017",
+                    "id_str": "4098142378",
+                    "listed_count": 643,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T20:27:39.000Z",
+                "place": null,
+                "quote_count": 28,
+                "reply_count": 6
+            },
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657920826,
+            "entities": {
+                "symbols": [],
+                "urls": [
+                    {
+                        "url": "https://t.co/adiCLsVZpY",
+                        "indices": [
+                            52,
+                            75
+                        ],
+                        "expanded_url": "https://twitter.com/_enem2017/status/926184047369388045",
+                        "display_url": "twitter.com/_enem2017/stat…"
+                    }
+                ],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 1535384887,
+                        "indices": [
+                            3,
+                            15
+                        ],
+                        "id_str": "1535384887",
+                        "screen_name": "bahcamargo1",
+                        "name": "βárbara"
+                    }
+                ]
+            },
+            "id_str": "926198566409986048",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "Pra quem precisar ler isto hoje. 💛 https://t.co/adiCLsVZpY",
+                "in_reply_to_status_id": null,
+                "id": 926198138762879000,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "quoted_status_id": 926184047369388000,
+                "quoted_status_id_str": "926184047369388045",
+                "quoted_status": {
+                    "text": "galerinha do Enem:\n\nvocês vão conseguir\nvocês estão capacitados \nvocês vão alcançar seus objetivos\na vida estável tá logo ali\nrespirem fundo",
+                    "in_reply_to_status_id": null,
+                    "id": 926184047369388000,
+                    "in_reply_to_status_id_str": null,
+                    "in_reply_to_user_id": null,
+                    "favorite_count": 561,
+                    "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                    "retweeted": false,
+                    "coordinates": null,
+                    "entities": {
+                        "symbols": [],
+                        "urls": [],
+                        "hashtags": [],
+                        "user_mentions": []
+                    },
+                    "id_str": "926184047369388045",
+                    "retweet_count": 301,
+                    "favorited": false,
+                    "user": {
+                        "location": "SEGUE VOCÊ",
+                        "statuses_count": 787,
+                        "id": 4098142378,
+                        "description": "Dicas para a redação e possíveis questões.  Sugestões via DM 📩",
+                        "name": "Enem 2017",
+                        "created_at": "2015-11-02T15:22:42.000Z",
+                        "followers_count": 75456,
+                        "profile_image_url_https": "https://pbs.twimg.com/profile_images/909805595296980993/EtlM3oGz_normal.jpg",
+                        "friends_count": 0,
+                        "screen_name": "_ENEM2017",
+                        "id_str": "4098142378",
+                        "listed_count": 643,
+                        "translator_type": "none"
+                    },
+                    "geo": null,
+                    "created_at": "2017-11-02T20:27:39.000Z",
+                    "place": null,
+                    "quote_count": 28,
+                    "reply_count": 6
+                },
+                "favorite_count": 0,
+                "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [
+                        {
+                            "url": "https://t.co/adiCLsVZpY",
+                            "indices": [
+                                35,
+                                58
+                            ],
+                            "expanded_url": "https://twitter.com/_enem2017/status/926184047369388045",
+                            "display_url": "twitter.com/_enem2017/stat…"
+                        }
+                    ],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926198138762878977",
+                "retweet_count": 1,
+                "favorited": false,
+                "user": {
+                    "location": null,
+                    "statuses_count": 35999,
+                    "id": 1535384887,
+                    "description": "\"Se tu fores luz na minha vida, verei Deus em ti.\" ✨",
+                    "name": "βárbara",
+                    "created_at": "2013-06-21T00:26:24.000Z",
+                    "followers_count": 2052,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/926125946868027392/1sDd-zxf_normal.jpg",
+                    "friends_count": 1054,
+                    "screen_name": "bahcamargo1",
+                    "id_str": "1535384887",
+                    "listed_count": 2,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T21:23:38.000Z",
+                "place": null,
+                "quote_count": 0,
+                "reply_count": 0,
+                "display_text_range": [
+                    0,
+                    34
+                ]
+            },
+            "user": {
+                "location": null,
+                "statuses_count": 2698,
+                "id": 781689315126571000,
+                "description": "Gustavo ❤",
+                "name": "Nayaraaaa💁🏻",
+                "created_at": "2016-09-30T02:57:10.000Z",
+                "followers_count": 168,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/918538215308570624/NR7C73ps_normal.jpg",
+                "friends_count": 123,
+                "screen_name": "nayara_penati",
+                "id_str": "781689315126571009",
+                "listed_count": 1,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:20.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "institucional",
+            "público geral"
+        ],
+        "keywords": [
+            "institucional",
+            "público geral"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d36",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "@_lealdaniel Enem tá na porta de👀no enem",
+            "in_reply_to_status_id": 925894792596414500,
+            "id": 926198563490664400,
+            "in_reply_to_status_id_str": "925894792596414464",
+            "in_reply_to_user_id": 950287206,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657920130,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 950287206,
+                        "indices": [
+                            0,
+                            12
+                        ],
+                        "id_str": "950287206",
+                        "screen_name": "_lealdaniel",
+                        "name": "Certamente nada Leal"
+                    }
+                ]
+            },
+            "id_str": "926198563490664448",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "Salvador, Brasil",
+                "statuses_count": 25,
+                "id": 833381705843097600,
+                "description": "lascador",
+                "name": "Pedro Thadeu Passos",
+                "created_at": "2017-02-19T18:24:16.000Z",
+                "followers_count": 8,
+                "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+                "friends_count": 8,
+                "screen_name": "thaDeus_MVP",
+                "id_str": "833381705843097601",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:20.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0,
+            "display_text_range": [
+                13,
+                40
+            ]
+        },
+        "categories": [
+            "público geral",
+            "cidade-salvador",
+            "enem",
+            "uf-ba",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "cidade-salvador",
+            "enem",
+            "uf-ba",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d35",
+        "reverse_geocode": [
+            "-16.26667",
+            "-40.56667"
+        ]
+    },
+    {
+        "status": {
+            "text": "RT @_ENEM2017: Gente o enem foi CANCELADO\n\nrepassem esse tweet pra avisar os outros",
+            "in_reply_to_status_id": null,
+            "id": 926198554862944300,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657918073,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 4098142378,
+                        "indices": [
+                            3,
+                            13
+                        ],
+                        "id_str": "4098142378",
+                        "screen_name": "_ENEM2017",
+                        "name": "Enem 2017"
+                    }
+                ]
+            },
+            "id_str": "926198554862944256",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "Gente o enem foi CANCELADO\n\nrepassem esse tweet pra avisar os outros",
+                "in_reply_to_status_id": null,
+                "id": 925864439773003800,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 2607,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "925864439773003776",
+                "retweet_count": 4319,
+                "favorited": false,
+                "user": {
+                    "location": "SEGUE VOCÊ",
+                    "statuses_count": 787,
+                    "id": 4098142378,
+                    "description": "Dicas para a redação e possíveis questões.  Sugestões via DM 📩",
+                    "name": "Enem 2017",
+                    "created_at": "2015-11-02T15:22:42.000Z",
+                    "followers_count": 75456,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/909805595296980993/EtlM3oGz_normal.jpg",
+                    "friends_count": 0,
+                    "screen_name": "_ENEM2017",
+                    "id_str": "4098142378",
+                    "listed_count": 643,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-11-01T23:17:38.000Z",
+                "place": null,
+                "quote_count": 332,
+                "reply_count": 72
+            },
+            "user": {
+                "location": null,
+                "statuses_count": 1430,
+                "id": 4611897286,
+                "description": "snap:cabelera19",
+                "name": "Gabreu",
+                "created_at": "2015-12-26T15:03:09.000Z",
+                "followers_count": 112,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/760234490774056960/Z0Im039F_normal.jpg",
+                "friends_count": 292,
+                "screen_name": "fritsbatata",
+                "id_str": "4611897286",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:18.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d34",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "RT @_ENEM2017: Atenção\n\nTá proibido ficar perguntando a nota do enem das pessoas\nobrigada",
+            "in_reply_to_status_id": null,
+            "id": 926198553260843000,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657917691,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 4098142378,
+                        "indices": [
+                            3,
+                            13
+                        ],
+                        "id_str": "4098142378",
+                        "screen_name": "_ENEM2017",
+                        "name": "Enem 2017"
+                    }
+                ]
+            },
+            "id_str": "926198553260843008",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "Atenção\n\nTá proibido ficar perguntando a nota do enem das pessoas\nobrigada",
+                "in_reply_to_status_id": null,
+                "id": 925496796121632800,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 1493,
+                "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "925496796121632768",
+                "retweet_count": 1264,
+                "favorited": false,
+                "user": {
+                    "location": "SEGUE VOCÊ",
+                    "statuses_count": 787,
+                    "id": 4098142378,
+                    "description": "Dicas para a redação e possíveis questões.  Sugestões via DM 📩",
+                    "name": "Enem 2017",
+                    "created_at": "2015-11-02T15:22:42.000Z",
+                    "followers_count": 75456,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/909805595296980993/EtlM3oGz_normal.jpg",
+                    "friends_count": 0,
+                    "screen_name": "_ENEM2017",
+                    "id_str": "4098142378",
+                    "listed_count": 642,
+                    "translator_type": "none"
+                },
+                "geo": null,
+                "created_at": "2017-10-31T22:56:45.000Z",
+                "place": null,
+                "quote_count": 104,
+                "reply_count": 5
+            },
+            "user": {
+                "location": "Ipatinga, Brasil",
+                "statuses_count": 310,
+                "id": 779634874475016200,
+                "description": "The creepy kid",
+                "name": "Gustavo Papa",
+                "created_at": "2016-09-24T10:53:33.000Z",
+                "followers_count": 58,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/834953165535645696/lQnsSMd9_normal.jpg",
+                "friends_count": 215,
+                "screen_name": "Gustavo_Papa_",
+                "id_str": "779634874475016192",
+                "listed_count": 0,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:17.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "uf-mg",
+            "enem",
+            "cidade-ipatinga",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "uf-mg",
+            "enem",
+            "cidade-ipatinga",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d33",
+        "reverse_geocode": [
+            "-23.5173",
+            "-47.51274"
+        ]
+    },
+    {
+        "status": {
+            "text": "RT @macaulincrack: to nei ai pro enem quero eh fuma makonha",
+            "in_reply_to_status_id": null,
+            "id": 926198547409768400,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657916296,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": [
+                    {
+                        "id": 1197924782,
+                        "indices": [
+                            3,
+                            17
+                        ],
+                        "id_str": "1197924782",
+                        "screen_name": "macaulincrack",
+                        "name": "marginal influencer"
+                    }
+                ]
+            },
+            "id_str": "926198547409768450",
+            "retweet_count": 0,
+            "favorited": false,
+            "retweeted_status": {
+                "text": "to nei ai pro enem quero eh fuma makonha",
+                "in_reply_to_status_id": null,
+                "id": 926161419447492600,
+                "in_reply_to_status_id_str": null,
+                "in_reply_to_user_id": null,
+                "favorite_count": 171,
+                "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Lite</a>",
+                "retweeted": false,
+                "coordinates": null,
+                "entities": {
+                    "symbols": [],
+                    "urls": [],
+                    "hashtags": [],
+                    "user_mentions": []
+                },
+                "id_str": "926161419447492608",
+                "retweet_count": 105,
+                "favorited": false,
+                "user": {
+                    "location": "Brasília, Brazil",
+                    "statuses_count": 29175,
+                    "id": 1197924782,
+                    "description": "Este perfil contém mais de 4.700 substâncias tóxicas, e shitpost que causam dependência física ou psíquica. [+18]",
+                    "name": "marginal influencer",
+                    "created_at": "2013-02-19T16:39:46.000Z",
+                    "followers_count": 44078,
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/813456213010710528/Qnt5XoVQ_normal.jpg",
+                    "friends_count": 208,
+                    "screen_name": "macaulincrack",
+                    "id_str": "1197924782",
+                    "listed_count": 506,
+                    "translator_type": "regular"
+                },
+                "geo": null,
+                "created_at": "2017-11-02T18:57:44.000Z",
+                "place": null,
+                "quote_count": 6,
+                "reply_count": 2
+            },
+            "user": {
+                "location": "Campo Grande, Brasil",
+                "statuses_count": 26773,
+                "id": 158489272,
+                "description": "🌹\n              \n                                                              Snapchat: batalhavictor",
+                "name": "vito",
+                "created_at": "2010-06-22T21:06:27.000Z",
+                "followers_count": 368,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/922642290782457856/NS-RPqvL_normal.jpg",
+                "friends_count": 93,
+                "screen_name": "batalhavictor",
+                "id_str": "158489272",
+                "listed_count": 2,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:16.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "uf-ms",
+            "enem",
+            "cidade-campo grande",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "uf-ms",
+            "enem",
+            "cidade-campo grande",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d31",
+        "reverse_geocode": [
+            "-16.48971",
+            "-43.72939"
+        ]
+    },
+    {
+        "status": {
+            "text": "Estudar pro Enem é muito chato gzuis",
+            "in_reply_to_status_id": null,
+            "id": 926198547049050100,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657916210,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198547049050113",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "MusicLand",
+                "statuses_count": 11026,
+                "id": 4323597154,
+                "description": "Dó, Ré, Mi, Fá, Sol, Lá, Xiumiiiin..🎶\nFIGHTING!!♥💪\nDEUS é bom o tempo todo, e o tempo todo, Deus é bom!",
+                "name": "🌼Marshmallow🐻🐼",
+                "created_at": "2015-11-30T00:49:41.000Z",
+                "followers_count": 171,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/835964590198566919/Y5I7f-gM_normal.jpg",
+                "friends_count": 646,
+                "screen_name": "_ouat_gv",
+                "id_str": "4323597154",
+                "listed_count": 3,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:16.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "enem",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d32",
+        "reverse_geocode": null
+    },
+    {
+        "status": {
+            "text": "Amanhã churras, sábado scooba e domingo Enem 😂",
+            "in_reply_to_status_id": null,
+            "id": 926198539235070000,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "favorite_count": 0,
+            "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+            "retweeted": false,
+            "coordinates": null,
+            "timestamp_ms": 1509657914347,
+            "entities": {
+                "symbols": [],
+                "urls": [],
+                "hashtags": [],
+                "user_mentions": []
+            },
+            "id_str": "926198539235069952",
+            "retweet_count": 0,
+            "favorited": false,
+            "user": {
+                "location": "Tramandaí, Brasil",
+                "statuses_count": 22139,
+                "id": 2980965415,
+                "description": "Não existem más influências quando você tem personalidade própria.",
+                "name": "filha de Oxum 🍯✨",
+                "created_at": "2015-01-13T23:04:57.000Z",
+                "followers_count": 447,
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/925939634793844737/gKB-nHRs_normal.jpg",
+                "friends_count": 291,
+                "screen_name": "kimmberly_Ss",
+                "id_str": "2980965415",
+                "listed_count": 2,
+                "translator_type": "none"
+            },
+            "geo": null,
+            "created_at": "2017-11-02T21:25:14.000Z",
+            "place": null,
+            "quote_count": 0,
+            "reply_count": 0
+        },
+        "categories": [
+            "público geral",
+            "cidade-tramandaí",
+            "enem",
+            "uf-rs",
+            "educação básica"
+        ],
+        "keywords": [
+            "público geral",
+            "cidade-tramandaí",
+            "enem",
+            "uf-rs",
+            "educação básica"
+        ],
+        "id": "59fb8d4cc6bd8d0011307d30",
+        "reverse_geocode": [
+            "-30.03977",
+            "-50.23016"
+        ]
+    }
+]
