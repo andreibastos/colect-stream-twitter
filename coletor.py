@@ -13,6 +13,8 @@ import threading, tweepy, socket, traceback, sys
 
 import requests, urllib, urllib3
 
+import lib_text 
+
 #import datasource.elasticsearch
 
 #######################################
@@ -106,7 +108,7 @@ class Collector(threading.Thread):
 		self.active = False
 		self.connected = False
 		self.stream = None
-		self.list_temp_tweets_to_insert = []  
+		self.documents_to_insert = []  
 		super(Collector, self).__init__()
 
 
@@ -175,92 +177,50 @@ class Collector(threading.Thread):
 		if 	self.stream is not None:
 			self.stream.disconnect()		
 		
-		
 class StreamingListener(tweepy.StreamListener):
 	def __init__(self, collector, *args, **kwargs):
 		self.collector = collector
 		self.count = 0
-		self.list_temp_tweets_to_insert = []
+		self.documents_to_insert = []
 		super(StreamingListener, self).__init__(*args, **kwargs)
-
-	def on_data(self, data):
-		global api_categorize,api_categorize2
+	def on_data(self, data):		
 		try:
+			#recebe o dado do twitter e transforma em objeto
 			status = json.loads(data)
-			if status.get('timestamp_ms') :
-				status['timestamp_ms'] = long(status['timestamp_ms'])
-			else:
-				if status.get("created_at"):				
-					status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
-				
 
-			status['id'] = long(status['id'])
+			#corrige os campos do status para inserir no database corretamente
+			status_fixed = fix_status(status)
 
-			place = status.get('place')
-			if(place):
-				place['id'] = str(place['id'])
-				status['place'] = place
-           	
-			user = status['user']
-			user['id'] = long(user['id'])
-			status['user'] = user
-			# user = user['screen_name']						
-			text = str(unicode(status['text']).encode('utf-8')).replace("\n","")			
-									
-			categories = categoriza(status, api_categorize)
-			categories2 = categoriza(status, api_categorize2)
+			#categoriza usando endpoints de categorização
+			categories = get_categories(status_fixed)
 
-			articles = get_articles(status)		
-			
-			keywords = []
-			reverse_geocode = []
+			#verifica se o dado tem algum block
+			blocked = is_blocked(status_fixed)
 
-			if categories:
-				keywords = categories.get("keywords")			
-				reverse_geocode = categories.get("reverse_geocode")
-				if reverse_geocode:
-					reverse_geocode = list(map(float,reverse_geocode))                    
-			if categories2:
-				if keywords:
-					keywords = list(set(keywords + categories2.get("keywords")))
-				else:
-					keywords = categories2.get("keywords")
+			#captura os links se houver
+			articles = get_articles(status_fixed)
 
+			#gera as palavras como um vetor para fazer uma pesquisa de texto
+			words = get_words(status_fixed)
 
-			created_at = status.get('created_at');
-			if (created_at):
-				print(created_at,text)
-			else:
-				print(text)
-			twitter_obj = {}				
-			twitter_obj['status'] = status
-			twitter_obj['keywords'] = keywords
-			twitter_obj['categories'] = keywords
-			twitter_obj['reverse_geocode'] = reverse_geocode
+			# #ajusta o documento para o database
+			document = prepare_document(status_fixed, categories, blocked, words)
 
-
-			# print(json.dumps(twitter_obj,indent=4))
+			# #atualiza o contador e adiciona na lista
 			self.collector.count += 1
+			self.collector.documents_to_insert.append(document) 
 
-			self.collector.list_temp_tweets_to_insert.append(twitter_obj) 
-
-	        
-			try:
-				if((self.collector.count % NUM_PER_INSERT) == 0):             
-					# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
-					saveData(self.collector.list_temp_tweets_to_insert)				
-					log_system.insert_tweets(NUM_PER_INSERT)
-					print('save in database {0} tweets'.format(NUM_PER_INSERT))	
-					self.collector.list_temp_tweets_to_insert = []			
-			except Exception as e:
-				log_system.error('saveInDatabase',e)			
-				return False
+			#verifica se tem quantidade suficiente no bulk para ser enviado
+			if((self.collector.count % NUM_PER_INSERT) == 0):             
+				insert_tweets(self.collector.documents_to_insert)
+				print('save in database {0} tweets'.format(NUM_PER_INSERT))	
+				self.collector.documents_to_insert = []			
+				self.collector.count = 0
 
 		except Exception as e:  
 			log_system.error('on_data',e)						
-			# return False
+			
 		super(StreamingListener, self).on_data(data)
-
 	def on_error(self, status_code):
 		log_system.error('on_error', status_code)				
 		if status_code == 401:
@@ -314,6 +274,110 @@ def getConfig():
 	except Exception as e:		
 		log_system.error('getConfig',e)
 	pass
+
+def fix_status(status):
+	try:
+		#corrige o tempo 
+		if status.get('timestamp_ms') :
+			status['timestamp_ms'] = long(status['timestamp_ms'])
+		else:
+			if status.get("created_at"):				
+				status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
+
+		#corrige o status.id
+		status['id'] = long(status['id'])
+
+		#corrige o place.id
+		place = status.get('place')
+		if(place):
+			place['id'] = str(place.get('id',""))
+			status['place'] = place
+	  	
+	  	#corrige o user
+		user = status['user']
+		user['id'] = long(user['id'])
+		status['user'] = user
+		screen_name = status['user']['screen_name']
+								
+		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
+		print("@"+screen_name+": "+ text + " : " + status.get("created_at"))
+		
+		return status
+	except Exception as e:
+		print 'fix_status'
+		raise e
+
+#adaptação para atender a uma segunda categorização
+def get_categories(status):
+	global api_categorize,api_categorize2	
+	categories_api1 = categoriza(status, api_categorize)
+	categories_api2 = categoriza(status, api_categorize2)
+
+	keywords = []
+	reverse_geocode = []
+
+	if categories_api1:
+		keywords = categories_api1.get("keywords")			
+		reverse_geocode = categories_api1.get("reverse_geocode")
+		if reverse_geocode:
+			reverse_geocode = list(map(float,reverse_geocode))                    
+	if categories_api2:
+		if keywords:
+			keywords = list(set(keywords + categories_api2.get("keywords")))
+		else:
+			keywords = categories_api2.get("keywords")	
+
+	categories = {"reverse_geocode":reverse_geocode,"keywords":keywords}
+
+	return categories
+
+
+def is_blocked(status):	
+	#not implements
+	return False
+
+def get_articles(status):
+	#not implements
+	return {}
+	# urls = status["entities"]["urls"]
+	# if (urls):
+	# 	for url in urls:
+	# 		expanded_url = url["expanded_url"]
+	# 		print(expanded_url)
+			# pass	
+
+def get_words(status):
+	try:		
+		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","").lower()
+		words = lib_text.remove_punctuation(text)
+		words = lib_text.remove_punctuation_special(words)
+		# words = str(unicode(words.replace("\n","")).encode("utf-8")).decode("utf-8")				
+		words = words.split(" ")
+		return words
+	except Exception as e:
+		print 'get_words'
+		raise e
+	
+
+def prepare_document(status, categories, blocked, words):
+	document = {}				
+	document['status'] = status
+	document['keywords'] = categories.get("keywords", None)
+	document['categories'] = categories.get("keywords", None)
+	document['reverse_geocode'] = categories.get("reverse_geocode", None)	
+	document['blocked'] = blocked
+	document['words'] = words
+
+def insert_tweets(documents):
+	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
+	try:
+		data=json.dumps(documents)
+		r = requests.post(api_database, data=data, headers=headers)
+		r.raise_for_status()		
+		return {'ok':1, 'msg':'gravado com sucesso'}			
+	except requests.exceptions.HTTPError as e:
+		log_system.error('saveData',e)
+		raise e
 
 # chaves de idenficação
 def read_keys():	
@@ -393,31 +457,8 @@ def categoriza(status, api_categorize):
 		log_system.error('request categoriza', e)		
 		return {}
 
-def get_articles(status):
-	urls = status["entities"]["urls"]
-	if (urls):
-		for url in urls:
-			expanded_url = url["expanded_url"]
-			print(expanded_url)
-			pass
 
 
-def saveData(data):
-	data=json.dumps(data)
-	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
-	try:
-
-		r = requests.post(api_database, data=data, headers=headers)
-		r.raise_for_status()
-		
-		return {'ok':1, 'msg':'gravado com sucesso'}			
-	except requests.exceptions.HTTPError as e:
-		log_system.error('saveData',e)
-
-	try:
-		pass
-	except Exception as e:
-		log_system.error('saveData',e)
 
 ###################################################################
 
