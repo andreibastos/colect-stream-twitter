@@ -18,7 +18,7 @@ class TestPersistenceElasticsearchTwitter(unittest.TestCase):
     uri = settings.datasource.get('es_uri', 'http://localhost:9200')
     self.elasticsearch = elasticsearch.ElasticsearchEngine(uri=uri)
     self.index = 'twitter-test'
-    self.type = 'statusues'
+    self.type = 'statuses'
     self.routing = 'tests'
     statusues_test_file = os.path.join(PATH_ABS, 'data/twitter-statusues.json')
     with open(statusues_test_file) as statusues_test:
