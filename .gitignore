@@ -31,6 +31,38 @@ keys\.json
 
 env
 .env
+bin\*
+include\*
+lib\*
+local\*
+querys.json
+
+pip-selfcheck.json
+
+*.sublime-project
+
+*.sublime-workspace
+
+keys_exemplo\.json
+
+*.log
+
+query_exemplo\.json
+
+matador_thread
+
+modelo\.json
+
+query_exemplo \(copy\)\.json
+
+
+
+colect-stream-twitter\.tar\.gz
+
+keys\.json
+
+env
+.env
 querys_dilma\.json
 
 share/python-wheels/CacheControl-0\.11\.5-py2\.py3-none-any\.whl
@@ -75,9 +107,4 @@ datasource/__pycache__/
 
 *.pyc
 
-<<<<<<< refs/remotes/GustavoRPS/feature/ds-elasticsearch
-settings.cfg
-*.pyc
-=======
->>>>>>> gitignore
 kill_coletor
