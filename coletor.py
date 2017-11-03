@@ -219,7 +219,7 @@ class StreamingListener(tweepy.StreamListener):
 				keywords = categories.get("keywords")			
 				reverse_geocode = categories.get("reverse_geocode")
 				if reverse_geocode:
-					reverse_geocode = list(map(int,reverse_geocode))                    
+					reverse_geocode = list(map(float,reverse_geocode))                    
 			if categories2:
 				if keywords:
 					keywords = list(set(keywords + categories2.get("keywords")))
