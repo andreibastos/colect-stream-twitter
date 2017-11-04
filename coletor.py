@@ -230,15 +230,9 @@ class StreamingListener(tweepy.StreamListener):
 				if flags_enable.get("send_mongodb_api"):
 					insert_tweets(self.collector.documents_to_insert)
 					print('save in database {0} tweets'.format(NUM_PER_INSERT))	
-				if flags_enable.get("send_elastic"):
-					try:
-						elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)
-						
-					except Exception as e:
-						# with open('data.json', 'w') as outfile:
-						# 	json.dump(self.collector.documents_to_insert, outfile, indent=4)
-						# print e
-						raise e				
+				if flags_enable.get("send_elastic"):					
+					elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)
+			
 
 				self.collector.documents_to_insert = []			
 				self.collector.count = 0
