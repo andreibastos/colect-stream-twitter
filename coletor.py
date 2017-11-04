@@ -15,6 +15,8 @@ import requests, urllib, urllib3
 
 import lib_text 
 
+from persistence import elasticsearch
+
 #import datasource.elasticsearch
 
 #######################################
@@ -28,6 +30,7 @@ api_categorize = ''
 filename_log = ''
 filename_keys = '';
 filename_querys = '';
+datasource = {}
 
 sendTelegram = False
 chat_id = 0
@@ -42,6 +45,9 @@ keys = []
 querys = []
 log_system = ''
 active_collectors = []
+
+elastic_search = {}
+flags_enable = {}
 
 #####################################################
 
@@ -191,17 +197,21 @@ class StreamingListener(tweepy.StreamListener):
 			#corrige os campos do status para inserir no database corretamente
 			status_fixed = fix_status(status)
 
-			#categoriza usando endpoints de categorização
-			categories = get_categories(status_fixed)
+			#categoriza usando endpoints de categorização			
+			if flags_enable.get("send_categorie"):				
+				categories = get_categories(status_fixed)
 
 			#verifica se o dado tem algum block
-			blocked = is_blocked(status_fixed)
+			if flags_enable.get("blocked_enable"):				
+				blocked = is_blocked(status_fixed)
 
 			#captura os links se houver
-			articles = get_articles(status_fixed)
+			if flags_enable.get("get_articles"):				
+				articles = get_articles(status_fixed)
 
 			#gera as palavras como um vetor para fazer uma pesquisa de texto
-			words = get_words(status_fixed)
+			if flags_enable.get("word_split"):				
+				words = get_words(status_fixed)
 
 			# #ajusta o documento para o database
 			document = prepare_document(status_fixed, categories, blocked, words)
@@ -211,9 +221,13 @@ class StreamingListener(tweepy.StreamListener):
 			self.collector.documents_to_insert.append(document) 
 
 			#verifica se tem quantidade suficiente no bulk para ser enviado
-			if((self.collector.count % NUM_PER_INSERT) == 0):             
-				insert_tweets(self.collector.documents_to_insert)
-				print('save in database {0} tweets'.format(NUM_PER_INSERT))	
+			if((self.collector.count % NUM_PER_INSERT) == 0):
+				if flags_enable.get("send_mongodb_api"):
+					insert_tweets(self.collector.documents_to_insert)
+					print('save in database {0} tweets'.format(NUM_PER_INSERT))	
+				if flags_enable.get("send_elastic"):				
+					elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)
+
 				self.collector.documents_to_insert = []			
 				self.collector.count = 0
 
@@ -237,11 +251,35 @@ class StreamingListener(tweepy.StreamListener):
 		# print(status)
 		pass
 
+class PersistenceElasticsearchTwitter(object):
+	"""docstring for PersistenceElasticsearchTwitter"""
+
+	def __init__(self):		
+		uri = datasource.get('es_uri', 'http://localhost:9200')
+		self.elasticsearch = elasticsearch.ElasticsearchEngine(uri=uri)
+		self.index = 'twitter-test'
+		self.type = 'statuses'
+		self.routing = 'tests'		
+		# super(PersistenceElasticsearchTwitter, self).__init__()
+
+
+	def ping(self):
+		self.assertTrue(self.elasticsearch.client.ping())
+
+	def insert_statusues_bulk(self, statusues ):    	
+		self.elasticsearch.insert(
+			index=self.index,
+			type=self.type,
+			routing=self.routing,
+			doc_or_docs=statusues,
+		)
+		
+
 ##################################################################
 
 ######################### Funções ################################
 def getConfig():
-	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram
+	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable 
 	try:
 		data = {}
 		with open('config.json') as data_file:    
@@ -249,9 +287,11 @@ def getConfig():
 
 		if data:
 
-			endpoints = data.get('endpoints')
-			files = data.get('files')			
-			collector = data.get('collector')
+			endpoints = data.get('endpoints', None)
+			files = data.get('files', None)			
+			collector = data.get('collector',None)
+			datasource = data.get('datasource',None)
+			flags_enable = data.get("flags_enable", None)
 			
 
 
@@ -362,11 +402,17 @@ def get_words(status):
 def prepare_document(status, categories, blocked, words):
 	document = {}				
 	document['status'] = status
-	document['keywords'] = categories.get("keywords", None)
-	document['categories'] = categories.get("keywords", None)
-	document['reverse_geocode'] = categories.get("reverse_geocode", None)	
-	document['blocked'] = blocked
-	document['words'] = words
+	if categories:			
+		document['keywords'] = categories.get("keywords", None)
+		document['categories'] = categories.get("keywords", None)
+		document['reverse_geocode'] = categories.get("reverse_geocode", None)
+	if blocked:		
+		document['blocked'] = True
+	else:
+		document['blocked'] = False
+	if words:			
+		document['words'] = words
+	return document
 
 def insert_tweets(documents):
 	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
@@ -466,7 +512,7 @@ def categoriza(status, api_categorize):
 def main():
 	getConfig();
 
-	global log_system, keys
+	global log_system, keys, elastic_search
 	# cria o objeto de log do sistema
 	log_system = log_collector();
 
@@ -475,6 +521,10 @@ def main():
 	
 	#ler as querys
 	querys = read_querys();
+
+	# cria o objeto do elastic search
+	elastic_search = PersistenceElasticsearchTwitter()
+
 	
 	index_query = 1;
 	for query in querys:
