@@ -352,7 +352,7 @@ def fix_status(status):
 		
 		return status
 	except Exception as e:
-		print 'fix_status'
+		print('fix_status')
 		raise e
 
 #adaptação para atender a uma segunda categorização
@@ -397,21 +397,16 @@ def get_articles(status):
 
 def get_words(status):
 	try:		
-		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","").lower()
-		words = lib_text.remove_punctuation(text)
-		words = lib_text.remove_punctuation_special(words)		
-		# words = str(unicode(words.replace("\n","")).encode("utf-8")).decode("utf-8")				
-		words = filter(None, words.split(" ")) 
-
-		list_words = []
-		for word in words:
-			if not lib_text.is_stopword(word)  and word  is not "" and word  is not None:
-				list_words.append(word)
-
+		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")
+		try:
+			words = lib_text.get_words(text)
+		except Exception as e:
+			print e
+			raise e
 		
-		return list_words
+		return words
 	except Exception as e:
-		print 'get_words'
+		print ('get_words')
 		raise e
 	
 

@@ -62,6 +62,53 @@ UNDESIRED_CHARACTERS.add('…')
 UNDESIRED_CHARACTERS_SPECIAL = UNDESIRED_CHARACTERS.copy()
 UNDESIRED_CHARACTERS_SPECIAL.remove('_')
 
+def get_words(str_s):
+    '''
+    Get clear valid words from text.
+    '''
+
+    valid_words = []
+    for word in str_s.split():        
+        
+        if check_word(word):
+            word = remove_punctuation(word)
+            wod = remove_punctuation_special(word)
+            valid_words.append(word)
+    return valid_words
+
+def check_word(str_s):
+    '''
+    Check if string is a valid word or not.
+    '''
+    word_remove_list = ['rt', '\n', '', 'http', 'https', '//t', '//']
+    word_start = ['@', '#', 'co/', '/', 'http']
+    word_in = ['kk', 'rsrs', 'haha', '/']
+    if len(str_s) > 1\
+    and not is_stopword(str_s)\
+    and not any(w in str_s for w in word_in)\
+    and not any(str_s.startswith(w) for w in word_start)\
+    and not str_s.lower() in word_remove_list:
+        return True
+    return False
+
+def clear_word(str_s):
+    '''
+    Clear string from accents and punctuation.
+    '''
+    try:
+        str_s = str_s.lower()
+        str_s = remove_latin_accents(str_s)
+        str_s = remove_punctuation(str_s)
+        str_s = remove_punctuation_special(str_s)
+        
+    except Exception as e:
+        print 'aqii'
+        raise e
+
+
+    return str_s
+
+
 def remove_punctuation(str_string):
     """
     This function iterates through each character in 'str_string'
@@ -113,6 +160,15 @@ def is_stopword(str_string):
         return True
     else:
         return False
+def is_mention(str_s):
+    '''
+    Returns True if the input is a mention and False if not.
+    A mention is considered here as a string that starts with
+    the "@" (at) character.
+    '''
+    if (str_s.startswith("@")) and not(str_s.endswith("…")):    
+        return True
+    else: return False
 
 def is_hashtag(str_s):
     """
@@ -120,6 +176,7 @@ def is_hashtag(str_s):
     A hashtag is considered as string that starts with the "#"
     character.
     """
+
     if str_s.startswith("#") and not(str_s.endswith("…")):
         return True
     else:
@@ -139,6 +196,7 @@ def is_twitter_mention(str_s):
 def is_URL(str_s):
     """
     Returns True if str_string is an URL or False if not. """
+
     if (str_s.startswith("ht") or str_s.startswith('hr')) and not(str_s.endswith("…")):
         return True
     else:
