@@ -390,9 +390,10 @@ def get_words(status):
 	try:		
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","").lower()
 		words = lib_text.remove_punctuation(text)
-		words = lib_text.remove_punctuation_special(words)
+		words = lib_text.remove_punctuation_special(words)		
 		# words = str(unicode(words.replace("\n","")).encode("utf-8")).decode("utf-8")				
-		words = words.split(" ")
+		words = filter(None, words.split(" "))
+
 		return words
 	except Exception as e:
 		print 'get_words'
