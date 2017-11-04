@@ -375,7 +375,7 @@ def get_categories(status):
 		reverse_geocode = categories_api1.get("reverse_geocode")
 		if reverse_geocode:
 			reverse_geocode = list(map(float,reverse_geocode))
-			reverse_geocode = reversed(reverse_geocode)
+			reverse_geocode = list(reversed(reverse_geocode))
 	if categories_api2:
 		if keywords:
 			keywords = list(set(keywords + categories_api2.get("keywords")))
