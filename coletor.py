@@ -45,6 +45,7 @@ keys = []
 querys = []
 log_system = ''
 active_collectors = []
+config_elastic_search = None
 
 elastic_search = {}
 flags_enable = {}
@@ -258,21 +259,23 @@ class StreamingListener(tweepy.StreamListener):
 class PersistenceElasticsearchTwitter(object):
 	"""docstring for PersistenceElasticsearchTwitter"""
 
-	def __init__(self):		
+	def __init__(self, config_elastic_search):		
 		uri = datasource.get('es_uri', 'http://localhost:9200')
 		self.elasticsearch = elasticsearch.ElasticsearchEngine(uri=uri)
-		self.index = 'twitter-test'
 		self.type = 'statuses'
-		self.routing = 'tests'		
+		self.routing = config_elastic_search.get("routing","labic")		
+		self.index = config_elastic_search.get("index","twitter")
+		print self.index
 		# super(PersistenceElasticsearchTwitter, self).__init__()
 
 
 	def ping(self):
 		self.assertTrue(self.elasticsearch.client.ping())
 
-	def insert_statusues_bulk(self, statusues ):    	
+	def insert_statusues_bulk(self, statusues ):
+		today = str(datetime.date.today())	
 		self.elasticsearch.insert(
-			index=self.index,
+			index=self.index.replace("-YYYY-MM-DD",today),
 			type=self.type,
 			routing=self.routing,
 			doc_or_docs=statusues,
@@ -282,8 +285,8 @@ class PersistenceElasticsearchTwitter(object):
 ##################################################################
 
 ######################### Funções ################################
-def getConfig():
-	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable 
+def get_config():
+	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable, config_elastic_search
 	try:
 		data = {}
 		with open('config.json') as data_file:    
@@ -296,6 +299,7 @@ def getConfig():
 			collector = data.get('collector',None)
 			datasource = data.get('datasource',None)
 			flags_enable = data.get("flags_enable", None)
+			config_elastic_search = data.get("elasticsearch", None)
 			
 
 
@@ -316,7 +320,7 @@ def getConfig():
 			pass
 		pass
 	except Exception as e:		
-		log_system.error('getConfig',e)
+		log_system.error('get_config',e)
 	pass
 
 def fix_status(status):
@@ -515,7 +519,7 @@ def categoriza(status, api_categorize):
 
 ######################## Rotina Principal #########################
 def main():
-	getConfig();
+	get_config();
 
 	global log_system, keys, elastic_search
 	# cria o objeto de log do sistema
@@ -529,7 +533,7 @@ def main():
 
 	# cria o objeto do elastic search
 	if flags_enable.get("send_elastic"):
-		elastic_search = PersistenceElasticsearchTwitter()
+		elastic_search = PersistenceElasticsearchTwitter(config_elastic_search)
 
 	
 	index_query = 1;
