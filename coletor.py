@@ -429,9 +429,9 @@ def prepare_document(status, categories, blocked, words):
 		document['block'] = False
 	if words:
 		status['text_terms'] = words
-		
+
 	document['status'] = status
-		document['words'] = words
+		
 	return document
 
 def insert_tweets(documents):
