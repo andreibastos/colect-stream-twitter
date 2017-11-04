@@ -276,7 +276,7 @@ class PersistenceElasticsearchTwitter(object):
 		today = str(datetime.date.today())	
 		
 		self.elasticsearch.insert(
-			index=self.index.replace("-YYYY-MM-DD",today),
+			index=self.index.replace("YYYY-MM-DD",today),
 			type=self.type,
 			routing=self.routing,
 			doc_or_docs=statusues,
