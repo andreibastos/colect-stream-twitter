@@ -409,7 +409,13 @@ def get_words(status):
 		# words = str(unicode(words.replace("\n","")).encode("utf-8")).decode("utf-8")				
 		words = filter(None, words.split(" ")) 
 
-		return words
+		list_words = []
+		for word in words:
+			if not lib_text.is_stopword(word)  and word  is not "" and word  is not None:
+				list_words.append(word)
+
+		
+		return list_words
 	except Exception as e:
 		print 'get_words'
 		raise e
