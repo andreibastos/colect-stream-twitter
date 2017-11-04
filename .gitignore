@@ -33,3 +33,4 @@ env
 .env
 settings.cfg
 *.pyc
+.vscode
