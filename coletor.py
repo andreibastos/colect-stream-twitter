@@ -13,6 +13,12 @@ import threading, tweepy, socket, traceback, sys
 
 import requests, urllib, urllib3
 
+import lib_text 
+
+from persistence import elasticsearch
+
+#import datasource.elasticsearch
+
 #######################################
 urllib3.disable_warnings()
 
@@ -24,7 +30,10 @@ api_categorize = ''
 filename_log = ''
 filename_keys = '';
 filename_querys = '';
+datasource = {}
 
+sendTelegram = False
+chat_id = 0
 
 NUM_PER_INSERT = 10 ;
 DATE_FORMAT_TWITTER = "%a %b %d %H:%M:%S %z %Y";
@@ -36,6 +45,10 @@ keys = []
 querys = []
 log_system = ''
 active_collectors = []
+config_elastic_search = None
+
+elastic_search = {}
+flags_enable = {}
 
 #####################################################
 
@@ -50,8 +63,10 @@ class log_collector():
 		# self.file.write(log)
 
 	def send_telegram(self,text):
-		print(text)
-		chat_id = 42637535		
+		if not sendTelegram:
+			return
+
+		print(text)			
 		params = {'chat_id':chat_id,'text':text}
 		
 		try:			
@@ -100,7 +115,7 @@ class Collector(threading.Thread):
 		self.active = False
 		self.connected = False
 		self.stream = None
-		self.list_temp_tweets_to_insert = []  
+		self.documents_to_insert = []  
 		super(Collector, self).__init__()
 
 
@@ -163,94 +178,68 @@ class Collector(threading.Thread):
 		self.main()
 
 	def stop(self):				
-		print "Stopping collector: " +  ", ".join(c for c in self.query)
+		print("Stopping collector: " +  ", ".join(c for c in self.query))
 		self.active = False	
+		self.connected = False
 		if 	self.stream is not None:
 			self.stream.disconnect()		
-		# print dir(self.stream)
 		
 class StreamingListener(tweepy.StreamListener):
 	def __init__(self, collector, *args, **kwargs):
 		self.collector = collector
 		self.count = 0
-		self.list_temp_tweets_to_insert = []
+		self.documents_to_insert = []
 		super(StreamingListener, self).__init__(*args, **kwargs)
-
-	def on_data(self, data):
-		global api_categorize,api_categorize2
+	def on_data(self, data):		
 		try:
+			words = None
+			categories = None
+
+
+			#recebe o dado do twitter e transforma em objeto
 			status = json.loads(data)
-			if status.get('timestamp_ms') :
-				status['timestamp_ms'] = long(status['timestamp_ms'])
-			else:
-				if status.get("created_at"):				
-					status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
-				
 
-			status['id'] = long(status['id'])
+			#corrige os campos do status para inserir no database corretamente
+			status_fixed = fix_status(status)
 
-			place = status.get('place')
-			if(place):
-				place['id'] = str(place['id'])
-				status['place'] = place
-           	
-			user = status['user']
-			user['id'] = long(user['id'])
-			status['user'] = user
-			# user = user['screen_name']						
-			text = str(unicode(status['text']).encode('utf-8')).replace("\n","")			
-									
-			categories = categoriza(status, api_categorize)
-			categories2 = categoriza(status, api_categorize2)
+			#categoriza usando endpoints de categorização			
+			if flags_enable.get("send_categorie"):				
+				categories = get_categories(status_fixed)
 
-			articles = get_articles(status)		
-			
-			keywords = []
-			reverse_geocode = []
+			#verifica se o dado tem algum block
+			if flags_enable.get("blocked_enable"):				
+				blocked = is_blocked(status_fixed)
 
-			if categories:
-				keywords = categories.get("keywords")			
-				reverse_geocode = categories.get("reverse_geocode")
-			if categories2:
-				if keywords:
-					keywords = list(set(keywords + categories2.get("keywords")))
-				else:
-					keywords = categories2.get("keywords")
+			#captura os links se houver
+			if flags_enable.get("get_articles"):				
+				articles = get_articles(status_fixed)
 
+			#gera as palavras como um vetor para fazer uma pesquisa de texto
+			if flags_enable.get("word_split"):				
+				words = get_words(status_fixed)
 
-			created_at = status.get('created_at');
-			if (created_at):
-				print(created_at,text)
-			else:
-				print(text)
-			twitter_obj = {}				
-			twitter_obj['status'] = status
-			twitter_obj['keywords'] = keywords
-			twitter_obj['categories'] = keywords
-			twitter_obj['reverse_geocode'] = reverse_geocode
+			# #ajusta o documento para o database
+			document = prepare_document(status_fixed, categories, blocked, words)
 
-
-			# print(json.dumps(twitter_obj,indent=4))
+			# #atualiza o contador e adiciona na lista
 			self.collector.count += 1
+			self.collector.documents_to_insert.append(document) 
 
-			self.collector.list_temp_tweets_to_insert.append(twitter_obj)        
-	        
-			try:
-				if((self.collector.count % NUM_PER_INSERT) == 0):             
-					# twitter_collection.insert(self.collector.list_temp_tweets_to_insert)
-					saveData(self.collector.list_temp_tweets_to_insert)				
-					log_system.insert_tweets(NUM_PER_INSERT)
-					print 'save in database {0} tweets'.format(NUM_PER_INSERT)
-					self.collector.list_temp_tweets_to_insert = []			
-			except Exception as e:
-				log_system.error('saveInDatabase',e)			
-				return False
+			#verifica se tem quantidade suficiente no bulk para ser enviado
+			if((self.collector.count % NUM_PER_INSERT) == 0):
+				if flags_enable.get("send_mongodb_api"):
+					insert_tweets(self.collector.documents_to_insert)
+					print('save in database {0} tweets'.format(NUM_PER_INSERT))	
+				if flags_enable.get("send_elastic"):				
+					elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)
+
+				self.collector.documents_to_insert = []			
+				self.collector.count = 0
 
 		except Exception as e:  
 			log_system.error('on_data',e)						
-			# return False
+			
 		super(StreamingListener, self).on_data(data)
-
 	def on_error(self, status_code):
 		log_system.error('on_error', status_code)				
 		if status_code == 401:
@@ -267,24 +256,58 @@ class StreamingListener(tweepy.StreamListener):
 		# print(status)
 		pass
 
+class PersistenceElasticsearchTwitter(object):
+	"""docstring for PersistenceElasticsearchTwitter"""
+
+	def __init__(self, config_elastic_search):		
+		uri = datasource.get('es_uri', 'http://localhost:9200')
+		self.elasticsearch = elasticsearch.ElasticsearchEngine(uri=uri)
+		self.type = 'statuses'
+		self.routing = config_elastic_search.get("routing","labic")		
+		self.index = config_elastic_search.get("index","twitter")
+		print self.index
+		# super(PersistenceElasticsearchTwitter, self).__init__()
+
+
+	def ping(self):
+		self.assertTrue(self.elasticsearch.client.ping())
+
+	def insert_statusues_bulk(self, statusues ):
+		today = str(datetime.date.today())	
+		
+		self.elasticsearch.insert(
+			index=self.index.replace("YYYY-MM-DD",today),
+			type=self.type,
+			routing=self.routing,
+			doc_or_docs=statusues,
+		)
+		
+
 ##################################################################
 
 ######################### Funções ################################
-def getConfig():
-	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield
+def get_config():
+	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable, config_elastic_search
 	try:
 		data = {}
 		with open('config.json') as data_file:    
 			data = json.load(data_file)
 
 		if data:
-			endpoints = data.get('endpoints')
-			files = data.get('files')			
-			collector = data.get('collector')
+
+			endpoints = data.get('endpoints', None)
+			files = data.get('files', None)			
+			collector = data.get('collector',None)
+			datasource = data.get('datasource',None)
+			flags_enable = data.get("flags_enable", None)
+			config_elastic_search = data.get("elasticsearch", None)			
+
 
 			NUM_PER_INSERT = collector.get('NUM_PER_INSERT')
 			categorize_namefield = collector.get('categorize_namefield')
 
+			sendTelegram = collector.get('sendTelegram')
+			chat_id = collector.get('chat_id')
 
 			api_database = endpoints.get('api_database')
 			api_bot_telegram = endpoints.get('api_bot_telegram')
@@ -296,9 +319,120 @@ def getConfig():
 			filename_querys = files.get('filename_querys')								
 			pass
 		pass
-	except Exception as e:
-		log_system.error('getConfig',e)
+	except Exception as e:		
+		log_system.error('get_config',e)
 	pass
+
+def fix_status(status):
+	try:
+		#corrige o tempo 
+		if status.get('timestamp_ms') :
+			status['timestamp_ms'] = long(status['timestamp_ms'])
+		else:
+			if status.get("created_at"):				
+				status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
+
+		#corrige o status.id
+		status['id'] = long(status['id'])
+
+		#corrige o place.id
+		place = status.get('place')
+		if(place):
+			place['id'] = str(place.get('id',""))
+			status['place'] = place
+	  	
+	  	#corrige o user
+		user = status['user']
+		user['id'] = long(user['id'])
+		status['user'] = user
+		screen_name = status['user']['screen_name']
+								
+		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
+		print("@"+screen_name+": "+ text + " : " + status.get("created_at"))
+		
+		return status
+	except Exception as e:
+		print 'fix_status'
+		raise e
+
+#adaptação para atender a uma segunda categorização
+def get_categories(status):
+	global api_categorize,api_categorize2	
+	categories_api1 = categoriza(status, api_categorize)
+	categories_api2 = categoriza(status, api_categorize2)
+
+	keywords = []
+	reverse_geocode = []
+
+	if categories_api1:
+		keywords = categories_api1.get("keywords")			
+		reverse_geocode = categories_api1.get("reverse_geocode")
+		if reverse_geocode:
+			reverse_geocode = list(map(float,reverse_geocode))                    
+	if categories_api2:
+		if keywords:
+			keywords = list(set(keywords + categories_api2.get("keywords")))
+		else:
+			keywords = categories_api2.get("keywords")	
+
+	categories = {"reverse_geocode":reverse_geocode,"keywords":keywords}
+
+	return categories
+
+
+def is_blocked(status):	
+	#not implements
+	return False
+
+def get_articles(status):
+	#not implements
+	return {}
+	# urls = status["entities"]["urls"]
+	# if (urls):
+	# 	for url in urls:
+	# 		expanded_url = url["expanded_url"]
+	# 		print(expanded_url)
+			# pass	
+
+def get_words(status):
+	try:		
+		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","").lower()
+		words = lib_text.remove_punctuation(text)
+		words = lib_text.remove_punctuation_special(words)		
+		# words = str(unicode(words.replace("\n","")).encode("utf-8")).decode("utf-8")				
+		words = filter(None, words.split(" ")) 
+
+		return words
+	except Exception as e:
+		print 'get_words'
+		raise e
+	
+
+def prepare_document(status, categories, blocked, words):
+	document = {}				
+	document['status'] = status
+	if categories:			
+		document['keywords'] = categories.get("keywords", None)
+		document['categories'] = categories.get("keywords", None)
+		document['reverse_geocode'] = categories.get("reverse_geocode", None)
+	if blocked:		
+		document['block'] = True
+	else:
+		document['block'] = False
+	if words:			
+		document['words'] = words
+	return document
+
+def insert_tweets(documents):
+	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
+	try:
+		data=json.dumps(documents)
+		r = requests.post(api_database, data=data, headers=headers)
+		r.raise_for_status()		
+		return {'ok':1, 'msg':'gravado com sucesso'}			
+	except requests.exceptions.HTTPError as e:
+		log_system.error('saveData',e)
+		raise e
 
 # chaves de idenficação
 def read_keys():	
@@ -354,7 +488,7 @@ def categoriza(status, api_categorize):
 		if place:		
 			place = place['full_name']
 			place = str(unicode(place).encode('utf-8'))		
-			print place
+			print(place)
 
 		else:
 			place = ""
@@ -372,43 +506,22 @@ def categoriza(status, api_categorize):
 		r = requests.get(api_categorize, params=params)
 		
 		r.raise_for_status()
-		categories = r.json()
-		# print json.dumps(r.json(), indent=4)
-
-		# print '[user]:{0}\t[text]:{1}\t[location]:{2}\t[place]:{3}'.format(username, text, location, place)
+		categories = r.json()		
 		return categories
 	except Exception as e:
 		log_system.error('request categoriza', e)		
 		return {}
 
-def get_articles(status):
-	urls = status["entities"]["urls"]
-	if (urls):
-		for url in urls:
-			expanded_url = url["expanded_url"]
-			print(expanded_url)
-			pass
 
 
-def saveData(data):
-	data=json.dumps(data)
-	try:
-		headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
-
-		r = requests.post(api_database, data=data, headers=headers)
-		r.raise_for_status()
-		
-		return {'ok':1, 'msg':'gravado com sucesso'}			
-	except requests.exceptions.HTTPError as e:
-		log_system.error('saveData',e)
 
 ###################################################################
 
 ######################## Rotina Principal #########################
 def main():
-	getConfig();
+	get_config();
 
-	global log_system, keys
+	global log_system, keys, elastic_search
 	# cria o objeto de log do sistema
 	log_system = log_collector();
 
@@ -417,6 +530,11 @@ def main():
 	
 	#ler as querys
 	querys = read_querys();
+
+	# cria o objeto do elastic search
+	if flags_enable.get("send_elastic"):
+		elastic_search = PersistenceElasticsearchTwitter(config_elastic_search)
+
 	
 	index_query = 1;
 	for query in querys:
@@ -424,7 +542,7 @@ def main():
 			key = get_key(); 
 
 		query['track'] = [str(unicode(x).encode('utf-8')).decode("utf-8") for x in query['track']]
-		# print query['track'][0]
+		
 		c = Collector(query['track'], query['languages'], key)
 				
 		c.start()
@@ -435,12 +553,13 @@ def main():
 		try:
 			raw_input('Ctrl+C stop program')
 		except (KeyboardInterrupt, EOFError):
-			print 'stopping program...'
+			print('stopping program...')
 			for c in active_collectors:
 				c.stop();				
-			print 'program stop.'			
-			sys.exit()
-		
+			print('program stop.')	
+			break
+			sys.exit(1)
+	sys.exit(1)
 		
 
 
