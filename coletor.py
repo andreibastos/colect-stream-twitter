@@ -523,7 +523,8 @@ def main():
 	querys = read_querys();
 
 	# cria o objeto do elastic search
-	elastic_search = PersistenceElasticsearchTwitter()
+	if flags_enable.get("send_elastic"):
+		elastic_search = PersistenceElasticsearchTwitter()
 
 	
 	index_query = 1;
