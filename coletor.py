@@ -191,6 +191,10 @@ class StreamingListener(tweepy.StreamListener):
 		super(StreamingListener, self).__init__(*args, **kwargs)
 	def on_data(self, data):		
 		try:
+			words = None
+			categories = None
+
+
 			#recebe o dado do twitter e transforma em objeto
 			status = json.loads(data)
 
@@ -392,7 +396,7 @@ def get_words(status):
 		words = lib_text.remove_punctuation(text)
 		words = lib_text.remove_punctuation_special(words)		
 		# words = str(unicode(words.replace("\n","")).encode("utf-8")).decode("utf-8")				
-		words = filter(None, words.split(" "))
+		words = [not lib_text.is_stopword(x) for x in  filter(None, words.split(" "))] 
 
 		return words
 	except Exception as e:
