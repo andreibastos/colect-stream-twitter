@@ -230,8 +230,15 @@ class StreamingListener(tweepy.StreamListener):
 				if flags_enable.get("send_mongodb_api"):
 					insert_tweets(self.collector.documents_to_insert)
 					print('save in database {0} tweets'.format(NUM_PER_INSERT))	
-				if flags_enable.get("send_elastic"):				
-					elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)
+				if flags_enable.get("send_elastic"):
+					try:
+						elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)
+						
+					except Exception as e:
+						# with open('data.json', 'w') as outfile:
+						# 	json.dump(self.collector.documents_to_insert, outfile, indent=4)
+						# print e
+						raise e				
 
 				self.collector.documents_to_insert = []			
 				self.collector.count = 0
@@ -265,7 +272,6 @@ class PersistenceElasticsearchTwitter(object):
 		self.type = 'statuses'
 		self.routing = config_elastic_search.get("routing","labic")		
 		self.index = config_elastic_search.get("index","twitter")
-		print self.index
 		# super(PersistenceElasticsearchTwitter, self).__init__()
 
 
@@ -368,7 +374,8 @@ def get_categories(status):
 		keywords = categories_api1.get("keywords")			
 		reverse_geocode = categories_api1.get("reverse_geocode")
 		if reverse_geocode:
-			reverse_geocode = list(map(float,reverse_geocode))                    
+			reverse_geocode = list(map(float,reverse_geocode))
+			reverse_geocode = [reverse_geocode[1] reverse_geocode[0]]                    
 	if categories_api2:
 		if keywords:
 			keywords = list(set(keywords + categories_api2.get("keywords")))
