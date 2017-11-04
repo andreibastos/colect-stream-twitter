@@ -69,7 +69,7 @@ def remove_punctuation(str_string):
     'UNDESIRED_CHARACTERS' set. It returns the given string without
     the UNDESIRED_CHARACTERS, even if it is the empty string.
     """
-    str_clean_string = ' '.join(character for character in str_string if character not in UNDESIRED_CHARACTERS)
+    str_clean_string = ''.join(character for character in str_string if character not in UNDESIRED_CHARACTERS)
     if str_clean_string == '':
         return ''
     else:
@@ -79,9 +79,9 @@ def remove_punctuation_special(str_string):
     """
     Same as remove_punctuation, except that this preserves the underline character.
     """
-    str_clean_string = ' '.join(character for character in str_string if character not in UNDESIRED_CHARACTERS_SPECIAL)
+    str_clean_string = ''.join(character for character in str_string if character not in UNDESIRED_CHARACTERS_SPECIAL)
     if str_clean_string == '':
-        return ' '
+        return ''
     else:
         return str_clean_string
 
@@ -105,7 +105,7 @@ def remove_invalid_characters(str_string):
     if len(list_string_valid_chars) == 0:
         return ''
     else:
-        return ' '.join(list_string_valid_chars)
+        return ''.join(list_string_valid_chars)
 
 def is_stopword(str_string):
     """ Returns True if str_string is the stopwords list or False if not. """
