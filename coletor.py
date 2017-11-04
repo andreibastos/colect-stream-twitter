@@ -140,6 +140,8 @@ class Collector(threading.Thread):
 
 		self.swap_auth()
 
+
+
 		## Adiciona no log
 		log_system.streaming_tweets(self.query)
 		print(self.query)		
@@ -153,7 +155,11 @@ class Collector(threading.Thread):
 			self.stream.filter(track=self.query, languages=self.languages)
 		except Exception as e:
 			log_system.error('stream.filter', e)
-			log_system.new('colect:{0} spleep 60 seconds'.format(self.query))		
+			log_system.new('colect:{0} sleep 60 seconds'.format(self.query))
+			time.sleep(60)
+			self.stop()
+			self.main()	
+			log_system.error('stream.filter', 'retornou')	
 
 		#enqunto estiver ativo
 		while (self.active):
