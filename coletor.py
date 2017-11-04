@@ -274,6 +274,7 @@ class PersistenceElasticsearchTwitter(object):
 
 	def insert_statusues_bulk(self, statusues ):
 		today = str(datetime.date.today())	
+		
 		self.elasticsearch.insert(
 			index=self.index.replace("-YYYY-MM-DD",today),
 			type=self.type,
@@ -299,8 +300,7 @@ def get_config():
 			collector = data.get('collector',None)
 			datasource = data.get('datasource',None)
 			flags_enable = data.get("flags_enable", None)
-			config_elastic_search = data.get("elasticsearch", None)
-			
+			config_elastic_search = data.get("elasticsearch", None)			
 
 
 			NUM_PER_INSERT = collector.get('NUM_PER_INSERT')
@@ -400,7 +400,7 @@ def get_words(status):
 		words = lib_text.remove_punctuation(text)
 		words = lib_text.remove_punctuation_special(words)		
 		# words = str(unicode(words.replace("\n","")).encode("utf-8")).decode("utf-8")				
-		words = [not lib_text.is_stopword(x) for x in  filter(None, words.split(" "))] 
+		words = filter(None, words.split(" ")) 
 
 		return words
 	except Exception as e:
@@ -416,9 +416,9 @@ def prepare_document(status, categories, blocked, words):
 		document['categories'] = categories.get("keywords", None)
 		document['reverse_geocode'] = categories.get("reverse_geocode", None)
 	if blocked:		
-		document['blocked'] = True
+		document['block'] = True
 	else:
-		document['blocked'] = False
+		document['block'] = False
 	if words:			
 		document['words'] = words
 	return document
