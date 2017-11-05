@@ -8,6 +8,7 @@
 ############### IMPORT's ###############
 import json, datetime, time
 from dateutil.parser import *
+from random import randint
 
 import threading, tweepy, socket, traceback, sys
 
@@ -83,7 +84,8 @@ class log_collector():
 		self.new(text);
 
 	def error(self,source, error_msg):		
-		text = 'Erro em {0}. Message_error:{1}.'.format(source, str(error_msg)) 
+		text = 'Erro em {0}. Message_error:{1}.'.format(source, str(error_msg))
+		print text 
 		self.send_telegram(text);
 		self.new(text);		
 
@@ -140,8 +142,6 @@ class Collector(threading.Thread):
 
 		self.swap_auth()
 
-
-
 		## Adiciona no log
 		log_system.streaming_tweets(self.query)
 		print(self.query)		
@@ -158,37 +158,40 @@ class Collector(threading.Thread):
 			log_system.new('colect:{0} sleep 60 seconds'.format(self.query))
 			time.sleep(60)
 			self.stop()
-			self.main()	
 			log_system.error('stream.filter', 'retornou')	
+			self.main()	
+		finally:
+			#enqunto estiver ativo
+			while (self.active):
+				try:
+					self.connected = True
 
-		#enqunto estiver ativo
-		while (self.active):
-			try:
-				self.connected = True
+				except socket.gaierror as sg:
+					log_system.error('socket.gaierror', e)				
+					self.connected = False
+					c = active_collectors.pop(int(job_id) - 1)
+					c.stop()
+					time.sleep(60)
+				except Exception as e:
+					self.connected = False
+					traceback.print_exc(file=sys.stdout)
+					sys.stdout.flush()
+					time.sleep(60)
+					log_system.error('connected', e)								
 
-			except socket.gaierror as sg:
-				log_system.error('socket.gaierror', e)				
-				self.connected = False
-				c = active_collectors.pop(int(job_id) - 1)
-				c.stop()
-				time.sleep(60)
-			except Exception as e:
-				self.connected = False
-				traceback.print_exc(file=sys.stdout)
-				sys.stdout.flush()
-				time.sleep(60)
-				log_system.error('connected', e)								
 		return 0
 
 	def run(self):        
 		self.main()
 
 	def stop(self):				
-		print("Stopping collector: " +  ", ".join(c for c in self.query))
 		self.active = False	
 		self.connected = False
 		if 	self.stream is not None:
 			self.stream.disconnect()		
+		querys = ", ".join(c for c in self.query)
+		print("Stopping collector: " +  querys)
+		#log_system.send_telegram('stopping_colletor: '+ querys)
 		
 class StreamingListener(tweepy.StreamListener):
 	def __init__(self, collector, *args, **kwargs):
@@ -291,9 +294,8 @@ class PersistenceElasticsearchTwitter(object):
 			routing=self.routing,
 			doc_or_docs=statusues,
 		)
-		
-
 ##################################################################
+
 
 ######################### Funções ################################
 def get_config():
@@ -327,11 +329,11 @@ def get_config():
 			filename_log = files.get('filename_log')
 			filename_keys = files.get('filename_keys')
 			filename_querys = files.get('filename_querys')								
-			pass
-		pass
+					
 	except Exception as e:		
 		log_system.error('get_config',e)
-	pass
+		raise Exception('get_config', e)
+	
 
 def fix_status(status):
 	try:
@@ -342,19 +344,30 @@ def fix_status(status):
 			if status.get("created_at"):				
 				status['timestamp_ms'] =  long(time.mktime(datetime.datetime.strptime(status['created_at'], '%a %b %d %H:%M:%S +0000 %Y').timetuple())*1000)							
 
-		#corrige o status.id
-		status['id'] = long(status['id'])
+		try:
+			#corrige o status.id
+			status['id'] = long(status['id'])
+			
+		except Exception as e:
+			log_system.error("status[id]"+status['id'], e)
 
-		#corrige o place.id
-		place = status.get('place')
-		if(place):
-			place['id'] = str(place.get('id',""))
-			status['place'] = place
+		try:
+			#corrige o place.id
+			place = status.get('place')
+			if(place):
+				place['id'] = str(place.get('id',""))
+				status['place'] = place			
+		except Exception as e:
+			log_system.error("place: "+place['id'],e )
 	  	
 	  	#corrige o user
-		user = status['user']
-		user['id'] = long(user['id'])
-		status['user'] = user
+	  	try:
+			user = status['user']
+			user['id'] = long(user['id'])
+			status['user'] = user  		
+	  	except Exception as e:
+	  		log_system.error("user: "+user["id"], e)
+
 		screen_name = status['user']['screen_name']
 								
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
@@ -367,29 +380,33 @@ def fix_status(status):
 
 #adaptação para atender a uma segunda categorização
 def get_categories(status):
-	global api_categorize,api_categorize2	
-	categories_api1 = categoriza(status, api_categorize)
-	categories_api2 = categoriza(status, api_categorize2)
+	categories = {}
+	try:
+		global api_categorize,api_categorize2	
+		categories_api1 = categoriza(status, api_categorize)
+		categories_api2 = categoriza(status, api_categorize2)
 
-	keywords = []
-	reverse_geocode = []
+		keywords = []
+		reverse_geocode = []
 
-	if categories_api1:
-		keywords = categories_api1.get("keywords")			
-		reverse_geocode = categories_api1.get("reverse_geocode")
-		if reverse_geocode:
-			reverse_geocode = list(map(float,reverse_geocode))
-			reverse_geocode = list(reversed(reverse_geocode))
-	if categories_api2:
-		if keywords:
-			keywords = list(set(keywords + categories_api2.get("keywords")))
-		else:
-			keywords = categories_api2.get("keywords")	
+		if categories_api1:
+			keywords = categories_api1.get("keywords")			
+			reverse_geocode = categories_api1.get("reverse_geocode")
+			if reverse_geocode:
+				reverse_geocode = list(map(float,reverse_geocode))
+				reverse_geocode = list(reversed(reverse_geocode))
+		if categories_api2:
+			if keywords:
+				keywords = list(set(keywords + categories_api2.get("keywords")))
+			else:
+				keywords = categories_api2.get("keywords")	
 
-	categories = {"reverse_geocode":reverse_geocode,"keywords":keywords}
-
-	return categories
-
+		categories = {"reverse_geocode":reverse_geocode,"keywords":keywords}
+		
+	except Exception as e:
+		raise Exception('get_categories', e)
+	finally:
+		return categories
 
 def is_blocked(status):	
 	#not implements
@@ -406,37 +423,33 @@ def get_articles(status):
 			# pass	
 
 def get_words(status):
+	words = []
 	try:		
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")
-		try:
-			words = lib_text.get_words(text)
-		except Exception as e:
-			print e
-			raise e
-		
+		words = lib_text.get_words(text)				
+	except Exception as e:		
+		raise Exception('get_words', e)
+	finally:
 		return words
-	except Exception as e:
-		print ('get_words')
-		raise e
-	
 
 def prepare_document(status, categories, blocked, words):
 	document = {}				
-	
-	if categories:			
-		document['keywords'] = categories.get("keywords", None)
-		document['categories'] = categories.get("keywords", None)
-		document['reverse_geocode'] = categories.get("reverse_geocode", None)
-	if blocked:		
-		document['block'] = True
-	else:
-		document['block'] = False
-	if words:
-		status['text_terms'] = words
-
-	document['status'] = status
-		
-	return document
+	try:
+		if categories:			
+			document['keywords'] = categories.get("keywords", None)
+			document['categories'] = categories.get("keywords", None)
+			document['reverse_geocode'] = categories.get("reverse_geocode", None)
+		if blocked:		
+			document['block'] = True
+		else:
+			document['block'] = False
+		if words:
+			status['text_terms'] = words		
+	except Exception as e:
+		raise Exception('prepare_document', e)
+	finally:
+		document['status'] = status
+		return document
 
 def insert_tweets(documents):
 	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
@@ -444,37 +457,44 @@ def insert_tweets(documents):
 		data=json.dumps(documents)
 		r = requests.post(api_database, data=data, headers=headers)
 		r.raise_for_status()		
-		return {'ok':1, 'msg':'gravado com sucesso'}			
+		return {'ok':1, 'msg':'ok'}			
 	except requests.exceptions.HTTPError as e:
-		log_system.error('saveData',e)
-		raise e
+		log_system.error('insert_tweets',e)
+		raise Exception('prepare_document', e)
+	finally:
+		return {'ok':0, 'msg':str(e)}			
 
 # chaves de idenficação
 def read_keys():	
+	keys = []
 	try:
 		global log_system
 		# ler arquivo	
 		f = open(filename_keys,'r')
-
 		log_system.read_file(filename_keys)
-		return json.loads(f.read());	
-		pass
+		keys = json.loads(f.read())
 	except Exception as e:
-		raise e
+		raise Exception('read_keys', e)
+	finally:
+		return keys;	
+		
 
 def get_key():
-	from random import randint
-
 	global keys
 	global index_key;
-	## troca a chave atual por outra.
-	index_key = randint(0, len(keys)-1)
-	key = keys[index_key];
+	try:
+		## troca a chave atual por outra.
+		index_key = randint(0, len(keys)-1)
+		key = keys[index_key];
 
-	text = 'usando \'key\': {0}'.format(key[0]) 
-	print(text) 
-	log_system.new(text)
-	
+		text = 'usando \'key\': {0}'.format(key[0]) 
+		print(text) 
+		log_system.new(text)
+
+	except Exception as e:
+		raise Exception('get_key', e)
+	finally:
+		pass
 	return key
 
 # querys 
