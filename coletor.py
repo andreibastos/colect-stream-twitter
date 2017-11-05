@@ -214,6 +214,7 @@ class StreamingListener(tweepy.StreamListener):
 			#categoriza usando endpoints de categorização			
 			if flags_enable.get("send_categorie"):				
 				categories = get_categories(status_fixed)
+				print "\n"
 
 			#verifica se o dado tem algum block
 			if flags_enable.get("blocked_enable"):				
@@ -371,7 +372,7 @@ def fix_status(status):
 		screen_name = status['user']['screen_name']
 								
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
-		print("@"+screen_name+": "+ text + " : " + status.get("created_at"))
+		#print("[@"+screen_name+"]:["+ text + "]:")
 		
 		return status
 	except Exception as e:
@@ -379,8 +380,19 @@ def fix_status(status):
 		raise Exception('fix_status',e)
 
 #adaptação para atender a uma segunda categorização
-def get_categories(status):
-	categories = {}
+def get_categories(status,categories={}):
+	print  "->"
+	
+	print status.get("user").get("screen_name")
+
+	retweeted_status = status.get("retweeted_status")
+	quoted_status = status.get("quoted_status")
+
+	if retweeted_status:
+		categories = get_categories(retweeted_status, categories=categories)
+
+	if quoted_status:
+		categories = get_categories(quoted_status, categories=categories)
 	try:
 		global api_categorize,api_categorize2	
 		categories_api1 = categoriza(status, api_categorize)
@@ -401,11 +413,16 @@ def get_categories(status):
 			else:
 				keywords = categories_api2.get("keywords")	
 
-		categories = {"reverse_geocode":reverse_geocode,"keywords":keywords}
+		if categories:
+			categories["reverse_geocode"] = list(set(categories["reverse_geocode"]+reverse_geocode))
+			categories["keywords"] = list(set(categories["keywords"]+keywords))
+		else:
+			categories = {"reverse_geocode":reverse_geocode,"keywords":keywords}
 		
 	except Exception as e:
 		raise Exception('get_categories', e)
 	finally:
+		print categories
 		return categories
 
 def is_blocked(status):	
@@ -523,7 +540,7 @@ def categoriza(status, api_categorize):
 		if place:		
 			place = place['full_name']
 			place = str(unicode(place).encode('utf-8'))		
-			print(place)
+			#print(place)
 
 		else:
 			place = ""
