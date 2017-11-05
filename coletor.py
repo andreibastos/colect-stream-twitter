@@ -373,11 +373,11 @@ def fix_status(status):
 								
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
 		#print("[@"+screen_name+"]:["+ text + "]:")
-		return status		
+		
+		return status
 	except Exception as e:
 		print('fix_status')
-		# log_system.error('fix_status', e)
-
+		raise Exception('fix_status',e)
 
 #adaptação para atender a uma segunda categorização
 def get_categories(status,categories={}):
@@ -388,11 +388,11 @@ def get_categories(status,categories={}):
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
 
-	# if retweeted_status:
-	# 	categories = get_categories(retweeted_status, categories=categories)
+	if retweeted_status:
+		categories = get_categories(retweeted_status, categories=categories)
 
-	# if quoted_status:
-	# 	categories = get_categories(quoted_status, categories=categories)
+	if quoted_status:
+		categories = get_categories(quoted_status, categories=categories)
 	try:
 		global api_categorize,api_categorize2	
 		categories_api1 = categoriza(status, api_categorize)
@@ -412,7 +412,6 @@ def get_categories(status,categories={}):
 				keywords = list(set(keywords + categories_api2.get("keywords")))
 			else:
 				keywords = categories_api2.get("keywords")	
-
 
 		if categories:
 			categories["reverse_geocode"] = list(set(categories["reverse_geocode"]+reverse_geocode))
