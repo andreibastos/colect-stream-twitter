@@ -167,7 +167,7 @@ class Collector(threading.Thread):
 					self.connected = True
 
 				except socket.gaierror as sg:
-					log_system.error('socket.gaierror', e)				
+					log_system.error('socket.gaierror', sg)				
 					self.connected = False
 					c = active_collectors.pop(int(job_id) - 1)
 					c.stop()
@@ -376,7 +376,7 @@ def fix_status(status):
 		return status
 	except Exception as e:
 		print('fix_status')
-		raise e
+		raise Exception('fix_status',e)
 
 #adaptação para atender a uma segunda categorização
 def get_categories(status):
@@ -462,7 +462,7 @@ def insert_tweets(documents):
 		log_system.error('insert_tweets',e)
 		raise Exception('prepare_document', e)
 	finally:
-		return {'ok':0, 'msg':str(e)}			
+		return {'ok':0, 'msg':'error'}			
 
 # chaves de idenficação
 def read_keys():	
