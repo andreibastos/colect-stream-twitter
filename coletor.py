@@ -388,11 +388,11 @@ def get_categories(status,categories={}):
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
 
-	if retweeted_status:
-		categories = get_categories(retweeted_status, categories=categories)
+	# if retweeted_status:
+	# 	categories = get_categories(retweeted_status, categories=categories)
 
-	if quoted_status:
-		categories = get_categories(quoted_status, categories=categories)
+	# if quoted_status:
+	# 	categories = get_categories(quoted_status, categories=categories)
 	try:
 		global api_categorize,api_categorize2	
 		categories_api1 = categoriza(status, api_categorize)
@@ -413,6 +413,7 @@ def get_categories(status,categories={}):
 			else:
 				keywords = categories_api2.get("keywords")	
 
+		
 		if categories:
 			categories["reverse_geocode"] = list(set(categories["reverse_geocode"]+reverse_geocode))
 			categories["keywords"] = list(set(categories["keywords"]+keywords))
