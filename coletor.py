@@ -156,7 +156,7 @@ class Collector(threading.Thread):
 		except Exception as e:
 			log_system.error('stream.filter', e)
 			log_system.new('colect:{0} sleep 60 seconds'.format(self.query))
-			time.sleep(60)
+			time.sleep(5)
 			self.stop()
 			log_system.error('stream.filter', 'retornou')	
 			self.main()	
@@ -374,10 +374,12 @@ def fix_status(status):
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
 		#print("[@"+screen_name+"]:["+ text + "]:")
 		
-		return status
+		
 	except Exception as e:
 		print('fix_status')
-		raise Exception('fix_status',e)
+		# log_system.error('fix_status', e)
+	finally:
+		return status
 
 #adaptação para atender a uma segunda categorização
 def get_categories(status,categories={}):
@@ -413,7 +415,7 @@ def get_categories(status,categories={}):
 			else:
 				keywords = categories_api2.get("keywords")	
 
-		
+
 		if categories:
 			categories["reverse_geocode"] = list(set(categories["reverse_geocode"]+reverse_geocode))
 			categories["keywords"] = list(set(categories["keywords"]+keywords))
