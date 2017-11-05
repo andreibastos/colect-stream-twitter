@@ -203,51 +203,54 @@ class StreamingListener(tweepy.StreamListener):
 		try:
 			words = None
 			categories = None
+			blocked = None
 
 
 			#recebe o dado do twitter e transforma em objeto
 			status = json.loads(data)
 
 			#corrige os campos do status para inserir no database corretamente
-			status_fixed = fix_status(status)
+			if 	not 'limit' in status:
 
-			#categoriza usando endpoints de categorização			
-			if flags_enable.get("send_categorie"):				
-				categories = get_categories(status_fixed)
-				print "\n"
+				status_fixed = fix_status(status)
 
-			#verifica se o dado tem algum block
-			if flags_enable.get("blocked_enable"):				
-				blocked = is_blocked(status_fixed)
+				#categoriza usando endpoints de categorização			
+				if flags_enable.get("send_categorie"):				
+					categories = get_categories(status_fixed)
+					print "\n"
 
-			#captura os links se houver
-			if flags_enable.get("get_articles"):				
-				articles = get_articles(status_fixed)
+				#verifica se o dado tem algum block
+				if flags_enable.get("blocked_enable"):				
+					blocked = is_blocked(status_fixed)
 
-			#gera as palavras como um vetor para fazer uma pesquisa de texto
-			if flags_enable.get("word_split"):				
-				words = get_words(status_fixed)
+				#captura os links se houver
+				if flags_enable.get("get_articles"):				
+					articles = get_articles(status_fixed)
 
-			# #ajusta o documento para o database
-			document = prepare_document(status_fixed, categories, blocked, words)
+				#gera as palavras como um vetor para fazer uma pesquisa de texto
+				if flags_enable.get("word_split"):				
+					words = get_words(status_fixed)
 
-			# #atualiza o contador e adiciona na lista
-			self.collector.count += 1
-			self.collector.documents_to_insert.append(document) 
+				# #ajusta o documento para o database
+				document = prepare_document(status_fixed, categories, blocked, words)
 
-			#verifica se tem quantidade suficiente no bulk para ser enviado
-			if((self.collector.count % NUM_PER_INSERT) == 0):
-				try:
-					if flags_enable.get("send_mongodb_api"):
-						insert_tweets(self.collector.documents_to_insert)
-						print('save in database {0} tweets'.format(NUM_PER_INSERT))	
-					if flags_enable.get("send_elastic"):					
-						elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)					
-				except Exception as e:
-					raise e
-				finally:
-					self.collector.documents_to_insert = []			
-					self.collector.count = 0			
+				# #atualiza o contador e adiciona na lista
+				self.collector.count += 1
+				self.collector.documents_to_insert.append(document) 
+
+				#verifica se tem quantidade suficiente no bulk para ser enviado
+				if((self.collector.count % NUM_PER_INSERT) == 0):
+					try:
+						if flags_enable.get("send_mongodb_api"):
+							insert_tweets(self.collector.documents_to_insert)
+							print('save in database {0} tweets'.format(NUM_PER_INSERT))	
+						if flags_enable.get("send_elastic"):					
+							elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)					
+					except Exception as e:
+						raise e
+					finally:
+						self.collector.documents_to_insert = []			
+						self.collector.count = 0			
 			
 
 
@@ -376,7 +379,6 @@ def fix_status(status):
 		
 		return status
 	except Exception as e:
-		print('fix_status')
 		raise Exception('fix_status',e)
 
 #adaptação para atender a uma segunda categorização
