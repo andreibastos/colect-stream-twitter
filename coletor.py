@@ -154,11 +154,11 @@ class Collector(threading.Thread):
 		try:
 			self.stream.filter(track=self.query, languages=self.languages)
 		except Exception as e:
-			log_system.error('stream.filter', e)
-			log_system.new('colect:{0} sleep 60 seconds'.format(self.query))
+			# log_system.error('stream.filter', e)
+			# log_system.new('colect:{0} sleep 60 seconds'.format(self.query))
 			time.sleep(5)
 			self.stop()
-			log_system.error('stream.filter', 'retornou')	
+			# log_system.error('stream.filter', 'retornou')	
 			self.main()	
 		finally:
 			#enqunto estiver ativo
@@ -359,7 +359,7 @@ def fix_status(status):
 			#corrige o place.id
 			place = status.get('place')
 			if(place):
-				place['id'] = str(place.get('id',""))
+				place['id'] = str(place.get('id'))
 				status['place'] = place			
 		except Exception as e:
 			log_system.error("place: "+place['id'],e )
