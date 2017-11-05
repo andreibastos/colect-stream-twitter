@@ -383,9 +383,8 @@ def fix_status(status):
 
 #adaptação para atender a uma segunda categorização
 def get_categories(status,categories={}):
-	print  "->"
 	
-	print status.get("user").get("screen_name")
+	print "["+status.get("user").get("screen_name")+"]"
 
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
@@ -424,7 +423,7 @@ def get_categories(status,categories={}):
 	except Exception as e:
 		raise Exception('get_categories', e)
 	finally:
-		print categories
+		print ", ".join(x for x in categories["keywords"])
 		return categories
 
 def is_blocked(status):	
