@@ -373,13 +373,11 @@ def fix_status(status):
 								
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
 		#print("[@"+screen_name+"]:["+ text + "]:")
-		
-		
+		return status		
 	except Exception as e:
 		print('fix_status')
 		# log_system.error('fix_status', e)
-	finally:
-		return status
+
 
 #adaptação para atender a uma segunda categorização
 def get_categories(status,categories={}):
