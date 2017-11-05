@@ -426,7 +426,7 @@ def get_words(status):
 	words = []
 	try:		
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")
-		words = lib_text.get_words(text)				
+		words = lib_text.get_words(text.lower())				
 	except Exception as e:		
 		raise Exception('get_words', e)
 	finally:
