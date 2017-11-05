@@ -391,8 +391,8 @@ def get_categories(status,categories={}):
 	if retweeted_status:
 		categories = get_categories(retweeted_status, categories=categories)
 
-	if quoted_status:
-		categories = get_categories(quoted_status, categories=categories)
+	# if quoted_status:
+	# 	categories = get_categories(quoted_status, categories=categories)
 	try:
 		global api_categorize,api_categorize2	
 		categories_api1 = categoriza(status, api_categorize)
