@@ -296,8 +296,8 @@ class PersistenceElasticsearchTwitter(object):
 		self.assertTrue(self.elasticsearch.client.ping())
 
 	def insert_statusues_bulk(self, statusues ):
-		today = datetime.datetime.utcnow().date()
-				
+		today = str( datetime.datetime.utcnow().strftime('%Y-%m-%d'))	
+		
 		self.elasticsearch.insert(
 			index=self.index.replace("YYYY-MM-DD",today),
 			type=self.type,
