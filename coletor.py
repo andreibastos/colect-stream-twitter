@@ -377,19 +377,17 @@ def fix_status(status):
 	  	except Exception as e:
 	  		log_system.error("user: "+user["id"], e)
 
-		screen_name = status['user']['screen_name']
-								
-		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
-		#print("[@"+screen_name+"]:["+ text + "]:")
+
 		
 		return status
 	except Exception as e:
 		raise Exception('fix_status',e)
 
 #adaptação para atender a uma segunda categorização
-def get_categories(status,categories={}):
-	
-	print "["+status.get("user").get("screen_name")+"]"
+def get_categories(status,categories={}):	
+	screen_name = status['user']['screen_name']
+	text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
+	print("[(@"+screen_name+") ("+ text + ") ")
 
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
@@ -406,6 +404,10 @@ def get_categories(status,categories={}):
 
 		keywords = []
 		reverse_geocode = []
+
+		is_level_one = False
+		if not categories:
+			is_level_one = True
 
 		if categories_api1:
 			keywords = categories_api1.get("keywords")			
@@ -428,8 +430,9 @@ def get_categories(status,categories={}):
 	except Exception as e:
 		raise Exception('get_categories', e)
 	finally:
-		print ", ".join(x for x in categories["keywords"])
-		return categories
+		if is_level_one:
+			print "("+ ", ".join(x for x in categories["keywords"])+")]"
+			return categories
 
 def is_blocked(status):	
 	#not implements
