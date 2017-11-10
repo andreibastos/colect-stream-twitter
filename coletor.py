@@ -216,8 +216,7 @@ class StreamingListener(tweepy.StreamListener):
 
 				#categoriza usando endpoints de categorização			
 				if flags_enable.get("send_categorie"):				
-					categories = get_categories(status_fixed)
-					print "\n"
+					categories = get_categories(status_fixed)					
 
 				#verifica se o dado tem algum block
 				if flags_enable.get("blocked_enable"):				
@@ -476,17 +475,19 @@ def prepare_document(status, categories, blocked, words):
 		return document
 
 def insert_tweets(documents):
-	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		
+	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		    
+    resposta = {'ok':0, 'msg':'error'}
+    r = None
 	try:
 		data=json.dumps(documents)
 		r = requests.post(api_database, data=data, headers=headers)
-		r.raise_for_status()		
-		return {'ok':1, 'msg':'ok'}			
-	except requests.exceptions.HTTPError as e:
+		r.raise_for_status()        
+		resposta = {'ok':1, 'msg':'ok'}			
+	except (requests.exceptions.HTTPError, requests.exceptions.RequestException) as e:    
 		log_system.error('insert_tweets',e)
-		raise Exception('prepare_document', e)
+        log_system.error('insert_tweets', r.text)	    
 	finally:
-		return {'ok':0, 'msg':'error'}			
+		return resposta
 
 # chaves de idenficação
 def read_keys():	
