@@ -216,7 +216,8 @@ class StreamingListener(tweepy.StreamListener):
 
 				#categoriza usando endpoints de categorização			
 				if flags_enable.get("send_categorie"):				
-					categories = get_categories(status_fixed)					
+					categories = get_categories(status_fixed)
+					print_keywords(categories)
 
 				#verifica se o dado tem algum block
 				if flags_enable.get("blocked_enable"):				
@@ -405,9 +406,6 @@ def get_categories(status,categories={}):
 		keywords = []
 		reverse_geocode = []
 
-		is_level_one = False
-		if not categories:
-			is_level_one = True
 
 		if categories_api1:
 			keywords = categories_api1.get("keywords")			
@@ -430,9 +428,9 @@ def get_categories(status,categories={}):
 	except Exception as e:
 		raise Exception('get_categories', e)
 	finally:
-		if is_level_one:
-			print "("+ ", ".join(x for x in categories["keywords"])+")]"
-			return categories
+		return categories
+def print_keywords(categories):
+	print "("+ ", ".join(x for x in categories["keywords"])+")]"
 
 def is_blocked(status):	
 	#not implements
