@@ -430,7 +430,7 @@ def get_categories(status,categories={}):
 	finally:
 		return categories
 def print_keywords(categories):
-	print "("+ ", ".join(x for x in categories["keywords"])+")]"
+	print "\t("+ ", ".join(x for x in categories["keywords"])+")]\n"
 
 def is_blocked(status):	
 	#not implements
