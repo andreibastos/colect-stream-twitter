@@ -476,8 +476,8 @@ def prepare_document(status, categories, blocked, words):
 
 def insert_tweets(documents):
 	headers = {'user-agent': 'coletor-tweets', 'content-type': 'application/json'}		    
-    resposta = {'ok':0, 'msg':'error'}
-    r = None
+	resposta = {'ok':0, 'msg':'error'}
+	r = None
 	try:
 		data=json.dumps(documents)
 		r = requests.post(api_database, data=data, headers=headers)
@@ -485,7 +485,7 @@ def insert_tweets(documents):
 		resposta = {'ok':1, 'msg':'ok'}			
 	except (requests.exceptions.HTTPError, requests.exceptions.RequestException) as e:    
 		log_system.error('insert_tweets',e)
-        log_system.error('insert_tweets', r.text)	    
+		log_system.error('insert_tweets', r.text)	    
 	finally:
 		return resposta
 
