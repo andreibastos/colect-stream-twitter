@@ -79,7 +79,7 @@ class log_collector():
 			result = r.json()			
 			self.new(result)		
 		except Exception as e:			
-			log_system.error('send_telegram', e)
+			log_system.error('send_telegram', 'mensagem muito grande')
 			return {}
 
 	def read_file(self, filename):		
