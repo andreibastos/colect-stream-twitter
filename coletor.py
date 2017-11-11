@@ -442,9 +442,6 @@ def get_categories(status,categories={}):
 	text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
 	print("[(@"+screen_name+") ("+ text + ") ")
 
-	
-
-
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
 
@@ -453,7 +450,6 @@ def get_categories(status,categories={}):
 
 	if quoted_status:
 		categories = get_categories(quoted_status, categories=categories)
-
 
 	try:
 		global api_categorize,api_categorize2	
@@ -472,23 +468,16 @@ def get_categories(status,categories={}):
 				keywords = list(set(keywords + categories_api2.get("keywords")))
 			else:
 				keywords = categories_api2.get("keywords")	
-		
-		# if categories:
-		# 	print len(categories["keywords"]), "categories_api2"
 
 		categories["keywords"] = list(set(keywords))
 		if categories:
 			categories["keywords"] = list(set(categories["keywords"]+keywords))
-		# else:
-		# 	categories["keywords"] = list(set(keywords))	
-
 
 		categories["reverse_geocode"] = reverse_geocode
 		
 	except Exception as e:
 		raise Exception('get_categories', e)
 	finally:
-		#print json.dumps(categories, indent=4)
 		return categories
 
 def print_keywords(categories):
