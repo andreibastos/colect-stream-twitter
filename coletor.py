@@ -216,10 +216,12 @@ class StreamingListener(tweepy.StreamListener):
 
 				status_fixed = fix_status(status)
 
+
+
 				#categoriza usando endpoints de categorização			
 				if flags_enable.get("send_categorie"):				
 					categories = get_categories(status_fixed)
-					print_keywords(categories)
+					#print_keywords(categories)
 
 				#verifica se o dado tem algum block
 				if flags_enable.get("blocked_enable"):				
@@ -320,7 +322,6 @@ class Mongodb(object):
 	"""docstring for Mongodb"""
 
 	def __init__(self, config_mongodb):
-		print config_mongodb
 		self.uri = datasource["mongodb_uri"]
 		self.collection_name = config_mongodb["collection_name"]
 		self.database_name = config_mongodb["database_name"]
@@ -432,47 +433,51 @@ def get_categories(status,categories={}):
 	text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")			
 	print("[(@"+screen_name+") ("+ text + ") ")
 
+	
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
 
 	if retweeted_status:
-		categories = get_categories(retweeted_status, categories=categories)
+		categories= get_categories(retweeted_status, categories=categories)
 
 	if quoted_status:
 		categories = get_categories(quoted_status, categories=categories)
+
 	try:
 		global api_categorize,api_categorize2	
 		categories_api1 = categoriza(status, api_categorize)
 		categories_api2 = categoriza(status, api_categorize2)
 
 		keywords = []
-		reverse_geocode = []
-
+		reverse_geocode = {}
 
 		if categories_api1:
-			keywords = categories_api1.get("keywords")			
-			reverse_geocode = categories_api1.get("reverse_geocode")
-			if reverse_geocode:
-				reverse_geocode = list(map(float,reverse_geocode))
-				reverse_geocode = list(reversed(reverse_geocode))
+			keywords = categories_api1.get("keywords")		
+			reverse_geocode = categories_api1.get("reverse_geocode")		
+
 		if categories_api2:
 			if keywords:
 				keywords = list(set(keywords + categories_api2.get("keywords")))
 			else:
 				keywords = categories_api2.get("keywords")	
 
-		if categories:
-			categories["reverse_geocode"] = list(set(categories["reverse_geocode"]+reverse_geocode))
+		if categories:	
 			categories["keywords"] = list(set(categories["keywords"]+keywords))
 		else:
-			categories = {"reverse_geocode":reverse_geocode,"keywords":keywords}
+			categories["keywords"] = keywords			
+
+		categories["reverse_geocode"] = reverse_geocode
 		
 	except Exception as e:
 		raise Exception('get_categories', e)
 	finally:
+		#print json.dumps(categories, indent=4)
 		return categories
 def print_keywords(categories):
-	print "\t("+ ", ".join(x for x in categories["keywords"])+")]\n"
+	keywords = categories.get("keywords")
+	if keywords:	
+		print "\t("+ ", ".join(x for x in keywords)+")]\n"
+
 
 def is_blocked(status):	
 	#not implements
@@ -609,9 +614,11 @@ def categoriza(status, api_categorize):
 		r = requests.get(api_categorize, params=params)
 		
 		r.raise_for_status()
-		categories = r.json()		
+		categories = r.json()
+		
 		return categories
 	except Exception as e:
+		print (str(e))
 		log_system.error('request categoriza', e)		
 		return {}
 
@@ -640,12 +647,9 @@ def main():
 
 
 	if flags_enable.get("send_mongodb_uri",False):
-		print config_mongodb,"\n"
 		mongodb = Mongodb(config_mongodb)
 
 
-
-	
 	index_query = 1;
 	for query in querys:
 		if index_query % 1 == 0:
