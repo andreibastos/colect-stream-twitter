@@ -256,7 +256,6 @@ class StreamingListener(tweepy.StreamListener):
 							if flags_enable.get("send_elastic"):					
 								elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)				
 						except Exception as e:
-							print json.dumps(self.collector.documents_to_insert, indent=4)
 							log_system.error('send_elastic',e)														
 							self.collector.documents_to_insert = []			
 							self.collector.count = 0			
