@@ -15,6 +15,7 @@ import threading, tweepy, socket, traceback, sys
 import requests, urllib, urllib3
 
 import lib_text 
+import pymongo
 
 from persistence import elasticsearch
 
@@ -47,7 +48,8 @@ querys = []
 log_system = ''
 active_collectors = []
 config_elastic_search = None
-
+config_mongodb = None
+mongodb = None
 elastic_search = {}
 flags_enable = {}
 
@@ -240,24 +242,33 @@ class StreamingListener(tweepy.StreamListener):
 
 				#verifica se tem quantidade suficiente no bulk para ser enviado
 				if((self.collector.count % NUM_PER_INSERT) == 0):
+					try:
+						try:
+							if flags_enable.get("send_mongodb_uri"):
+								mongodb.insert_tweets(self.collector.documents_to_insert)
+						except Exception as e:
+							print(str(e))
 
-					try:
-						if flags_enable.get("send_mongodb_api"):
-							insert_tweets(self.collector.documents_to_insert)
-							print('save in database {0} tweets'.format(NUM_PER_INSERT))							
-					except Exception as e:
-						raise e
-					try:
-						if flags_enable.get("send_elastic"):					
-							elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)					
-					except Exception as e:
+						try:
+							if flags_enable.get("send_mongodb_api"):
+								insert_tweets(self.collector.documents_to_insert)
+						except Exception as e:
+							raise e
+						try:
+							if flags_enable.get("send_elastic"):					
+								elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)					
+						except Exception as e:													
+							self.collector.documents_to_insert = []			
+							self.collector.count = 0			
+							raise e	
+
+						print('save in database {0} tweets'.format(len(self.collector.documents_to_insert)))	
 						self.collector.documents_to_insert = []			
-						self.collector.count = 0			
-						raise e					
-
-					self.collector.documents_to_insert = []			
-					self.collector.count = 0			
+						self.collector.count = 0	
 			
+					except Exception as e:
+						log_system.error('insert_tweets_num_per_insert',e)	
+						raise e
 
 
 		except Exception as e:  
@@ -304,12 +315,39 @@ class PersistenceElasticsearchTwitter(object):
 			routing=self.routing,
 			doc_or_docs=statusues,
 		)
+
+class Mongodb(object):
+	"""docstring for Mongodb"""
+
+	def __init__(self, config_mongodb):
+		print config_mongodb
+		self.uri = datasource["mongodb_uri"]
+		self.collection_name = config_mongodb["collection_name"]
+		self.database_name = config_mongodb["database_name"]
+		self.setup();
+
+	def setup(self):
+		try:
+			self.client = pymongo.MongoClient(self.uri)
+			self.database = self.client[self.database_name]
+			self.collection = self.database[self.collection_name]
+		except Exception as e:
+			raise e
+
+
+	def insert_tweets(self,documents):
+		try:			
+			self.collection.insert_many(documents)
+		except Exception as e:
+			raise e
+		
+		
 ##################################################################
 
 
 ######################### Funções ################################
 def get_config():
-	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable, config_elastic_search
+	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable, config_elastic_search,config_mongodb
 	try:
 		data = {}
 		with open('config.json') as data_file:    
@@ -322,7 +360,9 @@ def get_config():
 			collector = data.get('collector',None)
 			datasource = data.get('datasource',None)
 			flags_enable = data.get("flags_enable", None)
-			config_elastic_search = data.get("elasticsearch", None)			
+			config_elastic_search = data.get("elasticsearch", None)
+			config_mongodb = data.get("mongodb")
+
 
 
 			NUM_PER_INSERT = collector.get('NUM_PER_INSERT')
@@ -584,7 +624,7 @@ def categoriza(status, api_categorize):
 def main():
 	get_config();
 
-	global log_system, keys, elastic_search
+	global log_system, keys, elastic_search, flags_enable,mongodb
 	# cria o objeto de log do sistema
 	log_system = log_collector();
 
@@ -597,6 +637,13 @@ def main():
 	# cria o objeto do elastic search
 	if flags_enable.get("send_elastic"):
 		elastic_search = PersistenceElasticsearchTwitter(config_elastic_search)
+
+
+	if flags_enable.get("send_mongodb_uri",False):
+		print config_mongodb,"\n"
+		mongodb = Mongodb(config_mongodb)
+
+
 
 	
 	index_query = 1;
