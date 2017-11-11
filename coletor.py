@@ -456,11 +456,14 @@ def get_categories(status,categories={}):
 		categories_api2 = categoriza(status, api_categorize2)
 
 		keywords = []
-		reverse_geocode = {}
+		reverse_geocode = []
 
 		if categories_api1:
 			keywords = categories_api1.get("keywords")		
-			reverse_geocode = categories_api1.get("reverse_geocode")		
+			reverse_geocode = categories_api1.get("reverse_geocode")
+			if reverse_geocode:
+				reverse_geocode = list(map(float,reverse_geocode))
+				reverse_geocode = list(reversed(reverse_geocode))		
 
 		if categories_api2:
 			if keywords:
