@@ -347,6 +347,8 @@ def get_config():
 
 def fix_status(status):
 	try:
+		status["geo"] = None
+
 		#corrige o tempo 
 		if status.get('timestamp_ms') :
 			status['timestamp_ms'] = long(status['timestamp_ms'])
