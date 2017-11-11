@@ -52,6 +52,7 @@ config_mongodb = None
 mongodb = None
 elastic_search = {}
 flags_enable = {}
+geojson= False
 
 #####################################################
 
@@ -217,11 +218,10 @@ class StreamingListener(tweepy.StreamListener):
 				status_fixed = fix_status(status)
 
 
-
 				#categoriza usando endpoints de categorização			
 				if flags_enable.get("send_categorie"):				
 					categories = get_categories(status_fixed)
-					#print_keywords(categories)
+					print_keywords(categories)
 
 				#verifica se o dado tem algum block
 				if flags_enable.get("blocked_enable"):				
@@ -245,25 +245,28 @@ class StreamingListener(tweepy.StreamListener):
 				#verifica se tem quantidade suficiente no bulk para ser enviado
 				if((self.collector.count % NUM_PER_INSERT) == 0):
 					try:
-						try:
-							if flags_enable.get("send_mongodb_uri"):
-								mongodb.insert_tweets(self.collector.documents_to_insert)
-						except Exception as e:
-							print(str(e))
-							raise e
 
 						try:
 							if flags_enable.get("send_mongodb_api"):
 								insert_tweets(self.collector.documents_to_insert)
 						except Exception as e:
+							log_system.error('send_mongodb_api',e)	
 							raise e
 						try:
 							if flags_enable.get("send_elastic"):					
-								elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)					
-						except Exception as e:													
+								elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)				
+						except Exception as e:
+							print json.dumps(self.collector.documents_to_insert, indent=4)
+							log_system.error('send_elastic',e)														
 							self.collector.documents_to_insert = []			
 							self.collector.count = 0			
 							raise e	
+						try:
+							if flags_enable.get("send_mongodb_uri"):
+								mongodb.insert_tweets(self.collector.documents_to_insert)
+						except Exception as e:
+							log_system.error('send_mongodb_uri',e)	
+							raise e
 
 						print('save in database {0} tweets'.format(len(self.collector.documents_to_insert)))	
 						self.collector.documents_to_insert = []			
@@ -275,6 +278,7 @@ class StreamingListener(tweepy.StreamListener):
 
 
 		except Exception as e:  
+			pass
 			log_system.error('on_data',e)						
 			
 		super(StreamingListener, self).on_data(data)
@@ -338,9 +342,11 @@ class Mongodb(object):
 
 
 	def insert_tweets(self,documents):
+		docs = documents[:]
 		try:			
-			self.collection.insert_many(documents)
+			self.collection.insert_many(docs)
 		except Exception as e:
+			print str(e)
 			log_system.error("Mongodb.insert_tweets",e)
 			raise e
 		
@@ -350,7 +356,7 @@ class Mongodb(object):
 
 ######################### Funções ################################
 def get_config():
-	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable, config_elastic_search,config_mongodb
+	global api_database, api_bot_telegram, api_categorize, api_categorize2,NUM_PER_INSERT, filename_keys, filename_querys, filename_log, categorize_namefield, chat_id, sendTelegram,datasource, flags_enable, config_elastic_search,config_mongodb, geojson
 	try:
 		data = {}
 		with open('config.json') as data_file:    
@@ -364,9 +370,10 @@ def get_config():
 			datasource = data.get('datasource',None)
 			flags_enable = data.get("flags_enable", None)
 			config_elastic_search = data.get("elasticsearch", None)
-			config_mongodb = data.get("mongodb")
+			config_mongodb = data.get("mongodb")	
 
 
+			geojson = collector.get("geojson", False)
 
 			NUM_PER_INSERT = collector.get('NUM_PER_INSERT')
 			categorize_namefield = collector.get('categorize_namefield')
@@ -436,6 +443,8 @@ def get_categories(status,categories={}):
 	print("[(@"+screen_name+") ("+ text + ") ")
 
 	
+
+
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
 
@@ -444,6 +453,7 @@ def get_categories(status,categories={}):
 
 	if quoted_status:
 		categories = get_categories(quoted_status, categories=categories)
+
 
 	try:
 		global api_categorize,api_categorize2	
@@ -462,11 +472,16 @@ def get_categories(status,categories={}):
 				keywords = list(set(keywords + categories_api2.get("keywords")))
 			else:
 				keywords = categories_api2.get("keywords")	
+		
+		# if categories:
+		# 	print len(categories["keywords"]), "categories_api2"
 
-		if categories:	
+		categories["keywords"] = list(set(keywords))
+		if categories:
 			categories["keywords"] = list(set(categories["keywords"]+keywords))
-		else:
-			categories["keywords"] = keywords			
+		# else:
+		# 	categories["keywords"] = list(set(keywords))	
+
 
 		categories["reverse_geocode"] = reverse_geocode
 		
@@ -475,10 +490,11 @@ def get_categories(status,categories={}):
 	finally:
 		#print json.dumps(categories, indent=4)
 		return categories
+
 def print_keywords(categories):
-	keywords = categories.get("keywords")
-	if keywords:	
-		print "\t("+ ", ".join(x for x in keywords)+")]\n"
+	keywordss = categories.get("keywords")
+	if keywordss:	
+		print "\t("+ ", ".join(x for x in keywordss)+")]\n"
 
 
 def is_blocked(status):	
@@ -598,7 +614,6 @@ def categoriza(status, api_categorize):
 		if place:		
 			place = place['full_name']
 			place = str(unicode(place).encode('utf-8'))		
-			#print(place)
 
 		else:
 			place = ""
@@ -611,6 +626,9 @@ def categoriza(status, api_categorize):
 		log_system.error('categoriza', e)
 		
 	params = {'text':text, 'username':username, 'location':location, 'place':place}
+	if geojson:
+		params["geojson"] = geojson
+
 
 	try:			
 		r = requests.get(api_categorize, params=params)

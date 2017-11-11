@@ -71,8 +71,7 @@ def get_words(str_s):
     for word in str_s.split():        
         
         if check_word(word):
-            word = remove_punctuation(word)
-            wod = remove_punctuation_special(word)
+            word = remove_punctuation_special(word)
             valid_words.append(word)
     return valid_words
 
@@ -87,7 +86,7 @@ def check_word(str_s):
     and not is_stopword(str_s)\
     and not any(w in str_s for w in word_in)\
     and not any(str_s.startswith(w) for w in word_start)\
-    and not str_s.lower() in word_remove_list:
+    and not str_s in word_remove_list:
         return True
     return False
 
@@ -96,15 +95,13 @@ def clear_word(str_s):
     Clear string from accents and punctuation.
     '''
     try:
-        str_s = str_s.lower()
-        str_s = remove_latin_accents(str_s)
-        str_s = remove_punctuation(str_s)
+        #str_s = str_s.lower()
+        #str_s = remove_latin_accents(str_s)
+        #str_s = remove_punctuation(str_s)
         str_s = remove_punctuation_special(str_s)
         
     except Exception as e:
-        print 'aqii'
         raise e
-
 
     return str_s
 
