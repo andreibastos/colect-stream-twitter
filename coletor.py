@@ -250,6 +250,7 @@ class StreamingListener(tweepy.StreamListener):
 								mongodb.insert_tweets(self.collector.documents_to_insert)
 						except Exception as e:
 							print(str(e))
+							raise e
 
 						try:
 							if flags_enable.get("send_mongodb_api"):
@@ -340,6 +341,7 @@ class Mongodb(object):
 		try:			
 			self.collection.insert_many(documents)
 		except Exception as e:
+			log_system.error("Mongodb.insert_tweets",e)
 			raise e
 		
 		
