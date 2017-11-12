@@ -233,10 +233,10 @@ class StreamingListener(tweepy.StreamListener):
 
 				#gera as palavras como um vetor para fazer uma pesquisa de texto
 				if flags_enable.get("word_split"):				
-					words = get_words(status_fixed)
+					get_words(status_fixed)
 
 				# #ajusta o documento para o database
-				document = prepare_document(status_fixed, categories, blocked, words)
+				document = prepare_document(status_fixed, categories, blocked)
 
 				# #atualiza o contador e adiciona na lista
 				self.collector.count += 1
@@ -251,31 +251,29 @@ class StreamingListener(tweepy.StreamListener):
 								insert_tweets(self.collector.documents_to_insert)
 						except Exception as e:
 							log_system.error('send_mongodb_api',e)	
-							raise e
+							raise Exception('send_mongodb_api')	
 						try:
 							if flags_enable.get("send_elastic"):					
 								elastic_search.insert_statusues_bulk(self.collector.documents_to_insert)				
-						except Exception as e:
-							log_system.error('send_elastic',e)														
+						except Exception as e:													
 							self.collector.documents_to_insert = []			
-							self.collector.count = 0			
-							raise e	
+							self.collector.count = 0	
+							raise Exception('send_elastic')	
+
 						try:
 							if flags_enable.get("send_mongodb_uri"):
 								mongodb.insert_tweets(self.collector.documents_to_insert)
 						except Exception as e:
-							log_system.error('send_mongodb_uri',e)	
-							raise e
+							raise Exception('send_mongodb_uri')	
+
 
 						print('save in database {0} tweets'.format(len(self.collector.documents_to_insert)))	
 						self.collector.documents_to_insert = []			
 						self.collector.count = 0	
 			
 					except Exception as e:
-						log_system.error('insert_tweets_num_per_insert',e)	
-						raise e
-
-
+						raise Exception('insert_tweets_num_per_insert')	
+						
 		except Exception as e:  
 			pass
 			log_system.error('on_data',e)						
@@ -504,16 +502,28 @@ def get_articles(status):
 			# pass	
 
 def get_words(status):
-	words = []
+
+	retweeted_status = status.get("retweeted_status")
+	quoted_status = status.get("quoted_status")
+
+	if retweeted_status:
+		get_words(retweeted_status)
+	
+	if quoted_status:
+		get_words(quoted_status)
+
+	status_terms = []
 	try:		
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")
-		words = lib_text.get_words(text.lower())				
+		status_terms = lib_text.get_words(text.lower())
+		status["text_terms"] = status_terms
+
 	except Exception as e:		
 		raise Exception('get_words', e)
 	finally:
-		return words
+		return status_terms
 
-def prepare_document(status, categories, blocked, words):
+def prepare_document(status, categories, blocked):
 	document = {}				
 	try:
 		if categories:			
@@ -524,8 +534,7 @@ def prepare_document(status, categories, blocked, words):
 			document['block'] = True
 		else:
 			document['block'] = False
-		if words:
-			status['text_terms'] = words		
+	
 	except Exception as e:
 		raise Exception('prepare_document', e)
 	finally:
