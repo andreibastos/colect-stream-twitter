@@ -506,6 +506,8 @@ def get_words(status):
 	retweeted_status = status.get("retweeted_status")
 	quoted_status = status.get("quoted_status")
 
+
+
 	if retweeted_status:
 		get_words(retweeted_status)
 	
@@ -513,7 +515,13 @@ def get_words(status):
 		get_words(quoted_status)
 
 	status_terms = []
-	try:		
+	try:
+		extended_tweets = status.get("extended_tweet")	
+		if extended_tweets:
+			text = str(unicode(extended_tweets["full_text"]).encode('utf-8')).decode("utf-8").replace("\n","")
+			status_terms = lib_text.get_words(text.lower())
+			status["full_text_terms"] = status_terms
+
 		text = str(unicode(status['text']).encode('utf-8')).decode("utf-8").replace("\n","")
 		status_terms = lib_text.get_words(text.lower())
 		status["text_terms"] = status_terms
