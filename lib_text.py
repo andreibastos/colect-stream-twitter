@@ -79,9 +79,9 @@ def check_word(str_s):
     '''
     Check if string is a valid word or not.
     '''
-    word_remove_list = ['rt', '\n', '', 'http', 'https', '//t', '//',u'…']
+    word_remove_list = ['rt', '\n', '', 'http', 'https', '//t', '//']
     word_start = ['@', '#', 'co/', '/', 'http']
-    word_in = ['kk', 'rsrs', 'haha', '/']
+    word_in = ['kk', 'rsrs', 'haha', '/',u'…']
     if len(str_s) > 1\
     and not is_stopword(str_s)\
     and not any(w in str_s for w in word_in)\
