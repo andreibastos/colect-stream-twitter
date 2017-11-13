@@ -258,7 +258,7 @@ class StreamingListener(tweepy.StreamListener):
 						except Exception as e:													
 							self.collector.documents_to_insert = []			
 							self.collector.count = 0	
-							raise Exception('send_elastic')	
+							# raise Exception('send_elastic')	
 
 						try:
 							if flags_enable.get("send_mongodb_uri"):
