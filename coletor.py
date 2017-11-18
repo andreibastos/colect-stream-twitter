@@ -14,7 +14,7 @@ import threading, tweepy, socket, traceback, sys
 
 import requests, urllib, urllib3
 
-import lib_text 
+import lib_text, random_querys
 import pymongo
 
 from persistence import elasticsearch
@@ -31,6 +31,7 @@ api_bot_telegram = ''
 api_categorize = ''
 filename_log = ''
 filename_keys = '';
+filename_keywords = 'keywords.txt'
 filename_querys = '';
 datasource = {}
 
@@ -668,6 +669,9 @@ def main():
 	keys = read_keys();
 	
 	#ler as querys
+	random_querys.filename_keywords = filename_keywords
+	random_querys.filename_keys = filename_keys
+	random_querys.gerar_querys();
 	querys = read_querys();
 
 	# cria o objeto do elastic search
