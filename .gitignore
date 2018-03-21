@@ -3,6 +3,7 @@ bin\*
 include\*
 lib\*
 local\*
+share\*
 querys.json
 
 pip-selfcheck.json
