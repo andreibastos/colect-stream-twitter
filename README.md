@@ -30,26 +30,51 @@ $ nano config.json
 ```
 ```json
 {
+    "flags_enable":{
+        "send_telegram":false,
+        "send_elastic":false,
+        "send_categorie":false,
+        "send_mongodb_api":false,
+        "send_mongodb_uri":true,
+        "blocked_enable":false,
+        "get_articles":false,
+        "word_split":true
+    },
+
     "collector":{
-        "NUM_PER_INSERT":25,
-        "categorize_namefield":"categories",
-        "sendTelegram":true,
-        "chat_id": 999999
+        "geojson":false,
+        "NUM_PER_INSERT":5,
+        "categorize_namefield":"keywords",
+        "sendTelegram":false,
+        "chat_id": 99999999        
+    },
+    "elasticsearch":{
+        "routing":"your-router",
+        "index":"YYYY-MM-DD"
+    },
+    "mongodb":{
+        "collection_name":"collection_name",
+        "database_name":"database_name"
+    },
+
+    "datasource":{
+       "es_uri":"https://elastic@elasticsearch.your-domain.net/",
+       "mongodb_uri":"mongodb://127.0.0.1:27017"
     },
 
     "endpoints":{
-        "api_database" : "http://your_api",
-        "api_bot_telegram" : "http://your_bot_telegram",
-        "api_categorize" : "http://your_api_categorize",
-        "api_categorize2" : "http://your_api_categorize"
+        "api_database" : "https://your-api/v2/tweets",
+        "api_bot_telegram" : "https://api.telegram.org/bot{{id}}:{{token}}/sendMessage",
+        "api_categorize" : "http://localhost:5001/twitter?",
+        "api_categorize2" : "http://localhost:6002/twitter/?"
     },
     "files":{
-        "filename_log" : "clipper.log",
+        "filename_log" : "your-project-name.log",
         "filename_keys" : "keys.json",
         "filename_querys" : "querys.json"
     }
-
 }
+
 ```
 
 Second: edit file keys.json
