@@ -1,3 +1,5 @@
+#MeuCertificado
+#PartiuCertificação
 #revalida
 #rnc
 #saeb
@@ -17,12 +19,16 @@ educacao superior saeg
 enade
 enade2016
 enade2017
+enade2018
 encceja
 encceja2017
+encceja2018
+EnccejaNacional 
 enceja
 enem
 enem2016
 enem2017
+Enem2018
 eneminep
 escola governo
 escolas governo
@@ -36,9 +42,9 @@ mec2016
 mec2017
 operacaoenade
 operacaoenem
-prova brasil
+"prova brasil"
 provabrasil2017
-provinha brasil
+"provinha brasil"
 rede nacional de certificadores
 revalida cfm
 revalida mec
