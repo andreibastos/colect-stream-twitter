@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 import os.path
 import json
@@ -15,9 +16,9 @@ class TestPersistenceElasticsearchTwitter(unittest.TestCase):
   def setUp(self):
     PATH_ABS = os.path.abspath(os.path.dirname(__file__))
     
-    uri = settings.datasource.get('es_uri', 'http://localhost:9200')
+    uri = settings.datasource.get('es_uri')
     self.elasticsearch = elasticsearch.ElasticsearchEngine(uri=uri)
-    self.index = 'twitter-test'
+    self.index = 'twitter'
     self.type = 'statuses'
     self.routing = 'tests'
     statusues_test_file = os.path.join(PATH_ABS, 'data/twitter-statusues.json')
